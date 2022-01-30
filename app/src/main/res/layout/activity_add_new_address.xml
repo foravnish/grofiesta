@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/while_color"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/lytTop"
+        layout="@layout/app_header_layout" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/btnGoNext"
+        android:layout_below="@id/lytTop"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_line_3"
+                android:background="@color/recycleview_bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/_10sdp">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inpContactPersonName"
+                    style="@style/LoginTextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:hint="Name"
+                    android:visibility="gone"
+                    android:outlineAmbientShadowColor="@color/colorBlackLite"
+                    android:outlineSpotShadowColor="@color/colorBlackLite"
+                    android:padding="@dimen/_5sdp"
+                    android:textColorHint="@color/colorBlackLite"
+                    app:boxBackgroundColor="@color/while_color"
+                    app:boxCornerRadiusBottomEnd="@dimen/_4sdp"
+                    app:boxCornerRadiusBottomStart="@dimen/_4sdp"
+                    app:boxCornerRadiusTopEnd="@dimen/_4sdp"
+                    app:boxCornerRadiusTopStart="@dimen/_4sdp"
+                    app:boxStrokeWidth="@dimen/view_line"
+                    app:helperTextTextColor="@color/colorBlackLite"
+                    app:hintTextColor="@color/colorBlackLite"
+                    app:placeholderTextColor="@color/colorBlackLite">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editContactPerson"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:inputType="text"
+                        android:textColor="@color/colorBlackLite"
+                        android:textColorHint="@color/colorBlackLite"
+                        android:textCursorDrawable="@null"
+                        android:textSize="@dimen/_12sdp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/LoginTextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:hint="Address"
+                    android:outlineAmbientShadowColor="@color/colorBlackLite"
+                    android:outlineSpotShadowColor="@color/colorBlackLite"
+                    android:padding="@dimen/_5sdp"
+                    android:textColorHint="@color/colorBlackLite"
+                    app:boxBackgroundColor="@color/while_color"
+                    app:boxCornerRadiusBottomEnd="@dimen/_4sdp"
+                    app:boxCornerRadiusBottomStart="@dimen/_4sdp"
+                    app:boxCornerRadiusTopEnd="@dimen/_4sdp"
+                    app:boxCornerRadiusTopStart="@dimen/_4sdp"
+                    app:boxStrokeWidth="@dimen/view_line"
+                    app:helperTextTextColor="@color/colorBlackLite"
+                    app:hintTextColor="@color/colorBlackLite"
+                    app:placeholderTextColor="@color/colorBlackLite">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:inputType="text"
+                        android:textColor="@color/colorBlackLite"
+                        android:textColorHint="@color/colorBlackLite"
+                        android:textCursorDrawable="@null"
+                        android:textSize="@dimen/_12sdp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/LoginTextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:hint="Pincode"
+                    android:outlineAmbientShadowColor="@color/colorBlackLite"
+                    android:outlineSpotShadowColor="@color/colorBlackLite"
+                    android:padding="@dimen/_5sdp"
+                    android:textColorHint="@color/colorBlackLite"
+                    app:boxBackgroundColor="@color/while_color"
+                    app:boxCornerRadiusBottomEnd="@dimen/_4sdp"
+                    app:boxCornerRadiusBottomStart="@dimen/_4sdp"
+                    app:boxCornerRadiusTopEnd="@dimen/_4sdp"
+                    app:boxCornerRadiusTopStart="@dimen/_4sdp"
+                    app:boxStrokeWidth="@dimen/view_line"
+                    app:helperTextTextColor="@color/colorBlackLite"
+                    app:hintTextColor="@color/colorBlackLite"
+                    app:placeholderTextColor="@color/colorBlackLite">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editPincode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:inputType="number"
+                        android:textColor="@color/colorBlackLite"
+                        android:textColorHint="@color/colorBlackLite"
+                        android:textCursorDrawable="@null"
+                        android:textSize="@dimen/_12sdp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_5sdp">
+
+                    <RadioButton
+                        android:id="@+id/btnHome"
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/colorBlackLite"
+                        android:checked="true"
+                        android:fontFamily="@font/poppins"
+                        android:onClick="clickHome"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:text="Home"
+                        android:textColor="@color/colorBlackLite"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <RadioButton
+                        android:id="@+id/btnWork"
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/colorBlackLite"
+                        android:fontFamily="@font/poppins"
+                        android:onClick="clickWork"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:text="Work"
+                        android:textColor="@color/colorBlackLite"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <RadioButton
+                        android:id="@+id/btnOthers"
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/colorBlackLite"
+                        android:fontFamily="@font/poppins"
+                        android:onClick="clickOthers"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:text="Others"
+                        android:textColor="@color/colorBlackLite"
+                        android:textSize="@dimen/_12sdp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.skydoves.elasticviews.ElasticButton
+        android:id="@+id/btnGoNext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="@drawable/rounded_corner_red"
+        android:fontFamily="@font/poppins_medium"
+        android:includeFontPadding="false"
+        android:onClick="goToSubmit"
+        android:text="Submit"
+        android:textAllCaps="false"
+        android:textColor="@color/while_color"
+        android:textSize="@dimen/_14sdp"
+        app:button_duration="100"
+        app:button_scale="0.95" />
+
+</RelativeLayout>

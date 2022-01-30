@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Grofiesta</string>
+
+    <string name="server_error">"Server is busy, Please try after sometime"</string>
+    <string name="internet_not_connect">Internet is not connected</string>
+    <string name="title_activity_compose">ComposeActivity</string>
+
+    <string name="verify_mobile">Verify Mobile</string>
+    <string name="enter_otp">Enter OTP</string>
+    <string name="dont_recieve">Didn\'t Receive the OTP?</string>
+    <string name="resend_code">Resend Code</string>
+    <string name="phone_verification_message">Enter the OTP code sent to your phone</string>
+
+    <string name="profile">Profile</string>
+    <string name="lbl_gender">Gender</string>
+    <string name="lbl_age">Age</string>
+    <string name="lbl_profile_quote">Complete your profile</string>
+    <string name="lbl_save">Save</string>
+    <string name="lbl_female">Female</string>
+    <string name="lbl_male">Male</string>
+    <string name="hint_name">Name</string>
+    <string name="lbl_skip">Skip</string>
+    <string name="lbl_next">Next</string>
+
+
+    <string name="something_went_wrong">"Something went wrong. Please try again!!"</string>
+    <string name="internet_is_slow">"Your internet connection is very slow. Please try again!!"</string>
+    <string name="internet_not_message">Please check your internet connection and try again</string>
+    <string name="server_error_title">Oops!</string>
+    <string name="server_error_message_new">A software update is in progress and will take about 2min. Please retry after 2min. If issue persists, contact customer care.</string>
+
+
+</resources>

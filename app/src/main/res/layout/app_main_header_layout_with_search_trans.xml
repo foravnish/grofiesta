@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rytMainHL"
+    android:layout_width="match_parent"
+    android:layout_height="?actionBarSize"
+    android:background="@drawable/divider_top_nav_bar"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:id="@+id/lytMainView"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <com.skydoves.elasticviews.ElasticImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/_45sdp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/_10sdp"
+            android:tint="@color/colorBlackLite"
+            app:imageView_duration="250"
+            app:imageView_scale="0.7"
+            app:srcCompat="@drawable/ic_back_arrow" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/_50sdp"
+            android:layout_marginRight="@dimen/_50sdp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtPageTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="@string/app_name"
+                android:textAllCaps="true"
+                app:textAllCaps="false"
+                android:textColor="@color/colorBlackLite"
+                android:textSize="@dimen/_13sdp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal">
+
+
+
+            <com.skydoves.elasticviews.ElasticLayout
+                android:id="@+id/lytCartView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="right"
+                android:layout_marginRight="10sp"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/_12sdp"
+                app:layout_duration="100"
+                app:layout_scale="0.85">
+
+                <LinearLayout
+                    android:id="@+id/cartRelativeLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtCartCount"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginBottom="-3.7dp"
+                        android:background="@drawable/rounded_corner_yellow"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text="0"
+                        android:textColor="@color/while_color"
+                        android:textSize="@dimen/_12sdp"
+                        android:visibility="visible" />
+
+                    <ImageView
+                        android:id="@+id/img_item_cart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:paddingRight="@dimen/_10sdp"
+                        app:srcCompat="@drawable/ic_baseline_shopping_cart"
+                        app:tint="@color/green" />
+                </LinearLayout>
+
+
+            </com.skydoves.elasticviews.ElasticLayout>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+</FrameLayout>

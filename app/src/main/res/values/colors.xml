@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="green">#03ac13</color>
+    <color name="green_light">#ade0ae</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#000000</color>
+    <color name="colorBlackLite">#000000</color>
+    <color name="recycleview_bg_lite1">#8DEEEFF0</color>
+    <color name="colorGrayLite">#DFDEDE</color>
+    <color name="item_color">#0773cb</color>
+    <color name="recycleview_bg_dark">#D9DEE4</color>
+    <color name="light_gray_bg">#1Aade0ae</color>
+    <color name="hint_color">#A9AEB1</color>
+    <color name="recycleview_bg_lite11">#46EEEFF0</color>
+    <color name="black_transparent">#8D000000</color>
+    <color name="colorWhiteGray3">#EBEFF3</color>
+    <color name="colorDarkGray1">#636060</color>
+
+    <color name="white">#FFFFFFFF</color>
+    <color name="recycleview_bg">#E1E6EB</color>
+    <color name="dark_transparent">#24000000</color>
+    <color name="light_transparent">#16000000</color>
+    <color name="green_transparent">#16ade0ae</color>
+
+    <color name="yellow">#ffc722</color>
+    <color name="light_yellow">#F6D46F</color>
+    <color name="light_green">#c9e3a4</color>
+    <color name="light_green2">#EEFADD</color>
+    <color name="light_green3">#F5FBEC</color>
+
+    <color name="dark_gray">#222222</color>
+    <color name="light_gray">#636161</color>
+    <color name="most_light_gray">#EEEEEE</color>
+
+    <color name="header_color">#343a40</color>
+
+    <color name="golder_color">#b39138</color>
+
+    <color name="while_color">#FFFFFF</color>
+    <color name="colorActionBar11">#59222121</color>
+
+    <color name="transparent">#66555555</color>
+    <color name="text_gray">#555555</color>
+    <color name="red">#F44336</color>
+    <color name="orange">#FF9800</color>
+
+</resources>

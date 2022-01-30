@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/while_color"
+    android:orientation="vertical">
+
+    <include layout="@layout/app_header_layout" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/_15sdp">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animation_view"
+                android:layout_width="@dimen/_170sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_height="wrap_content"
+                app:lottie_autoPlay="true"
+                android:adjustViewBounds="true"
+                android:padding="@dimen/_10sdp"
+                android:background="@drawable/lite_gray_circle_shape"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/otp_mobile" />
+
+            <ImageView
+                android:layout_width="@dimen/_170sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:adjustViewBounds="true"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_verification" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/poppins_medium"
+                android:includeFontPadding="false"
+                android:text="@string/enter_otp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_20sdp"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="@string/phone_verification_message"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_12sdp" />
+
+
+<!--            <com.mukesh.OtpView-->
+<!--                android:id="@+id/otp_view1"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_marginLeft="@dimen/_10sdp"-->
+<!--                android:layout_marginTop="@dimen/_25sdp"-->
+<!--                android:layout_marginRight="@dimen/_10sdp"-->
+<!--                android:background="@android:color/transparent"-->
+<!--                android:fontFamily="@font/poppins_medium"-->
+<!--                android:inputType="number"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:visibility="gone"-->
+<!--                app:itemCount="4"-->
+<!--                app:itemSpacing="-1dp"-->
+<!--                app:itemWidth="@dimen/dp_60"-->
+<!--                app:lineColor="@color/colorDarkGray"-->
+<!--                app:viewType="line" />-->
+
+            <EditText
+                android:id="@+id/otp_view"
+                android:layout_width="@dimen/_180sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:digits="1234567890"
+                android:includeFontPadding="true"
+                android:inputType="numberDecimal"
+                android:letterSpacing="1.2"
+                android:maxLength="6"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/colorGrayLite"
+                android:textSize="@dimen/_18sdp" />
+
+            <TextView
+                android:id="@+id/txtTimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:includeFontPadding="false"
+                android:text="01:59"
+                android:textColor="@color/colorBlackLite"
+                android:textSize="@dimen/_14sdp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_35sdp"
+                android:includeFontPadding="false"
+                android:text="@string/dont_recieve"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_50sdp"
+                android:includeFontPadding="false"
+                android:text="@string/resend_code"
+                android:textColor="@color/green"
+                android:textSize="@dimen/_12sdp"
+                android:visibility="gone" />
+
+            <com.skydoves.elasticviews.ElasticButton
+                android:id="@+id/btnVerifyNow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:alpha="0.8"
+                android:gravity="center"
+                android:background="@drawable/rounded_corner_red"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:includeFontPadding="false"
+                android:onClick="gotToAccounts"
+                android:text="Verify Now"
+                android:textAllCaps="false"
+                android:textColor="@color/while_color"
+                android:textSize="@dimen/_16sdp"
+                android:visibility="visible"
+                app:button_duration="250"
+                app:button_scale="0.87" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="I have a problem. "
+                    android:textColor="@color/colorBlackLite"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/txtResendOtp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:alpha="0.7"
+                    android:enabled="false"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:onClick="resendOtp"
+                    android:text="Resend"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_12sdp"/>
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_15sdp"
+        android:background="@drawable/rounded_corner_red"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:includeFontPadding="false"
+        android:onClick="gotToAccounts"
+        android:text="Verify Now"
+        android:textAllCaps="false"
+        android:textColor="@color/while_color"
+        android:textSize="@dimen/_17sdp"
+        android:visibility="gone" />
+</LinearLayout>

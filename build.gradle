@@ -1,0 +1,23 @@
+buildscript {
+    ext.kotlin_version = "1.5.31"
+    ext.ktor_version = '1.6.0'
+    ext.lifecycle_version = "2.3.1"
+    ext.room_version = "2.3.0"
+    ext.dagger_hilt = "2.38.1"
+    ext.paging_version = "3.0.1"
+
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:7.0.2"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

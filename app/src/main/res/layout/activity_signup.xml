@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/while_color">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/_50sdp"
+                    android:paddingStart="@dimen/_20sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_20sdp"
+                    android:paddingBottom="@dimen/_10sdp">
+
+                    <ImageView
+                        android:layout_width="@dimen/_130sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:adjustViewBounds="true"
+                        app:srcCompat="@drawable/logo" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:includeFontPadding="false"
+                        android:text="@string/app_name"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_15sdp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/txtSignInTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_25sdp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="Sign Up"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_18sdp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:hint="First Name"
+                        android:outlineAmbientShadowColor="@color/colorBlackLite"
+                        android:outlineSpotShadowColor="@color/colorBlackLite"
+                        android:textColorHint="@color/colorBlackLite"
+                        app:boxCornerRadiusBottomEnd="@dimen/_4sdp"
+                        app:boxCornerRadiusBottomStart="@dimen/_4sdp"
+                        app:boxCornerRadiusTopEnd="@dimen/_4sdp"
+                        app:boxCornerRadiusTopStart="@dimen/_4sdp"
+                        app:helperTextTextColor="@color/colorBlackLite"
+                        app:hintTextColor="@color/colorBlackLite"
+                        app:placeholderTextColor="@color/colorBlackLite">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:inputType="textPersonName"
+                            android:maxLines="1"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/colorBlackLite"
+                            android:textCursorDrawable="@null"
+                            android:textSize="@dimen/_12sdp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:hint="Last Name"
+                        android:outlineAmbientShadowColor="@color/colorBlackLite"
+                        android:outlineSpotShadowColor="@color/colorBlackLite"
+                        android:textColorHint="@color/colorBlackLite"
+                        app:boxCornerRadiusBottomEnd="@dimen/_4sdp"
+                        app:boxCornerRadiusBottomStart="@dimen/_4sdp"
+                        app:boxCornerRadiusTopEnd="@dimen/_4sdp"
+                        app:boxCornerRadiusTopStart="@dimen/_4sdp"
+                        app:helperTextTextColor="@color/colorBlackLite"
+                        app:hintTextColor="@color/colorBlackLite"
+                        app:placeholderTextColor="@color/colorBlackLite">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editLastName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:inputType="textPersonName"
+                            android:maxLines="1"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/colorBlackLite"
+                            android:textCursorDrawable="@null"
+                            android:textSize="@dimen/_12sdp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:hint="Email Id"
+                        android:outlineAmbientShadowColor="@color/colorBlackLite"
+                        android:outlineSpotShadowColor="@color/colorBlackLite"
+                        android:textColorHint="@color/colorBlackLite"
+                        app:boxCornerRadiusBottomEnd="@dimen/_4sdp"
+                        app:boxCornerRadiusBottomStart="@dimen/_4sdp"
+                        app:boxCornerRadiusTopEnd="@dimen/_4sdp"
+                        app:boxCornerRadiusTopStart="@dimen/_4sdp"
+                        app:helperTextTextColor="@color/colorBlackLite"
+                        app:hintTextColor="@color/colorBlackLite"
+                        app:placeholderTextColor="@color/colorBlackLite">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:inputType="textEmailAddress"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/colorBlackLite"
+                            android:textCursorDrawable="@null"
+                            android:textSize="@dimen/_12sdp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:hint="Mobile Number"
+                        android:outlineAmbientShadowColor="@color/colorBlackLite"
+                        android:outlineSpotShadowColor="@color/colorBlackLite"
+                        android:textColorHint="@color/colorBlackLite"
+                        app:boxCornerRadiusBottomEnd="@dimen/_4sdp"
+                        app:boxCornerRadiusBottomStart="@dimen/_4sdp"
+                        app:boxCornerRadiusTopEnd="@dimen/_4sdp"
+                        app:boxCornerRadiusTopStart="@dimen/_4sdp"
+                        app:helperTextTextColor="@color/colorBlackLite"
+                        app:hintTextColor="@color/colorBlackLite"
+                        app:placeholderTextColor="@color/colorBlackLite">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editMobileNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:digits="1234567890"
+                            android:fontFamily="@font/poppins_medium"
+                            android:inputType="numberDecimal"
+                            android:maxLength="10"
+                            android:maxLines="1"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/colorBlackLite"
+                            android:textCursorDrawable="@null"
+                            android:textSize="@dimen/_12sdp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginLeft="@dimen/_10sdp"-->
+<!--                        android:layout_marginTop="@dimen/_10sdp"-->
+<!--                        android:layout_marginRight="@dimen/_10sdp"-->
+<!--                        android:layout_marginBottom="@dimen/_5sdp"-->
+<!--                        android:hint="Password"-->
+<!--                        android:outlineAmbientShadowColor="@color/colorBlackLite"-->
+<!--                        android:outlineSpotShadowColor="@color/colorBlackLite"-->
+<!--                        android:textColorHint="@color/colorBlackLite"-->
+<!--                        app:boxCornerRadiusBottomEnd="@dimen/_4sdp"-->
+<!--                        app:boxCornerRadiusBottomStart="@dimen/_4sdp"-->
+<!--                        app:boxCornerRadiusTopEnd="@dimen/_4sdp"-->
+<!--                        app:boxCornerRadiusTopStart="@dimen/_4sdp"-->
+<!--                        app:helperTextTextColor="@color/colorBlackLite"-->
+<!--                        app:hintTextColor="@color/colorBlackLite"-->
+<!--                        app:placeholderTextColor="@color/colorBlackLite">-->
+
+<!--                        <com.google.android.material.textfield.TextInputEditText-->
+<!--                            android:id="@+id/editPassword"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:fontFamily="@font/poppins_medium"-->
+<!--                            android:inputType="textPassword"-->
+<!--                            android:textColor="@color/black"-->
+<!--                            android:textColorHint="@color/colorBlackLite"-->
+<!--                            android:textCursorDrawable="@null"-->
+<!--                            android:textSize="@dimen/_12sdp" />-->
+
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
+
+
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginLeft="@dimen/_10sdp"-->
+<!--                        android:layout_marginTop="@dimen/_10sdp"-->
+<!--                        android:layout_marginRight="@dimen/_10sdp"-->
+<!--                        android:layout_marginBottom="@dimen/_5sdp"-->
+<!--                        android:hint="Confirm Password"-->
+<!--                        android:outlineAmbientShadowColor="@color/colorBlackLite"-->
+<!--                        android:outlineSpotShadowColor="@color/colorBlackLite"-->
+<!--                        android:textColorHint="@color/colorBlackLite"-->
+<!--                        app:boxCornerRadiusBottomEnd="@dimen/_4sdp"-->
+<!--                        app:boxCornerRadiusBottomStart="@dimen/_4sdp"-->
+<!--                        app:boxCornerRadiusTopEnd="@dimen/_4sdp"-->
+<!--                        app:boxCornerRadiusTopStart="@dimen/_4sdp"-->
+<!--                        app:helperTextTextColor="@color/colorBlackLite"-->
+<!--                        app:hintTextColor="@color/colorBlackLite"-->
+<!--                        app:placeholderTextColor="@color/colorBlackLite">-->
+
+<!--                        <com.google.android.material.textfield.TextInputEditText-->
+<!--                            android:id="@+id/editConfirmPassword"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:fontFamily="@font/poppins_medium"-->
+<!--                            android:inputType="textPassword"-->
+<!--                            android:textColor="@color/black"-->
+<!--                            android:textColorHint="@color/colorBlackLite"-->
+<!--                            android:textCursorDrawable="@null"-->
+<!--                            android:textSize="@dimen/_12sdp" />-->
+
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:hint="Address"
+                        android:outlineAmbientShadowColor="@color/colorBlackLite"
+                        android:outlineSpotShadowColor="@color/colorBlackLite"
+                        android:textColorHint="@color/colorBlackLite"
+                        app:boxCornerRadiusBottomEnd="@dimen/_4sdp"
+                        app:boxCornerRadiusBottomStart="@dimen/_4sdp"
+                        app:boxCornerRadiusTopEnd="@dimen/_4sdp"
+                        app:boxCornerRadiusTopStart="@dimen/_4sdp"
+                        app:helperTextTextColor="@color/colorBlackLite"
+                        app:hintTextColor="@color/colorBlackLite"
+                        app:placeholderTextColor="@color/colorBlackLite">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:inputType="textMultiLine"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/colorBlackLite"
+                            android:textCursorDrawable="@null"
+                            android:textSize="@dimen/_12sdp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:hint="Pincode"
+                        android:outlineAmbientShadowColor="@color/colorBlackLite"
+                        android:outlineSpotShadowColor="@color/colorBlackLite"
+                        android:textColorHint="@color/colorBlackLite"
+                        app:boxCornerRadiusBottomEnd="@dimen/_4sdp"
+                        app:boxCornerRadiusBottomStart="@dimen/_4sdp"
+                        app:boxCornerRadiusTopEnd="@dimen/_4sdp"
+                        app:boxCornerRadiusTopStart="@dimen/_4sdp"
+                        app:helperTextTextColor="@color/colorBlackLite"
+                        app:hintTextColor="@color/colorBlackLite"
+                        app:placeholderTextColor="@color/colorBlackLite">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editPostCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:inputType="numberDecimal"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/colorBlackLite"
+                            android:textCursorDrawable="@null"
+                            android:textSize="@dimen/_12sdp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.skydoves.elasticviews.ElasticButton
+                        android:id="@+id/btnGoOtp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_20sdp"
+                        android:background="@drawable/rounded_corner_green"
+                        android:includeFontPadding="false"
+                        android:onClick="goToOtp"
+                        android:text="Sign Up"
+                        android:textAllCaps="false"
+                        android:textColor="@color/while_color"
+                        android:textSize="@dimen/_12sdp"
+                        app:button_duration="250"
+                        app:button_scale="0.87" />
+
+
+
+                </LinearLayout>
+
+            </ScrollView>
+
+
+
+
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/loading_view"
+            layout="@layout/layout_loader"
+            android:visibility="gone" />
+
+    </FrameLayout>
+</layout>

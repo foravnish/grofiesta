@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:id="@+id/relative"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="0dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/btm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/view_line1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="@dimen/_15sdp"
+            >
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_skip"
+                android:onClick="onClickSkip"
+                android:textSize="@dimen/_18sdp"
+                android:textColor="@color/white"/>
+
+            <me.relex.circleindicator.CircleIndicator
+                android:id="@+id/indicator"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:ci_drawable="@drawable/strock_circle_indecator"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_next"
+                android:onClick="onClickNext"
+                android:textSize="@dimen/_18sdp"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/view_line1"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_25sdp"
+            android:background="#00BA03"/>
+
+
+    </RelativeLayout>
+</layout>

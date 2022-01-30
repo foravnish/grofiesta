@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black"
+    android:orientation="vertical">
+
+
+
+    <com.ortiz.touchview.TouchImageView
+        android:id="@+id/fullImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter" />
+
+    <com.skydoves.elasticviews.ElasticImageView
+        android:id="@+id/imgBack"
+        android:layout_width="@dimen/_55sdp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        app:srcCompat="@drawable/ic_back_arrow"
+        android:tint="@color/green"
+        app:imageView_duration="250"
+        app:imageView_scale="0.7" />
+
+</RelativeLayout>

@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:fillViewport="true"
+                android:scrollbarThumbVertical="@android:color/transparent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/match_wrap"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:text="@string/profile"
+                            android:textColor="@color/colorBlackLite"
+                            android:textSize="42sp" />
+
+                        <TextView
+                            style="@style/match_wrap"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="@font/poppins"
+                            android:text="@string/lbl_profile_quote"
+                            android:textColor="@color/colorBlackLite"
+                            android:textSize="@dimen/_20sdp" />
+                    </LinearLayout>
+
+                    <FrameLayout
+                        android:layout_width="@dimen/_120sdp"
+                        android:layout_height="@dimen/_120sdp"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="@dimen/_10sdp">
+
+                        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/profile_image"
+                            style="@style/match_match"
+                            android:src="@drawable/ic_profile"
+                            app:civ_border_color="@android:color/white"
+                            app:civ_border_width="@dimen/_1sdp" />
+
+                        <ProgressBar
+                            android:id="@+id/image_upload_progress"
+                            style="@style/wrap_warp"
+                            android:layout_gravity="center"
+                            android:visibility="gone" />
+
+                        <LinearLayout
+                            android:layout_width="@dimen/_45sdp"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_gravity="right|bottom"
+                            android:background="@drawable/strock_circle"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/upload_image_vw"
+                                android:layout_width="@dimen/_20sdp"
+                                android:layout_height="@dimen/_20sdp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/camera_profile"
+                                android:visibility="visible" />
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:focusableInTouchMode="true"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/editName"
+                            style="@style/et_profile"
+                            android:hint="First Name"
+                            android:maxLength="20"
+                            android:text=""
+                            android:textColor="@color/colorBlackLite"
+                            android:textColorHint="@color/colorBlackLite" />
+
+                        <EditText
+                            android:id="@+id/editLastName"
+                            style="@style/et_profile"
+                            android:hint="Last Name"
+                            android:maxLength="20"
+                            android:text=""
+                            android:textColor="@color/colorBlackLite"
+                            android:textColorHint="@color/colorBlackLite" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_60sdp"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:id="@+id/editMobile"
+                                style="@style/et_profile"
+                                android:layout_centerVertical="true"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:inputType="textEmailAddress"
+                                android:maxLength="60"
+                                android:text="+91 87979888"
+                                android:textColor="@color/colorBlackLite"
+                                android:textColorHint="@color/colorBlackLite" />
+
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_60sdp"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:id="@+id/editEmail"
+                                style="@style/et_profile"
+                                android:layout_centerVertical="true"
+                                android:hint="Email Id"
+                                android:inputType="textEmailAddress"
+                                android:maxLength="60"
+                                android:textColor="@color/colorBlackLite"
+                                android:textColorHint="@color/colorBlackLite" />
+
+
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+
+                    <!--                    <TextView-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:text="@string/lbl_gender"-->
+                    <!--                        android:textColor="@color/colorBlackLite"-->
+                    <!--                        android:textSize="20dp"-->
+                    <!--                        android:layout_marginTop="@dimen/_12sdp"/>-->
+
+                    <!--                    <RadioGroup-->
+                    <!--                        android:id="@+id/genderGroup"-->
+                    <!--                        android:layout_width="fill_parent"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginTop="15dp"-->
+                    <!--                        android:layout_gravity="center"-->
+                    <!--                        android:orientation="horizontal">-->
+
+                    <!--                        <RadioButton-->
+                    <!--                            android:id="@+id/radio_male"-->
+                    <!--                            style="@style/rb_profile"-->
+                    <!--                            android:text="@string/lbl_male"-->
+                    <!--                            android:textColor="@color/colorBlackLite"-->
+                    <!--                            android:padding="@dimen/_10sdp"-->
+                    <!--                            android:textSize="@dimen/_14sdp"-->
+                    <!--                            android:drawableTint="@color/colorBlackLite"-->
+                    <!--                            android:drawableLeft="@drawable/checkbox_drawable_background"-->
+                    <!--                            />-->
+
+                    <!--                        <RadioButton-->
+                    <!--                            android:id="@+id/radio_female"-->
+                    <!--                            style="@style/rb_profile"-->
+                    <!--                            android:drawableLeft="@drawable/checkbox_drawable_background_f"-->
+                    <!--                            android:padding="@dimen/_10sdp"-->
+                    <!--                            android:textSize="@dimen/_14sdp"-->
+                    <!--                            android:drawableTint="@color/colorBlackLite"-->
+                    <!--                            android:textColor="@color/colorBlackLite"-->
+                    <!--                            android:layout_marginLeft="@dimen/_10sdp"-->
+                    <!--                            android:text="@string/lbl_female"/>-->
+                    <!--                    </RadioGroup>-->
+
+
+                    <!--                    <TextView-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:text="@string/lbl_age"-->
+                    <!--                        android:textColor="@color/colorBlackLite"-->
+                    <!--                        android:textSize="20dp"-->
+                    <!--                        android:layout_marginTop="@dimen/_12sdp"/>-->
+
+
+                    <!--                    <include-->
+                    <!--                        android:id="@+id/layoutAge"-->
+                    <!--                        layout="@layout/age_profile"-->
+                    <!--                        style="@style/match_wrap"/>-->
+
+                    <Button
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_30sdp"
+                        android:layout_marginBottom="@dimen/_35sdp"
+                        android:background="@drawable/strok_fill_btn"
+                        android:onClick="clickSave"
+                        android:text="@string/lbl_save"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_16sdp" />
+
+
+                </LinearLayout>
+            </ScrollView>
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/loading_view"
+            layout="@layout/layout_loader" />
+    </FrameLayout>
+</layout>
