@@ -25,6 +25,7 @@ object Prefences {
     lateinit var postCode: SharedPreferences
     lateinit var address: SharedPreferences
     lateinit var addressId: SharedPreferences
+    lateinit var is_del_boy: SharedPreferences
 
     var USER_ID = "USER_ID"
     var IS_LOGIN = "IS_LOGIN"
@@ -43,6 +44,7 @@ object Prefences {
     var POST_CODE= "POST_CODE"
     var ADDRESS= "ADDRESS"
     var ADDRESS_ID= "ADDRESS_ID"
+    var IS_DEL_BOY= "IS_DEL_BOY"
 
     @JvmStatic
     fun resetUserData(ctx: Context){
@@ -61,9 +63,24 @@ object Prefences {
         setAddress(ctx,"")
         setAddressId(ctx,"")
         setPincode(ctx,"")
+        setUserImage(ctx,"")
+        setIsDeliveryBoy(ctx,"")
 
     }
 
+    @JvmStatic
+    fun setIsDeliveryBoy(context: Context, `is`: String) {
+        is_del_boy = PreferenceManager.getDefaultSharedPreferences(context)
+        val editor = is_del_boy.edit()
+        editor.putString(IS_DEL_BOY, `is`)
+        editor.commit()
+    }
+
+    @JvmStatic
+    fun getIsDeliveryBoy(context: Context?): String? {
+        is_del_boy = PreferenceManager.getDefaultSharedPreferences(context)
+        return is_del_boy.getString(IS_DEL_BOY, "")
+    }
 
     fun setIsBalance(context: Context, iss: Boolean) {
         isBalance = PreferenceManager.getDefaultSharedPreferences(context)

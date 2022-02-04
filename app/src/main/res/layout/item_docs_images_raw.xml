@@ -27,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <ImageView
                 android:id="@+id/imgPic"
                 android:layout_width="match_parent"
@@ -35,6 +36,7 @@
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/place_holder" />
+
 
             <View
                 android:layout_width="match_parent"
@@ -49,6 +51,18 @@
                 android:text="View"
                 android:textColor="@color/while_color"
                 android:textSize="@dimen/_12sdp" />
+
+            <ImageView
+                android:id="@+id/imgClose"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_centerInParent="true"
+                android:adjustViewBounds="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                app:srcCompat="@drawable/ic_baseline_close"
+                app:tint="@color/while_color" />
+
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 

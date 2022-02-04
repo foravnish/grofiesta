@@ -4,27 +4,46 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
 import android.view.View
+import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import com.accountapp.accounts.utils.Prefences
+import com.ananda.retailer.Room.Tables.MyCart
+import com.ananda.retailer.Views.Activities.Grocery.viewmodel.GroceryViewModel
 import com.app.grofiesta.R
 import com.app.grofiesta.data.model.request.SendOtpRequest
+import com.app.grofiesta.room.response.MyCartResponse
 import com.app.grofiesta.ui.base.BaseActivity
 import com.app.grofiesta.ui.main.view.home.HomeActivity
+import com.app.grofiesta.ui.main.view.product.ProductViewModel
 import com.app.grofiesta.utils.Utility
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_my_cart.*
 import kotlinx.android.synthetic.main.activity_o_t_p.*
+import kotlinx.android.synthetic.main.activity_servcie.*
 import kotlinx.android.synthetic.main.app_header_layout.*
+import kotlinx.android.synthetic.main.app_header_layout.imgBack
+import kotlinx.android.synthetic.main.app_header_layout.txtPageTitle
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class OTPActivity : BaseActivity() {
 
     lateinit var mViewModel: LoginViewModel
+    lateinit var mViewModelProduct: ProductViewModel
+
     var mMobile=""
     var customer_id=""
     var otp=""
+    val viewModel: GroceryViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_o_t_p)
@@ -32,7 +51,9 @@ class OTPActivity : BaseActivity() {
         mViewModel = ViewModelProvider.AndroidViewModelFactory(application)
             .create(LoginViewModel::class.java)
         mViewModel.init(this)
-
+        mViewModelProduct = ViewModelProvider.AndroidViewModelFactory(application)
+            .create(ProductViewModel::class.java)
+        mViewModelProduct.init(this@OTPActivity)
         imgBack.setOnClickListener { finish() }
         txtPageTitle.text = getString(R.string.verify_mobile)
 
@@ -151,15 +172,12 @@ class OTPActivity : BaseActivity() {
                                 Prefences.setPincode(this@OTPActivity,postcode)
                                 Prefences.setAddress(this@OTPActivity,address)
                                 Prefences.setAddressId(this@OTPActivity,""+address_id)
+                                Prefences.setUserImage(this@OTPActivity,""+urlimage)
+                                Prefences.setIsDeliveryBoy(this@OTPActivity,""+delevery_boy_status)
 
                             }
+                            callMyCartListing(customer_id)
 
-                            Intent(this, HomeActivity::class.java).apply {
-//                                putExtra("mobile",editMobileNumber.text.toString().trim())
-                            }.let {
-                                Utility.startActivityWithLeftToRightAnimation(this,it)
-                            }
-                            finishAffinity()
 
                         } else Utility.showToast(this)
                     })
@@ -169,6 +187,72 @@ class OTPActivity : BaseActivity() {
 
 
             })
+
+    }
+
+    private fun callMyCartListing(customer_id:String) {
+
+        mViewModelProduct.initMyCartListing(""+customer_id,true)!!.observe(this, Observer {mData->
+
+            lifecycleScope.launchWhenStarted {
+                withContext(Dispatchers.IO) {
+                    withContext(lifecycleScope.coroutineContext) {
+
+                        if (mData.status){
+                            if (mData.data!=null && mData.data.size>0 ){
+
+                                mData.data.forEach { mList->
+                                    mList.apply {
+                                        MyCartResponse(
+                                            "" + product_id, "" + category_id, "" + sub_category_id,
+                                            "" + product_name, "" + weight_size, "" + main_price,
+                                            "" + display_price, "" + purchase_price, "" + display_price,
+                                            "" + description, "" + short_desp, "" + urlimage,
+                                            ""+qwantity, "" + gst, ""
+                                        ).let {
+                                            viewModel.insertItemInCart(it)
+                                        }
+
+                                    }
+
+                                }
+                            }
+                        }
+
+
+                    }
+                }
+
+                redirectToActivity()
+            }
+
+
+        })
+
+
+    }
+
+    private fun redirectToActivity() {
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.getAllMyCart().observe(this@OTPActivity, Observer {
+                if (it != null && it.isNotEmpty()) {
+                    Intent(this@OTPActivity, HomeActivity::class.java).apply {
+                        putExtra("hasData","yes")
+                    }.let {
+                        Utility.startActivityWithLeftToRightAnimation(this@OTPActivity,it)
+                    }
+                    finishAffinity()
+                }else{
+                    Intent(this@OTPActivity, HomeActivity::class.java).apply {
+                    }.let {
+                        Utility.startActivityWithLeftToRightAnimation(this@OTPActivity,it)
+                    }
+                    finishAffinity()
+                }
+
+            })
+        }
 
     }
 
@@ -182,30 +266,6 @@ class OTPActivity : BaseActivity() {
             }
         }
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-//        if (requestCode == RC_SIGN_IN) {
-//            val task =
-//                GoogleSignIn.getSignedInAccountFromIntent(data)
-//            handleSignInResult(task)
-//        }
-    }
-
-//     [END onActivityResult]
-//    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
-//        try {
-//            val account =
-//                completedTask.getResult(ApiException::class.java)
-//            AppLog.printLog(account!!.email.toString())
-//            getGoogleLogin(account!!.email.toString())
-//        } catch (e: ApiException) {
-//            showToast("Something went wrong. Please Try Again...")
-//            AppLog.printLog(
-//                "signInResult:failed code=" + e.statusCode
-//            )
-//        }
-//    }
 
 
     fun resendOtp(view: View) {
@@ -221,62 +281,6 @@ class OTPActivity : BaseActivity() {
         }
     }
 
-    fun clickToGmailLogin(view: View) {
-//        try {
-//            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestEmail()
-//                .build()
-//            Utils.googleSingOut()
-//            Utils.mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-//            val signInIntent: Intent = Utils.mGoogleSignInClient!!.signInIntent
-//            startActivityForResult(signInIntent, RC_SIGN_IN)
-//        } catch (e: Exception) {
-//            println(e.message)
-//        }
-    }
 
-    private fun getGoogleLogin(email: String) {
-//        mViewModel1.getGoogleLogin(email)
-//            ?.observe(this, Observer {
-//                AppLog.printLog("Response", Gson().toJson(it))
-//                val mResponse = JSONObject(it)
-//                AppLog.printLog("MoModelIs", mResponse)
-//                val hasErrors: Boolean = mResponse.getBoolean("hasErrors")
-//                try {
-//                    if (!hasErrors) {
-//                        try {
-//                            val myClass: ApiResponseModels.ResponsePassword = Gson().fromJson(
-//                                mResponse.getString("response"),
-//                                ApiResponseModels.ResponsePassword::class.java
-//                            )
-//                            mViewModelInsert.initInsertUser(myClass)
-//                            getLoginLogout(myClass.token, myClass.user.empPartyACTBSr)
-////                            val intent = Intent(this, MainActivity::class.java)
-////                            intent.flags =
-////                                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-////                            startActivity(intent)
-//                        } catch (e: Exception) {
-//                        }
-//                    } else {
-//                        val error: String = mResponse.getString("errors")
-//                        showToast(error)
-//                    }
-//                } catch (e: Exception) {
-//                }
-//            })
-    }
 
-    private fun getLoginLogout(token: String, userId: String) {
-//        mViewModel.getLoginLogout(token, "4", userId)?.observe(this, Observer {
-//            AppLog.printLog("ApiResponse", Gson().toJson(it))
-//            if (!it.hasErrors) {
-//                val intent = Intent(this, MainActivity::class.java)
-//                intent.flags =
-//                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                startActivity(intent, animBundleBTU())
-//            } else {
-//                showToast(it.errors)
-//            }
-//        })
-    }
 }

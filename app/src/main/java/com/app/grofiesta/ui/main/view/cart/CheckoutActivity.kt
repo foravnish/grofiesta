@@ -27,6 +27,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
+import android.os.Handler
 import android.view.Window
 import android.widget.TextView
 import com.app.grofiesta.data.model.ApiResponseModels
@@ -87,7 +88,7 @@ class CheckoutActivity : BaseActivity() {
                     var amt1 = mTotalAmt + mShippingCharge + mGST
                     var amt2 = mCoupon + mWallet
                     mGrandTotalAmt = amt1 - amt2
-                    txtGrandTotal.text = "+ ₹" + mGrandTotalAmt
+                    txtGrandTotal.text = "₹" + mGrandTotalAmt
                     txtTotalAmount.text = "₹" + mGrandTotalAmt
                 } else {
                     txtWallet.text = "- ₹ " + mGrandTotalAmt
@@ -95,14 +96,14 @@ class CheckoutActivity : BaseActivity() {
                     var amt1 = mTotalAmt + mShippingCharge + mGST
                     var amt2 = mCoupon + mWallet
                     mGrandTotalAmt = amt1 - amt2
-                    txtGrandTotal.text = "+ ₹" + mGrandTotalAmt
+                    txtGrandTotal.text = "₹" + mGrandTotalAmt
                     txtTotalAmount.text = "₹" + mGrandTotalAmt
                 }
             } else {
                 var amt1 = mTotalAmt + mShippingCharge + mGST
                 var amt2 = mCoupon + 0.0
                 mGrandTotalAmt = amt1 - amt2
-                txtGrandTotal.text = "+ ₹" + mGrandTotalAmt
+                txtGrandTotal.text = "₹" + mGrandTotalAmt
                 txtTotalAmount.text = "₹" + mGrandTotalAmt
                 txtWallet.text = "- ₹ 0.0"
             }
@@ -175,22 +176,27 @@ class CheckoutActivity : BaseActivity() {
         mViewModel.initShippingCharge(Prefences.getPincode(this@CheckoutActivity)!!, true)!!
             .observe(this, Observer {
                 if (it.status) {
-                    txtShipingCharge.text = "+ ₹" + it.data
-                    mShippingCharge = it.data.toDouble()
+                    txtShipingCharge.text = "+ ₹" + it.shipping
+                    mShippingCharge = it.shipping.toDouble()
 
                     var amt1 = mTotalAmt + mShippingCharge + mGST
                     var amt2 = mCoupon + mWallet
                     mGrandTotalAmt = amt1 - amt2
-                    txtGrandTotal.text = "+ ₹" + mGrandTotalAmt
+                    txtGrandTotal.text = "₹" + mGrandTotalAmt
                     txtTotalAmount.text = "₹" + mGrandTotalAmt
+                    if (it.distance!=null && it.distance!=""){
+                        if (it.distance.toInt()>10)
+                            lytDistance.visibility=View.VISIBLE
+                        else
+                            lytDistance.visibility=View.GONE
+                    }
                 } else {
-                    txtShipingCharge.text = "+ ₹" + it.data
                     mShippingCharge = 0.0
-
+                    txtShipingCharge.text = "+ ₹" + mShippingCharge
                     var amt1 = mTotalAmt + mShippingCharge + mGST
                     var amt2 = mCoupon + mWallet
                     mGrandTotalAmt = amt1 - amt2
-                    txtGrandTotal.text = "+ ₹" + mGrandTotalAmt
+                    txtGrandTotal.text = "₹" + mGrandTotalAmt
                     txtTotalAmount.text = "₹" + mGrandTotalAmt
                 }
             })
@@ -294,34 +300,36 @@ class CheckoutActivity : BaseActivity() {
 
 //        openDialogSucessfull()
 
+        placeOrderNow()
 
-        lifecycleScope.launchWhenStarted {
-            withContext(Dispatchers.IO) {
-                withContext(lifecycleScope.coroutineContext) {
-
-                    mCartData.forEach {
-
-                        mViewModel.initAddToCart(
-                            Prefences.getUserId(this@CheckoutActivity)!!,
-                            "" + it.product_id, "" + it.qty, true
-                        )!!
-                            .observe(this@CheckoutActivity, Observer { mData ->
-                                if (mData.status) {
-
-                                    viewModel.deleteItemFromCart(it.product_id)
-
-                                } else showErrorCustomerToast()
-
-                            })
-
-
-                    }
-
-                }
-            }
-
-            placeOrderNow()
-        }
+//        lifecycleScope.launchWhenStarted {
+//            withContext(Dispatchers.IO) {
+//                withContext(lifecycleScope.coroutineContext) {
+//
+//                    mCartData.forEach {
+//
+//                        mViewModel.initAddToCart(
+//                            Prefences.getUserId(this@CheckoutActivity)!!,
+//                            "" + it.product_id, "" + it.qty, true
+//                        )!!
+//                            .observe(this@CheckoutActivity, Observer { mData ->
+//                                if (mData.status) {
+//
+//                                    viewModel.deleteItemFromCart(it.product_id)
+//
+//                                } else showErrorCustomerToast()
+//
+//                            })
+//
+//                    }
+//
+//                }
+//            }
+//            Handler().postDelayed(Runnable {
+//                placeOrderNow()
+//            }, 2000)
+//
+//        }
 
 
     }
@@ -345,6 +353,8 @@ class CheckoutActivity : BaseActivity() {
         )!!
             .observe(this, Observer { mData ->
                 if (mData.status) {
+
+                    viewModel.deleteMyCartAll()
                     openDialogSucessfull(mGrandTotalAmt,mData.order_id)
                 }
             })

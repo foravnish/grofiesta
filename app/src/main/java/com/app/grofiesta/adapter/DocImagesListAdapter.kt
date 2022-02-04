@@ -62,6 +62,9 @@ class DocImagesListAdapter(
             itemView.lytAdd.setOnClickListener {
                 onClick.onClickView(adapterPosition, "Add")
             }
+            itemView.imgClose.setOnClickListener {
+                onClick.onClickView(adapterPosition, "Close")
+            }
 
         }
     }

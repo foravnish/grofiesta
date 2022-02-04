@@ -12,6 +12,8 @@ import com.app.grofiesta.ui.base.BaseActivity
 import com.app.grofiesta.utils.RetryDialog
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 
 class LoginRepository {
@@ -179,12 +181,13 @@ class LoginRepository {
 
     @SuppressLint("CheckResult")
     fun callSaveUserDetail(
-        context: Context, req:UserProfileRequest, showDialog: Boolean
+        context: Context, firstname: RequestBody, mobile:RequestBody, email:RequestBody,
+        hidden_customer_id:RequestBody,address:RequestBody, imageedit:RequestBody,image: MultipartBody.Part?, showDialog: Boolean
     ): MutableLiveData<ApiResponseModels.SuccessResponse> {
         val mLiveData = MutableLiveData<ApiResponseModels.SuccessResponse>()
         if (NetworkHandling.isConnected(context)) {
             if (showDialog) (context as BaseActivity).showDialog()
-            apiInterface!!.callSaveUserDetail(req)
+            apiInterface!!.callSaveUserDetail(firstname,mobile,email,hidden_customer_id,address,imageedit,image)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).doOnError {
                     (context as BaseActivity).dismissDialog()
                     NetworkHandling.showNetworkError(context, it)

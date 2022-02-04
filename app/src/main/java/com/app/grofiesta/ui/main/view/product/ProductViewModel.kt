@@ -1,23 +1,41 @@
 package com.app.grofiesta.ui.main.view.product
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
+import com.ananda.retailer.Room.Repo.GroceryDBRepository
+import com.ananda.retailer.Room.Tables.MyCart
 import com.app.grofiesta.data.model.ApiResponseModels
+import com.app.grofiesta.room.response.MyCartResponse
+import com.app.grofiesta.ui.main.view.login.OTPActivity
+import io.reactivex.android.schedulers.AndroidSchedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.http.Part
 
 
 class ProductViewModel(application: Application) : AndroidViewModel(application) {
 
     private lateinit var mContext: Context
+    private var dbRepo: GroceryDBRepository? = null
 
     private var mRegistrationtApiRepository: ProductRepository? = null
 
+    private fun initRepo() {
+        if (dbRepo == null) dbRepo = GroceryDBRepository().getInstance()
+    }
+
+
+    init {
+        initRepo()
+    }
+
     fun init(context: Context) {
         this.mContext = context
+
     }
 
     fun initProductDetail(
@@ -25,6 +43,29 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
     ): MutableLiveData<ApiResponseModels.ProductDetailResponse>? {
         mRegistrationtApiRepository = ProductRepository().getInstance()
         mRegistrationtApiRepository!!.callProductDetail(mContext, productId, showDialog)
+            .let { return it }
+    }
+
+    fun initAddWishList(customer_id:String,
+        productId: String, showDialog: Boolean
+    ): MutableLiveData<ApiResponseModels.AddWishListResponse>? {
+        mRegistrationtApiRepository = ProductRepository().getInstance()
+        mRegistrationtApiRepository!!.callAddWishList(mContext, customer_id,productId, showDialog)
+            .let { return it }
+    }
+    fun initRemoveWishList(
+                        productId: String, showDialog: Boolean
+    ): MutableLiveData<ApiResponseModels.CommonRespose>? {
+        mRegistrationtApiRepository = ProductRepository().getInstance()
+        mRegistrationtApiRepository!!.callRemoveWishList(mContext, productId, showDialog)
+            .let { return it }
+    }
+
+    fun initListWishList(customer_id:String,
+                            showDialog: Boolean
+    ): MutableLiveData<ApiResponseModels.ProductListingResponse>? {
+        mRegistrationtApiRepository = ProductRepository().getInstance()
+        mRegistrationtApiRepository!!.callListWishList(mContext, customer_id, showDialog)
             .let { return it }
     }
 
@@ -61,6 +102,33 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
             .let { return it }
     }
 
+    fun initMyCartListing(
+        customer_id: String,
+        showDialog: Boolean
+    ): MutableLiveData<ApiResponseModels.ProductListingResponse>? {
+        mRegistrationtApiRepository = ProductRepository().getInstance()
+        mRegistrationtApiRepository!!.callMyCartList(mContext,customer_id,  showDialog)
+            .let { return it }
+    }
+
+    fun initDeleteMyCart(
+        cart_id: String,
+        showDialog: Boolean
+    ): MutableLiveData<ApiResponseModels.CommonRespose>? {
+        mRegistrationtApiRepository = ProductRepository().getInstance()
+        mRegistrationtApiRepository!!.callDeleteMyCart(mContext,cart_id,  showDialog)
+            .let { return it }
+    }
+
+    fun initUpdateMyCart(
+        cart_id: String,
+        qty:String,
+        showDialog: Boolean
+    ): MutableLiveData<ApiResponseModels.CommonRespose>? {
+        mRegistrationtApiRepository = ProductRepository().getInstance()
+        mRegistrationtApiRepository!!.callUpdateMyCart(mContext,cart_id,  qty,showDialog)
+            .let { return it }
+    }
 
     fun initDropDownFiestaData(
          showDialog: Boolean

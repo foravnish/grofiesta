@@ -56,6 +56,10 @@ class Utility {
 //        }
 //    }
 
+        fun showToastForLogin(ctx:Context) {
+            Toast.makeText(ctx, "Please Login first.", Toast.LENGTH_SHORT).show()
+        }
+
         fun MyCustomDialog(context: Context, layout: Int): Dialog {
             val dialog = Dialog(context)
             dialog.setContentView(layout)

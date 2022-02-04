@@ -27,10 +27,15 @@ object ApiUrls {
     const val PRODUCT_DETAIL = "api/getDetailProductsApi"
     const val DROP_DOWN_GRO = "api/getMainMenuGroApi"
     const val MY_SERVIES = "api/getServiceApi"
+    const val MY_CART_LIST = "api/cart_listing"
+    const val MY_CART_DELETE = "api/cart_delete_api"
+    const val MY_CART_UPDATE = "api/update_quantity_api"
     const val DROP_DOWN_FIESTA = "api/getMainMenuFiestaApi"
     const val DROP_DOWN_SERVICE = "api/getMainMenuGroApi"
     const val RELEATED_PRODUCT = "api/getrelatedProductsApi"
-    const val MY_ORDER_LISTING = "api/getOrderListApi"
+    const val MY_ORDER_LISTING = "api/order_list_api"
+    const val MY_DELIVERY_LISTING = "api/delivery_order_list"
+    const val MY_DELIVERY_CHANGE_STATUS = "api/order_status_update_api"
     const val MY_DROPDOWN_LISTING = "api/getproductDropdownApi"
     const val OFFER_LISTING = "api/getOfferApi"
     const val MY_WALLET = "api/walletApi"
@@ -48,6 +53,9 @@ object ApiUrls {
     const val ADD_ADDRESS = "api/add_address_api"
     const val ADD_SERVICE = "api/savere_refund_refund_api"
     const val SEND_FEEDBACK = "api/save_feedback_api"
+    const val ADD_WISHLIST = "api/add_product_to_wishlist_api"
+    const val REMOVE_WISHLIST = "api/delete_wishlist_api"
+    const val LISTING_WISHLIST = "api/getwishlist"
 
 
 }

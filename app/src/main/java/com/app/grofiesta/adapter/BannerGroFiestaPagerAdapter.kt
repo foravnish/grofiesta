@@ -13,7 +13,10 @@ import com.app.grofiesta.utils.Utility
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.home_product_item.view.*
 
-class BannerGroFiestaPagerAdapter(context: Context, val images: List<ApiResponseModels.GroFiestaPageResponse.Success.Slider>) : PagerAdapter() {
+class BannerGroFiestaPagerAdapter(
+    context: Context,
+    val images: List<ApiResponseModels.GroFiestaPageResponse.Success.Slider>,
+    var itemClick: (Int) -> Unit) : PagerAdapter() {
 
     var context: Context
     var imageView : ImageView? = null
@@ -41,6 +44,8 @@ class BannerGroFiestaPagerAdapter(context: Context, val images: List<ApiResponse
         imageView = itemView.findViewById(R.id.imageView) as ImageView
 
         Glide.with(itemView.context).load(images.get(position).urlimage).into(imageView!!)
+
+        imageView!!.setOnClickListener { itemClick(position) }
 
         container.addView(itemView)
 

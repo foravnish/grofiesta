@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.item_my_order.view.*
 
 @SuppressLint("SetTextI18n")
 class MyOrderListAdapter(
-    var mList: List<ApiResponseModels.MyOderResponse.Success>,
+    var mList: List<ApiResponseModels.OrderLIstingNewResponse.Data>,
 //    var activity: MyCartActivity,
 //    var divSr:String,
     var itemClick: (Int) -> Unit
@@ -32,15 +32,14 @@ class MyOrderListAdapter(
     }
 
     inner class MyHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindData(mListItem: ApiResponseModels.MyOderResponse.Success) {
+        fun bindData(mListItem: ApiResponseModels.OrderLIstingNewResponse.Data) {
 
             itemView.apply {
                 mListItem.apply {
-                    txtOrderNumber.text="Order Id : #"+od_id
-                    txtItemName.text=""+item_name
-                    txtOrderdate.text="Order Date : "+date_added
-                    txtPrice.text="₹"+price
-                    txtQty.text="Qty: "+quantity
+                    txtOrderNumber.text="Order Id: #"+order_id
+                    txtItemName.text="Address: "+address
+                    txtOrderdate.text="Order Date: "+date_added
+                    txtTotalPrice.text="Total Price: ₹"+total
 
                     if (status=="1") {
                         txtStatus.setTextColor(context.getColor(R.color.red))
@@ -56,7 +55,7 @@ class MyOrderListAdapter(
                 }
             }
             itemView.txtDetail.setOnClickListener {
-               // itemClick(adapterPosition)
+                itemClick(adapterPosition)
             }
 
         }

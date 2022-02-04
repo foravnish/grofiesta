@@ -30,6 +30,7 @@ import com.app.grofiesta.ui.main.view.FeedbackFromActivity
 import com.app.grofiesta.ui.main.view.WebViewActivity
 import com.app.grofiesta.ui.main.view.address.ManageAddressActivity
 import com.app.grofiesta.ui.main.view.cart.MyCartActivity
+import com.app.grofiesta.ui.main.view.deliveryBoy.DeliveryBoyListActivity
 import com.app.grofiesta.ui.main.view.login.LoginActivity
 import com.app.grofiesta.ui.main.view.offers.OffersActivity
 import com.app.grofiesta.ui.main.view.order.MyOrderListActivity
@@ -39,8 +40,10 @@ import com.app.grofiesta.ui.main.view.product.WishListActivity
 import com.app.grofiesta.ui.main.view.profile.ProfileActivity
 import com.app.grofiesta.ui.main.view.wallet.WalletActivity
 import com.app.grofiesta.utils.Utility
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
@@ -74,6 +77,12 @@ class HomeActivity : BaseActivity() {
 
         setNavFooterLayoutUtilities()
 
+        if (intent.hasExtra("hasData")){
+            Utility.startActivityWithLeftToRightAnimation(
+                this,
+                Intent(this, MyCartActivity::class.java)
+            )
+        }
         btnMyCart.setOnClickListener {
             Utility.startActivityWithLeftToRightAnimation(
                 this,
@@ -100,12 +109,27 @@ class HomeActivity : BaseActivity() {
             navAddress.visibility=View.GONE
             navProfile.visibility=View.GONE
             navFeedback.visibility=View.GONE
+            navWishlist.visibility=View.GONE
             v1.visibility=View.GONE
             v2.visibility=View.GONE
             v3.visibility=View.GONE
             v4.visibility=View.GONE
             v5.visibility=View.GONE
             v6.visibility=View.GONE
+            v7.visibility=View.GONE
+        }else{
+            if (Prefences.getIsDeliveryBoy(this)=="1"){
+                navDelBoy.visibility=View.VISIBLE
+                v7.visibility=View.VISIBLE
+            }
+        }
+        navDelBoy.setOnClickListener {
+            closeDrawer()
+            Intent(this@HomeActivity, DeliveryBoyListActivity::class.java).apply {
+            }.let {
+                Utility.startActivityWithLeftToRightAnimation(this,it)
+            }
+
         }
         navHome.setOnClickListener(View.OnClickListener {
             closeDrawer()
@@ -382,7 +406,7 @@ https://play.google.com/store/apps/details?id=${packageName}
             if (it!=null){
                 if (it.status){
                     if (mType=="fb"){
-                        val urlPage = ""+it.data.facebook
+                        val urlPage = ""+it.data[0].facebook
                         try {
                             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(urlPage)))
                         } catch (e: Exception) {
@@ -390,7 +414,7 @@ https://play.google.com/store/apps/details?id=${packageName}
                             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(urlPage)))
                         }
                     }else if (mType=="insta"){
-                        val urlPage = ""+it.data.instagram
+                        val urlPage = ""+it.data[0].instagram
                         try {
                             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(urlPage)))
                         } catch (e: Exception) {
@@ -398,9 +422,9 @@ https://play.google.com/store/apps/details?id=${packageName}
                             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(urlPage)))
                         }
                     }else if(mType=="wp"){
-                        whatsApp(""+it.data.mobile)
+                        whatsApp(""+it.data[0].mobile)
                     }else if(mType=="call"){
-                        callTo(""+it.data.mobile)
+                        callTo(""+it.data[0].mobile)
                     }
                 }
 
@@ -510,8 +534,15 @@ https://play.google.com/store/apps/details?id=${packageName}
         val headerView = navigationView.getHeaderView(0)
         val navUsername = headerView.findViewById<View>(R.id.txtNavUserName) as TextView
         val txtNavUserMobile = headerView.findViewById<View>(R.id.txtNavUserMobile) as TextView
+        val imgNavProfilePic = headerView.findViewById<View>(R.id.imgNavProfilePic) as CircleImageView
 
         if(Prefences.getIsLogin(this)) {
+            var urlimage=Prefences.getUserImage(this@HomeActivity)
+            if (urlimage!!.endsWith(".jpg") || urlimage!!.endsWith("jpeg ")
+                || urlimage!!.endsWith("png")){
+                Glide.with(this@HomeActivity).load(urlimage).into(imgNavProfilePic)
+            }
+
             navUsername.text = "" + Prefences.getFirstName(this@HomeActivity)
             txtNavUserMobile.text = "+91-" + Prefences.getUserMobile(this@HomeActivity)
         }else{

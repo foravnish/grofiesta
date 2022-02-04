@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ananda.retailer.Views.Activities.Grocery.viewmodel.GroceryViewModel
@@ -17,7 +16,6 @@ import com.app.grofiesta.utils.Utility
 import kotlinx.android.synthetic.main.dymanic_home_product_item.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.util.ArrayList
 
 class HomePageDynamicAdapter(
     val mList: List<ApiResponseModels.DymainHomeProductResponse.Data>,
@@ -27,6 +25,8 @@ class HomePageDynamicAdapter(
     var itemClick: (ApiResponseModels.DymainHomeProductResponse.Data.Productsdata,String,String) -> Unit
 ) :
     RecyclerView.Adapter<HomePageDynamicAdapter.MyHolder>() {
+    private var NUM_PAGES2 = 0
+    internal var position2: Int = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): MyHolder {
         var v: View
@@ -80,6 +80,8 @@ class HomePageDynamicAdapter(
                         if (mList.productsdata.size > 0)
                             initAdapter(context,itemView,mList.productsdata)
 
+//                        if (mList.module_banner.size>0)
+//                            initPagerViewer(context,itemView,mList.module_banner)
                     }
 
 
@@ -91,6 +93,41 @@ class HomePageDynamicAdapter(
 
         }
     }
+
+//    private val runnale2 = object : Runnable {
+//        override fun run() {
+//            binding.lytDynamicProduct.viewpager.setCurrentItem(position2, true)
+//            if (position2 >= NUM_PAGES2)
+//                position2 = 0
+//            else
+//                position2++
+//            // Move to the next page after 3s
+//            handler2.postDelayed(this, PERIOD_MS2)
+//        }
+//    }
+
+
+//    private fun initPagerViewer(
+//        context: Context,
+//        itemView: View, slider: List<String>
+//    ) {
+//        itemView.relativePager.visibility=View.VISIBLE
+//        NUM_PAGES2 = slider.size
+//
+////        List.forEach {
+////
+////        }
+//        itemView.viewpager.adapter =
+//            BannerGroFiestaPagerAdapter(context, slider){
+////                Intent(context, ImagePreviewActivity::class.java).apply {
+////                    putExtra("image", slider[it].urlimage)
+////                }.let {
+////                    Utility.startActivityWithLeftToRightAnimation(context!!, it)
+////                }
+//            }
+//        itemView.indicator.setViewPager(itemView.viewpager)
+//
+//    }
 
     private fun initAdapter(
         context: Context,
@@ -113,6 +150,7 @@ class HomePageDynamicAdapter(
 
         }
         itemView.rvDynamicProductHorizontal.adapter = mAdapter
+
     }
 
     private fun openMyCartScreen(mData: ApiResponseModels.DymainHomeProductResponse.Data.Productsdata,mType:String) {

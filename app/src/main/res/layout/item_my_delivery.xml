@@ -30,7 +30,7 @@
             android:layout_below="@+id/txtOrderNumber">
 
             <TextView
-                android:id="@+id/txtItemName"
+                android:id="@+id/txtCustomer_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_3sdp"
@@ -50,71 +50,45 @@
                 android:gravity="center"
                 android:text="Details"
                 android:textColor="@color/red"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="visible" />
 
         </RelativeLayout>
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/txtOrderNumber"-->
-<!--            android:orientation="horizontal">-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/txtPrice"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="@dimen/_3sdp"-->
-<!--                android:text="10"-->
-<!--                android:textSize="@dimen/_12sdp"-->
-<!--                android:textColor="@color/colorBlackLite"/>-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/txtQty"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="@dimen/_3sdp"-->
-<!--                android:text="5"-->
-<!--                android:textSize="@dimen/_12sdp"-->
-<!--                android:layout_marginLeft="@dimen/_10sdp"-->
-<!--                android:textColor="@color/colorBlackLite"/>-->
-
-<!--        </LinearLayout>-->
-
-        <TextView
-            android:id="@+id/txtTotalPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_3sdp"
-            android:text="10"
-            android:textSize="@dimen/_12sdp"
-            android:textColor="@color/colorBlackLite"/>
-
         <LinearLayout
-            android:id="@+id/lytStaus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_below="@+id/txtOrderNumber"
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/txtMobile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Status: "/>
+                android:layout_marginTop="@dimen/_3sdp"
+                android:text="10"
+                android:textSize="@dimen/_12sdp"
+                android:textColor="@color/colorBlackLite"/>
+
 
             <TextView
-                android:id="@+id/txtStatus"
-                android:layout_width="wrap_content"
+                android:id="@+id/txtChageStatus"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Deliverd"
-                android:textColor="@color/green" />
+                android:layout_marginTop="@dimen/_3sdp"
+                android:text="Change Status"
+                android:layout_gravity="right"
+                android:gravity="right"
+                android:textStyle="bold"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:textColor="@color/colorBlackLite"/>
 
         </LinearLayout>
 
 
         <TextView
-            android:id="@+id/txtOrderdate"
+            android:id="@+id/txtAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_3sdp"

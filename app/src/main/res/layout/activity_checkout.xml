@@ -298,6 +298,44 @@
                     android:background="@color/recycleview_bg_dark" />
 
                 <LinearLayout
+                    android:id="@+id/lytDistance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="horizontal">
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_gravity="center"
+                        app:lottie_rawRes="@raw/success_animation" />
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:focusableInTouchMode="true"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="Wow ! You are eligible for 60 minute delivery. Now take a cup of coffee, sit back and relax."
+                            android:textAllCaps="true"
+                            android:textColor="@color/green"
+                            android:textSize="@dimen/_12sdp" />
+
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="-5dp"

@@ -72,6 +72,7 @@ interface ApiInterface {
     fun callContactUs(
     ): Observable<ApiResponseModels.ContactUsResponse>
 
+
     @GET(ApiUrls.TNC_PRIVACY_ABOUT_US)
     fun callAboutTnCPrivacy(
     ): Observable<ApiResponseModels.TncPrivacyAboutUsResponse>
@@ -84,6 +85,24 @@ interface ApiInterface {
     fun callProductDetail(
         @Path("id") id: String
     ): Observable<ApiResponseModels.ProductDetailResponse>
+
+    @FormUrlEncoded
+    @POST(ApiUrls.ADD_WISHLIST)
+    fun callAddWishList(
+        @Field("customer_id") customer_id: String,
+        @Field("product_id") product_id: String
+    ): Observable<ApiResponseModels.AddWishListResponse>
+
+    @GET(ApiUrls.REMOVE_WISHLIST+ "/{id}")
+    fun callRemoveWishList(
+        @Path("id") id: String,
+    ): Observable<ApiResponseModels.CommonRespose>
+
+    @FormUrlEncoded
+    @POST(ApiUrls.LISTING_WISHLIST)
+    fun callListWishList(
+        @Field("customer_id") customer_id: String,
+    ): Observable<ApiResponseModels.ProductListingResponse>
 
     @FormUrlEncoded
     @POST(ApiUrls.SEARCH_PRODUCT)
@@ -106,9 +125,29 @@ interface ApiInterface {
     fun callDropDownGroData(
     ): Observable<ApiResponseModels.DropDownResponse>
 
+
     @GET(ApiUrls.MY_SERVIES)
     fun callMyServices(
     ): Observable<ApiResponseModels.Services>
+
+    @FormUrlEncoded
+    @POST(ApiUrls.MY_CART_LIST)
+    fun callMyCartList(
+        @Field("customer_id") customer_id: String
+    ): Observable<ApiResponseModels.ProductListingResponse>
+
+    @FormUrlEncoded
+    @POST(ApiUrls.MY_CART_DELETE)
+    fun callDeleteMyCart(
+        @Field("cart_id") cart_id: String
+    ): Observable<ApiResponseModels.CommonRespose>
+
+    @FormUrlEncoded
+    @POST(ApiUrls.MY_CART_UPDATE)
+    fun callUpdateMyCart(
+        @Field("cart_id") cart_id: String,
+        @Field("qty") qty: String,
+        ): Observable<ApiResponseModels.CommonRespose>
 
     @GET(ApiUrls.DROP_DOWN_FIESTA)
     fun callDropDownFiestaData(
@@ -118,10 +157,26 @@ interface ApiInterface {
     fun callServiceFiestaData(
     ): Observable<ApiResponseModels.DropDownResponse>
 
-    @GET(ApiUrls.MY_ORDER_LISTING + "/{id}")
+    @FormUrlEncoded
+    @POST(ApiUrls.MY_ORDER_LISTING)
     fun callMyOrderListing(
+        @Field("customer_id") customer_id: String
+    ): Observable<ApiResponseModels.OrderLIstingNewResponse>
+
+    @GET(ApiUrls.MY_DELIVERY_LISTING + "/{id}")
+    fun callMyDeliveryListing(
         @Path("id") id: String
-    ): Observable<ApiResponseModels.MyOderResponse>
+    ): Observable<ApiResponseModels.MyDeliveryResponse>
+
+    @FormUrlEncoded
+    @POST(ApiUrls.MY_DELIVERY_CHANGE_STATUS )
+    fun callChageStatus(
+        @Field("order_id") order_id: String,
+        @Field("username") username: String,
+        @Field("useremail") useremail: String,
+        @Field("order_status") order_status: String,
+
+    ): Observable<ApiResponseModels.MyDeliveryResponse>
 
     @GET(ApiUrls.MY_DROPDOWN_LISTING + "/{id}")
     fun callDropDownList(
@@ -141,11 +196,6 @@ interface ApiInterface {
     fun callUserDetail(
         @Path("id") id: String
     ): Observable<ApiResponseModels.UserDetailResponse>
-
-    @POST(ApiUrls.SAVE_PROFILE)
-    fun callSaveUserDetail(
-        @Body body: UserProfileRequest
-    ): Observable<ApiResponseModels.SuccessResponse>
 
     @FormUrlEncoded
     @POST(ApiUrls.COUPAN)
@@ -212,6 +262,18 @@ interface ApiInterface {
         @Field("address") address: String, @Field("customer_id") customer_id: String
     ): Observable<ApiResponseModels.ShipingChargeResponse>
 
+
+    @Multipart
+    @POST(ApiUrls.SAVE_PROFILE)
+    fun callSaveUserDetail(
+        @Part("name") firstname: RequestBody,
+        @Part("telephone") telephone: RequestBody,
+        @Part("email") email: RequestBody,
+        @Part("hidden_customer_id") hidden_customer_id: RequestBody,
+        @Part("address") address: RequestBody,
+        @Part("imageedit") imageedit: RequestBody,
+        @Part multipartTypedOutput: MultipartBody.Part?
+    ): Observable<ApiResponseModels.SuccessResponse>
 
     @Multipart
     @POST(ApiUrls.ADD_SERVICE)

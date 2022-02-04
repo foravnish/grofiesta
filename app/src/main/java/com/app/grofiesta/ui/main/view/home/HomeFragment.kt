@@ -17,12 +17,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.accountapp.accounts.base.BaseFragment
+import com.accountapp.accounts.utils.Prefences
 import com.ananda.retailer.Views.Activities.Grocery.viewmodel.GroceryViewModel
 import com.app.grofiesta.R
 import com.app.grofiesta.adapter.*
 import com.app.grofiesta.data.model.ApiResponseModels
 import com.app.grofiesta.databinding.FragmentHomeBinding
 import com.app.grofiesta.room.response.MyCartResponse
+import com.app.grofiesta.ui.main.view.cart.CheckoutViewModel
 import com.app.grofiesta.ui.main.view.cart.MyCartActivity
 import com.app.grofiesta.ui.main.view.product.ProductDetailActivity
 import com.app.grofiesta.ui.main.view.product.SearchProductActivity
@@ -40,6 +42,7 @@ class HomeFragment : BaseFragment() {
 
     lateinit var mAdapter: HomeItemsAdapter
     val viewModel: GroceryViewModel by activityViewModels()
+    lateinit var mViewModelCheckout: CheckoutViewModel
 
     companion object {
         val TAG = "FragmentHome"
@@ -55,21 +58,29 @@ class HomeFragment : BaseFragment() {
     var fragment: Fragment? = null
 
     internal var position: Int = 0
+    internal var position2: Int = 0
+
     private var NUM_PAGES = 0
-    internal val PERIOD_MS: Long =
-        3 * 1000 // time in milliseconds between successive task executions.
+    private var NUM_PAGES2 = 0
+
+    internal val PERIOD_MS: Long = 3 * 1000
+    internal val PERIOD_MS2: Long = 3 * 1000
     private var handler = Handler()
+    private var handler2 = Handler()
 
     lateinit var mViewModel: HomeViewModel
 
     public override fun onPause() {
         super.onPause()
         handler?.removeCallbacks(runnale)
+//        handler2?.removeCallbacks(runnale2)
     }
 
     override fun onResume() {
         super.onResume()
         handler.postDelayed(runnale, PERIOD_MS)
+//        handler2.postDelayed(runnale2, PERIOD_MS2)
+
     }
 
     private val runnale = object : Runnable {
@@ -83,6 +94,8 @@ class HomeFragment : BaseFragment() {
             handler.postDelayed(this, PERIOD_MS)
         }
     }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,7 +112,9 @@ class HomeFragment : BaseFragment() {
         mViewModel = ViewModelProvider.AndroidViewModelFactory(requireActivity().application)
             .create(HomeViewModel::class.java)
         mViewModel.init(requireActivity())
-
+        mViewModelCheckout = ViewModelProvider.AndroidViewModelFactory(requireActivity().application)
+            .create(CheckoutViewModel::class.java)
+        mViewModelCheckout.init(requireActivity())
         callBannerApi()
 
 
@@ -143,11 +158,12 @@ class HomeFragment : BaseFragment() {
 
         mViewModel.initMarquee(true)!!.observe(requireActivity(), Observer {
             if (it!=null){
-
                 if (it.status){
-                    binding.txtMarquee.isSelected=true
-                    binding.txtMarquee.visibility=View.VISIBLE
-                    binding.txtMarquee.text=""+it.data
+                    if (it.data!=null && it.data!="") {
+                        binding.txtMarquee.isSelected = true
+                        binding.txtMarquee.visibility = View.VISIBLE
+                        binding.txtMarquee.text = "" + it.data
+                    }else binding.txtMarquee.visibility=View.GONE
                 }else
                     binding.txtMarquee.visibility=View.GONE
             }
@@ -186,6 +202,7 @@ class HomeFragment : BaseFragment() {
                         }
 
                         initAdapterDymanicProduct(mData.data,lifecycleScope,viewModel,requireActivity())
+
                     }
 
 
@@ -362,8 +379,25 @@ class HomeFragment : BaseFragment() {
             }
         }
 
+        callAddToCartApi(mData)
     }
 
+    private fun callAddToCartApi(mData: ApiResponseModels.GroProductResponse.Success) {
+
+        if(Prefences.getIsLogin(requireActivity())) {
+            mViewModelCheckout.initAddToCart(
+                Prefences.getUserId(requireActivity())!!,
+                "" + mData.product_id, "1", true
+            )!!
+                .observe(requireActivity(), Observer { mData ->
+                    if (mData.status) {
+
+                    }
+
+                })
+        }else Utility.showToastForLogin(requireActivity())
+
+    }
 
     private fun openMyCartScreen() {
 
@@ -425,6 +459,8 @@ class HomeFragment : BaseFragment() {
         }
         binding.lytBestSeller.rvBestSeller.adapter = mAdapter
     }
+
+
 
 
 }

@@ -3,6 +3,7 @@ package com.app.grofiesta.ui.main.view.product
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.app.grofiesta.data.apiClient.ApiClient
 import com.app.grofiesta.data.apiClient.ApiInterface
 import com.app.grofiesta.data.apiClient.NetworkHandling
@@ -11,6 +12,9 @@ import com.app.grofiesta.ui.base.BaseActivity
 import com.app.grofiesta.utils.RetryDialog
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Part
@@ -59,6 +63,85 @@ class ProductRepository {
         }
         return mLiveData
     }
+
+    @SuppressLint("CheckResult")
+    fun callAddWishList(
+        context: Context,customer_id:String, productId: String, showDialog: Boolean
+    ): MutableLiveData<ApiResponseModels.AddWishListResponse> {
+        val mLiveData = MutableLiveData<ApiResponseModels.AddWishListResponse>()
+        if (NetworkHandling.isConnected(context)) {
+            if (showDialog) (context as BaseActivity).showDialog()
+            apiInterface!!.callAddWishList(customer_id,productId)
+                .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).doOnError {
+                    (context as BaseActivity).dismissDialog()
+                    NetworkHandling.showNetworkError(context, it)
+                }.subscribe({
+                    try {
+                        (context as BaseActivity).dismissDialog()
+                        mLiveData.value = it
+                    } catch (e: Exception) {
+                        println(e.printStackTrace())
+                    }
+                }, { error ->
+                })
+        } else {
+            NetworkHandling.getRetryDialog(context, RetryDialog.NO_INTERNET)
+        }
+        return mLiveData
+    }
+
+    @SuppressLint("CheckResult")
+    fun callRemoveWishList(
+        context: Context, productId: String, showDialog: Boolean
+    ): MutableLiveData<ApiResponseModels.CommonRespose> {
+        val mLiveData = MutableLiveData<ApiResponseModels.CommonRespose>()
+        if (NetworkHandling.isConnected(context)) {
+            if (showDialog) (context as BaseActivity).showDialog()
+            apiInterface!!.callRemoveWishList(productId)
+                .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).doOnError {
+                    (context as BaseActivity).dismissDialog()
+                    NetworkHandling.showNetworkError(context, it)
+                }.subscribe({
+                    try {
+                        (context as BaseActivity).dismissDialog()
+                        mLiveData.value = it
+                    } catch (e: Exception) {
+                        println(e.printStackTrace())
+                    }
+                }, { error ->
+                })
+        } else {
+            NetworkHandling.getRetryDialog(context, RetryDialog.NO_INTERNET)
+        }
+        return mLiveData
+    }
+
+    @SuppressLint("CheckResult")
+    fun callListWishList(
+        context: Context,customer_id:String,  showDialog: Boolean
+    ): MutableLiveData<ApiResponseModels.ProductListingResponse> {
+        val mLiveData = MutableLiveData<ApiResponseModels.ProductListingResponse>()
+        if (NetworkHandling.isConnected(context)) {
+            if (showDialog) (context as BaseActivity).showDialog()
+            apiInterface!!.callListWishList(customer_id)
+                .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).doOnError {
+                    (context as BaseActivity).dismissDialog()
+                    NetworkHandling.showNetworkError(context, it)
+                }.subscribe({
+                    try {
+                        (context as BaseActivity).dismissDialog()
+                        mLiveData.value = it
+                    } catch (e: Exception) {
+                        println(e.printStackTrace())
+                    }
+                }, { error ->
+                })
+        } else {
+            NetworkHandling.getRetryDialog(context, RetryDialog.NO_INTERNET)
+        }
+        return mLiveData
+    }
+
     @SuppressLint("CheckResult")
     fun callSearchData(
         context: Context, keyword: String, showDialog: Boolean
@@ -165,6 +248,85 @@ class ProductRepository {
         }
         return mLiveData
     }
+
+    @SuppressLint("CheckResult")
+    fun callMyCartList(
+        context: Context, customer_id:String, showDialog: Boolean
+    ): MutableLiveData<ApiResponseModels.ProductListingResponse> {
+        val mLiveData = MutableLiveData<ApiResponseModels.ProductListingResponse>()
+        if (NetworkHandling.isConnected(context)) {
+            if (showDialog) (context as BaseActivity).showDialog()
+            apiInterface!!.callMyCartList(customer_id)
+                .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).doOnError {
+                    (context as BaseActivity).dismissDialog()
+                    NetworkHandling.showNetworkError(context, it)
+                }.subscribe({
+                    try {
+                        (context as BaseActivity).dismissDialog()
+                        mLiveData.value = it
+                    } catch (e: Exception) {
+                        println(e.printStackTrace())
+                    }
+                }, { error ->
+                })
+        } else {
+            NetworkHandling.getRetryDialog(context, RetryDialog.NO_INTERNET)
+        }
+        return mLiveData
+    }
+
+    @SuppressLint("CheckResult")
+    fun callDeleteMyCart(
+        context: Context, cart_id:String, showDialog: Boolean
+    ): MutableLiveData<ApiResponseModels.CommonRespose> {
+        val mLiveData = MutableLiveData<ApiResponseModels.CommonRespose>()
+        if (NetworkHandling.isConnected(context)) {
+            if (showDialog) (context as BaseActivity).showDialog()
+            apiInterface!!.callDeleteMyCart(cart_id)
+                .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).doOnError {
+                    (context as BaseActivity).dismissDialog()
+                    NetworkHandling.showNetworkError(context, it)
+                }.subscribe({
+                    try {
+                        (context as BaseActivity).dismissDialog()
+                        mLiveData.value = it
+                    } catch (e: Exception) {
+                        println(e.printStackTrace())
+                    }
+                }, { error ->
+                })
+        } else {
+            NetworkHandling.getRetryDialog(context, RetryDialog.NO_INTERNET)
+        }
+        return mLiveData
+    }
+
+    @SuppressLint("CheckResult")
+    fun callUpdateMyCart(
+        context: Context, cart_id:String, qty:String,showDialog: Boolean
+    ): MutableLiveData<ApiResponseModels.CommonRespose> {
+        val mLiveData = MutableLiveData<ApiResponseModels.CommonRespose>()
+        if (NetworkHandling.isConnected(context)) {
+            if (showDialog) (context as BaseActivity).showDialog()
+            apiInterface!!.callUpdateMyCart(cart_id,qty)
+                .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).doOnError {
+                    (context as BaseActivity).dismissDialog()
+                    NetworkHandling.showNetworkError(context, it)
+                }.subscribe({
+                    try {
+                        (context as BaseActivity).dismissDialog()
+                        mLiveData.value = it
+                    } catch (e: Exception) {
+                        println(e.printStackTrace())
+                    }
+                }, { error ->
+                })
+        } else {
+            NetworkHandling.getRetryDialog(context, RetryDialog.NO_INTERNET)
+        }
+        return mLiveData
+    }
+
 
     @SuppressLint("CheckResult")
     fun callDropDownFiestaData(

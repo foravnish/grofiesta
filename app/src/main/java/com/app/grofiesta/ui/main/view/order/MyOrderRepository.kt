@@ -34,8 +34,8 @@ class MyOrderRepository {
     @SuppressLint("CheckResult")
     fun callMyOrderListing(
         context: Context, productId: String, showDialog: Boolean
-    ): MutableLiveData<ApiResponseModels.MyOderResponse> {
-        val mLiveData = MutableLiveData<ApiResponseModels.MyOderResponse>()
+    ): MutableLiveData<ApiResponseModels.OrderLIstingNewResponse> {
+        val mLiveData = MutableLiveData<ApiResponseModels.OrderLIstingNewResponse>()
         if (NetworkHandling.isConnected(context)) {
             if (showDialog) (context as BaseActivity).showDialog()
             apiInterface!!.callMyOrderListing(productId)

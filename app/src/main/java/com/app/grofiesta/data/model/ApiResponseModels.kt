@@ -25,9 +25,10 @@ object ApiResponseModels {
             }
         }
     }
+
     data class AddToCart(
         val status: ArrayList<Data>,
-    ): Serializable{
+    ) : Serializable {
         data class Data(
             var product_id: String,
             var qty: String
@@ -37,6 +38,15 @@ object ApiResponseModels {
 
     data class SuccessResponse(
         val success: Int
+    )
+
+    data class CommonRespose(
+        val status: Boolean
+    )
+
+    data class AddWishListResponse(
+        val status: Boolean,
+        val last_wishlist_id:String
     )
 
     data class SignupResponse(
@@ -51,7 +61,7 @@ object ApiResponseModels {
 
     data class ContactUsResponse(
         val status: Boolean,
-        val data: Data
+        val data: ArrayList<Data>
     ) : Serializable {
         data class Data(
             var mobile: String,
@@ -67,7 +77,8 @@ object ApiResponseModels {
 
     data class ShipingChargeResponse(
         val status: Boolean,
-        val data: Int
+        val shipping: String,
+        val distance: String
     )
 
     data class PlaceOrderResponse(
@@ -111,6 +122,9 @@ object ApiResponseModels {
             val telephone: String,
             val address: String,
             var address_id: String,
+            var image: String,
+            var urlimage: String,
+            var delevery_boy_status: String,
             val country: String,
             val postcode: String,
             val city: String,
@@ -123,12 +137,14 @@ object ApiResponseModels {
         var status: Boolean
     ) {
         data class Data(
+            var cart_id:String,
             var category_id: String,
             var description: String,
             var discount_percent: String,
             var display_price: String,
             var featured: String,
             var gfid: String,
+            var qwantity:String,
             var gst: String,
             var hsn: String,
             var image: String,
@@ -146,6 +162,7 @@ object ApiResponseModels {
             var urlimage: String,
             var weight_size: String,
             var hasWishList: Boolean = false,
+            var wi_id:String
         )
     }
 
@@ -174,7 +191,8 @@ object ApiResponseModels {
             var slug: String,
             var featured: String,
             var Stringstatus: String,
-            var category_name: String
+            var category_name: String,
+            var cart_id:String
         )
     }
 
@@ -230,21 +248,56 @@ object ApiResponseModels {
         ) : Serializable
     }
 
-    data class MyOderResponse(
-        var status: Boolean,
-        val data: ArrayList<Success>
-    ) : Serializable {
-        data class Success(
-            var od_id: String,
-            var order_id: String,
-            var product_id: String,
-            var item_name: String,
-            var quantity: String,
-            var price: String,
+//    data class MyOderResponse(
+//        var status: Boolean,
+//        val data: ArrayList<Success>
+//    ) : Serializable {
+//        data class Success(
+//            var od_id: String,
+//            var order_id: String,
+//            var product_id: String,
+//            var item_name: String,
+//            var quantity: String,
+//            var price: String,
+//            var customer_id: String,
+//            var status: String,
+//            var date_added: String,
+//        )
+//    }
+
+    data class OrderLIstingNewResponse(
+        var `data`: List<Data>,
+        var status: Boolean
+    ) {
+        data class Data(
+            var address: String,
+            var coupon_val: String,
+            var customer_email: String,
             var customer_id: String,
-            var status: String,
+            var customer_mobile: String,
+            var customer_name: String,
             var date_added: String,
-        )
+            var order_detail_count: Int,
+            var order_detail_data: List<OrderDetailData>,
+            var order_id: String,
+            var payment_method: String,
+            var postcode: String,
+            var shipping_charge: String,
+            var status: String,
+            var total: String
+        ) {
+            data class OrderDetailData(
+                var customer_id: String,
+                var date_added: String,
+                var delevery_boy_id: String,
+                var item_name: String,
+                var order_detail_id: String,
+                var order_id: String,
+                var price: String,
+                var product_id: String,
+                var quantity: String
+            )
+        }
     }
 
     data class ProductDetailResponse(
@@ -303,11 +356,12 @@ object ApiResponseModels {
             var category_name: String,
             var images: String,
             var module_status: String,
+            var module_banner: List<String>,
             var productsdata: List<Productsdata>
         ) {
             data class Productsdata(
                 var display_price: String,
-                var discount_percent:String,
+                var discount_percent: String,
                 var image: String,
                 var main_price: String,
                 var product_id: String,
@@ -383,7 +437,8 @@ object ApiResponseModels {
         data class Success(
             var image: List<Image>,
             var slider: List<Slider>,
-            var text: Text
+            var text: Text,
+            var breadcrumb_banner: String
         ) {
             data class Image(
                 var date_added: String,
@@ -472,5 +527,34 @@ object ApiResponseModels {
             var urlimage: String
         )
     }
+
+
+    data class MyDeliveryResponse(
+        var `data`: List<Data>,
+        var status: Boolean
+    ) {
+        data class Data(
+            var address: String,
+            var customer_email: String,
+            var customer_id: String,
+            var customer_mobile: String,
+            var customer_name: String,
+            var order_detail: List<OrderDetail>,
+            var order_id: String
+        ) {
+            data class OrderDetail(
+                var customer_id: String,
+                var date_added: String,
+                var delevery_boy_id: String,
+                var item_name: String,
+                var order_detail_id: String,
+                var order_id: String,
+                var price: String,
+                var product_id: String,
+                var quantity: String
+            )
+        }
+    }
+
 
 }

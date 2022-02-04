@@ -11,13 +11,13 @@ import kotlinx.android.synthetic.main.item_my_order_detail.view.*
 
 
 @SuppressLint("SetTextI18n")
-class MyOrderDetailAdapter(
-    var mList: List<ApiResponseModels.OrderLIstingNewResponse.Data.OrderDetailData>,
+class MyOrderDetailDeliveryBoyAdapter(
+    var mList: List<ApiResponseModels.MyDeliveryResponse.Data.OrderDetail>,
 //    var activity: MyCartActivity,
 //    var divSr:String,
     var itemClick: (Int) -> Unit
 ) :
-    RecyclerView.Adapter<MyOrderDetailAdapter.MyHolder>() {
+    RecyclerView.Adapter<MyOrderDetailDeliveryBoyAdapter.MyHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): MyHolder {
         val v =
@@ -26,16 +26,16 @@ class MyOrderDetailAdapter(
         return MyHolder(v)
     }
 
-    override fun onBindViewHolder(holder: MyOrderDetailAdapter.MyHolder, p1: Int) {
+    override fun onBindViewHolder(holder: MyOrderDetailDeliveryBoyAdapter.MyHolder, p1: Int) {
         holder.bindData(mList[p1])
     }
 
     inner class MyHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindData(mListItem: ApiResponseModels.OrderLIstingNewResponse.Data.OrderDetailData) {
+        fun bindData(mListItem: ApiResponseModels.MyDeliveryResponse.Data.OrderDetail) {
 
             itemView.apply {
                 mListItem.apply {
-                    txtOrderNumber.text="Item Id : #"+order_detail_id
+                    txtOrderNumber.text="Order Id : #"+order_detail_id
                     txtItemName.text=""+item_name
                     txtPrice.text="₹"+price
                     txtQty.text="Qty: "+quantity

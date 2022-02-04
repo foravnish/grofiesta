@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/txtItemName"
+            android:id="@+id/txtOrderId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_3sdp"
@@ -21,12 +21,12 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/txtOrderdate"
+            android:id="@+id/txtOrderDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginTop="@dimen/_3sdp"
-            android:text="Order Date : 25-Jul-2021"/>
+            android:text="Order Date : 25-Jul-2021" />
 
     </RelativeLayout>
 
@@ -58,6 +58,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:weightSum="4"
+        android:visibility="gone"
         android:orientation="horizontal">
 
         <TextView
@@ -110,132 +111,131 @@
         android:layout_marginTop="@dimen/_5sdp"/>
 
 </LinearLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp">
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/_10sdp">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_3sdp"
-            android:text="GST"
-            android:textColor="@color/colorBlackLite" />
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/_3sdp"-->
+<!--            android:text="GST"-->
+<!--            android:textColor="@color/colorBlackLite" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:textColor="@color/colorBlackLite"
-            android:text="1212"/>
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:textColor="@color/colorBlackLite"-->
+<!--            android:text="1212"/>-->
 
-    </RelativeLayout>
+<!--    </RelativeLayout>-->
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp">
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/_10sdp">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_3sdp"
-            android:text="Coupan"
-            android:textColor="@color/colorBlackLite" />
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Coupan"-->
+<!--            android:textColor="@color/colorBlackLite" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:textColor="@color/colorBlackLite"
-            android:text="FIRST"/>
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:textColor="@color/colorBlackLite"-->
+<!--            android:text="FIRST"/>-->
 
-    </RelativeLayout>
+<!--    </RelativeLayout>-->
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp">
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/_10sdp">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_3sdp"
-            android:text="Cash Back"
-            android:textColor="@color/colorBlackLite" />
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/_3sdp"-->
+<!--            android:text="Cash Back"-->
+<!--            android:textColor="@color/colorBlackLite" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:textColor="@color/colorBlackLite"
-            android:text="₹20.00"/>
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:textColor="@color/colorBlackLite"-->
+<!--            android:text="₹20.00"/>-->
 
-    </RelativeLayout>
+<!--    </RelativeLayout>-->
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp">
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/_10sdp">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_3sdp"
-            android:text="Delivery Charge"
-            android:textColor="@color/colorBlackLite" />
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/_3sdp"-->
+<!--            android:text="Delivery Charge"-->
+<!--            android:textColor="@color/colorBlackLite" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:textColor="@color/colorBlackLite"
-            android:text="₹50.00"/>
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:textColor="@color/colorBlackLite"-->
+<!--            android:text="₹50.00"/>-->
 
-    </RelativeLayout>
+<!--    </RelativeLayout>-->
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp">
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/_10sdp">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_3sdp"
-            android:text="Sub Total"
-            android:textColor="@color/colorBlackLite" />
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/_3sdp"-->
+<!--            android:text="Sub Total"-->
+<!--            android:textColor="@color/colorBlackLite" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:textColor="@color/colorBlackLite"
-            android:text="₹550.00"/>
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:textColor="@color/colorBlackLite"-->
+<!--            android:text="₹550.00"/>-->
 
-    </RelativeLayout>
+<!--    </RelativeLayout>-->
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp">
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/_10sdp">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_3sdp"
-            android:text="Grand Total"
-            android:textStyle="bold"
-            android:textColor="@color/colorBlackLite" />
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/_3sdp"-->
+<!--            android:text="Grand Total"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textColor="@color/colorBlackLite" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="₹600.00"
-            android:textColor="@color/colorBlackLite"
-            android:textStyle="bold" />
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:text="₹600.00"-->
+<!--            android:textColor="@color/colorBlackLite"-->
+<!--            android:textStyle="bold" />-->
 
-    </RelativeLayout>
+<!--    </RelativeLayout>-->
 
 </LinearLayout>

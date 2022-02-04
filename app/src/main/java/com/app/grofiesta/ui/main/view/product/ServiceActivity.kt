@@ -110,6 +110,9 @@ class ServiceActivity : BaseActivity() {
             override fun onClickView(position: Int, type: String) {
                 if (type.equals("Add", true)) {
                     callCamera()
+                }else if (type.equals("Close")){
+                    mImageUrl.remove(mImageUrl[position])
+                    setList()
                 } else {
                     val mListImg = ArrayList<String>()
                     mListImg.add(getListMandatory()[position].imgUrl)

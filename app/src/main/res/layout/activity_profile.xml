@@ -10,7 +10,10 @@
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <include layout="@layout/app_header_layout" />
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -67,6 +70,7 @@
                             android:visibility="gone" />
 
                         <LinearLayout
+                            android:id="@+id/imgCapture"
                             android:layout_width="@dimen/_45sdp"
                             android:layout_height="@dimen/_45sdp"
                             android:layout_gravity="right|bottom"
@@ -101,30 +105,22 @@
                             android:textColor="@color/colorBlackLite"
                             android:textColorHint="@color/colorBlackLite" />
 
-                        <EditText
-                            android:id="@+id/editLastName"
-                            style="@style/et_profile"
-                            android:hint="Last Name"
-                            android:maxLength="20"
-                            android:text=""
-                            android:textColor="@color/colorBlackLite"
-                            android:textColorHint="@color/colorBlackLite" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_60sdp"
                             android:layout_marginTop="@dimen/_15sdp"
+                            android:background="@color/recycleview_bg_dark"
                             android:orientation="horizontal">
 
                             <EditText
                                 android:id="@+id/editMobile"
                                 style="@style/et_profile"
                                 android:layout_centerVertical="true"
+                                android:background="@color/recycleview_bg_dark"
                                 android:focusable="false"
                                 android:focusableInTouchMode="false"
-                                android:inputType="textEmailAddress"
-                                android:maxLength="60"
-                                android:text="+91 87979888"
+                                android:text=""
                                 android:textColor="@color/colorBlackLite"
                                 android:textColorHint="@color/colorBlackLite" />
 

@@ -39,12 +39,6 @@ interface MyCartDao {
         product_id: String
     )
 
-//    @Query("DELETE FROM MyCart_TB WHERE sellerDivisionSr= :arg0 AND isDirectConsumer= :arg1 AND itemErpID = :itemErpID")
-//    fun deleteItemFromCart(arg0: String, arg1: String, itemErpID: String?)
-
-//    @Query("SELECT SUM(totalAmount) as _totalAmount, SUM(qty) as _qty, Count(*) as _itemCount FROM MyCart_TB WHERE sellerDivisionSr= :arg0 AND isDirectConsumer= :arg1")
-//    fun getCartDetails(arg0: String, arg1: String): LiveData<CartDetails>
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(word: MyCart): Long
 

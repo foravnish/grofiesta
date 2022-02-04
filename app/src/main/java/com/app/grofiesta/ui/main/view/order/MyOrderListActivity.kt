@@ -2,6 +2,7 @@ package com.app.grofiesta.ui.main.view.order
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,7 +15,6 @@ import com.app.grofiesta.ui.base.BaseActivity
 import com.app.grofiesta.adapter.MyOrderListAdapter
 import com.app.grofiesta.data.model.ApiResponseModels
 import com.app.grofiesta.databinding.ActivityOrderBinding
-import com.app.grofiesta.utils.Utility
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.app_header_layout.*
 
@@ -60,23 +60,27 @@ class MyOrderListActivity : BaseActivity() {
     }
 
 
-    private fun initAdapter(success: ArrayList<ApiResponseModels.MyOderResponse.Success>) {
+    private fun initAdapter(mData: List<ApiResponseModels.OrderLIstingNewResponse.Data>) {
         binding.rvProductList.layoutManager = LinearLayoutManager(this)
-        val mAdapter = MyOrderListAdapter(success) {
+        val mAdapter = MyOrderListAdapter(mData) {
 
-            openBottomSheet(it)
+            openBottomSheet(mData[it].order_detail_data)
         }
         binding.rvProductList.adapter = mAdapter
     }
 
-    private fun openBottomSheet(it: Int) {
+    private fun openBottomSheet(mDetailData: List<ApiResponseModels.OrderLIstingNewResponse.Data.OrderDetailData>) {
 
         val dialog = BottomSheetDialog(this)
 
         val view = layoutInflater.inflate(R.layout.bottom_sheet_dialog_detail, null)
         val rvOrderList = view.findViewById<RecyclerView>(R.id.rvOrderList)
+        val txtOrderId = view.findViewById<TextView>(R.id.txtOrderId)
+        val txtOrderDate = view.findViewById<TextView>(R.id.txtOrderDate)
 
-        initOrderAdapter(rvOrderList)
+        txtOrderId.text="Order Id: #"+mDetailData[0].order_id
+        txtOrderDate.text="Date: "+mDetailData[0].date_added
+        initOrderAdapter(rvOrderList,mDetailData)
 
 //        val btnClose = view.findViewById<Button>(R.id.idBtnDismiss)
 
@@ -89,9 +93,12 @@ class MyOrderListActivity : BaseActivity() {
 
         dialog.show()
     }
-    private fun initOrderAdapter(rvOrderList: RecyclerView) {
+    private fun initOrderAdapter(
+        rvOrderList: RecyclerView,
+        mDetailData: List<ApiResponseModels.OrderLIstingNewResponse.Data.OrderDetailData>
+    ) {
         rvOrderList.layoutManager = LinearLayoutManager(this)
-        val mAdapter = MyOrderDetailAdapter() {
+        val mAdapter = MyOrderDetailAdapter(mDetailData) {
 
         }
         rvOrderList.adapter = mAdapter

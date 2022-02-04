@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.ananda.retailer.Room.Repo.GroceryDBRepository
 import com.ananda.retailer.Room.Tables.MyCart
 import com.ananda.retailer.Room.Tables.MyWishList
+import com.app.grofiesta.data.model.ApiResponseModels
 import com.app.grofiesta.room.response.MyCartResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -116,7 +117,24 @@ class GroceryViewModel(application: Application) : AndroidViewModel(application)
         return dbRepo!!.getAllWishList()
     }
 
-    fun updateCartItem(data: MyCart, isPlus: Boolean) {
+    fun updateCartItem(data: ApiResponseModels.ProductListingResponse.Data, isPlus: Boolean) {
+        viewModelScope.launch(Dispatchers.IO) {
+            data.apply {
+                var _qty = qwantity.toInt()
+                _qty = if (isPlus) _qty + 1 else _qty - 1
+                if (_qty >= 1)
+                    dbRepo!!.updateCartItem(
+                        _qty.toString(), (display_price.toInt()*_qty).toString(), product_id
+                    )
+                else {
+                    deleteItemFromCart(data.product_id)
+                }
+                getMyCart(product_id)
+            }
+        }
+    }
+
+    fun updateCartItemFromDetail(data: MyCart, isPlus: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             data.apply {
                 var _qty = qty.toInt()
@@ -125,7 +143,9 @@ class GroceryViewModel(application: Application) : AndroidViewModel(application)
                     dbRepo!!.updateCartItem(
                         _qty.toString(), (display_price.toInt()*_qty).toString(), product_id
                     )
-                else deleteItemFromCart(data)
+                else {
+                    deleteItemFromCart(data.product_id)
+                }
                 getMyCart(product_id)
             }
         }

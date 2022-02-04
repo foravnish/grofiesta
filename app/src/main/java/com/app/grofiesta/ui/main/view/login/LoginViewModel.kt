@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import com.app.grofiesta.data.model.ApiResponseModels
 import com.app.grofiesta.data.model.request.*
 import com.app.grofiesta.ui.main.view.home.HomeRepository
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
@@ -74,10 +76,12 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun callSaveUserDetail(
-        req: UserProfileRequest, showDialog: Boolean
+        firstname: RequestBody, mobile: RequestBody, email: RequestBody,
+        hidden_customer_id: RequestBody,address:RequestBody,imageedit:RequestBody, image: MultipartBody.Part?, showDialog: Boolean
     ): MutableLiveData<ApiResponseModels.SuccessResponse>? {
         mRegistrationtApiRepository = LoginRepository().getInstance()
-        mRegistrationtApiRepository!!.callSaveUserDetail(mContext, req, showDialog)
+        mRegistrationtApiRepository!!.callSaveUserDetail(mContext, firstname,mobile,email,hidden_customer_id,address,
+            imageedit,image, showDialog)
             .let { return it }
     }
 

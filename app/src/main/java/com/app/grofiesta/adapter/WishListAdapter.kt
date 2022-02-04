@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_wish_list.view.*
 
 class WishListAdapter(
-    val mList: List<MyWishList>,
+    val mList: List<ApiResponseModels.ProductListingResponse.Data>,
     var itemClick: (Int,String) -> Unit
 ) :
     RecyclerView.Adapter<WishListAdapter.MyHolder>() {
@@ -39,11 +39,11 @@ class WishListAdapter(
     inner class MyHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 
-        fun bindData(mList: MyWishList) {
+        fun bindData(mList: ApiResponseModels.ProductListingResponse.Data) {
 
             itemView.apply {
                 mList.apply {
-                    Glide.with(itemView.context).load(image).into(productImg)
+                    Glide.with(itemView.context).load(urlimage).into(productImg)
                     txtName.text = "" + product_name
                     txtWeightSize.text = "" + weight_size
                     txtDisplayPrice.text = "₹" + display_price

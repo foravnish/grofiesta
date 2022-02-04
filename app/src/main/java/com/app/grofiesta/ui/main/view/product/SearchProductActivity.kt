@@ -43,10 +43,10 @@ class SearchProductActivity : BaseActivity() {
 
         edtSearchText.addTextChangedListener(afterTextChanged = {
             if (!it.toString().isEmpty()) {
-                Handler().postDelayed(Runnable {
-                    callSearchProduct(it.toString())
-                }, 1000)
-
+                callSearchProduct(it.toString())
+//                Handler().postDelayed(Runnable {
+//
+//                }, 1000)
 
             }
         })
@@ -55,18 +55,21 @@ class SearchProductActivity : BaseActivity() {
 
     private fun callSearchProduct(srchTxt: String) {
 
-        mViewModel.initSearchData("" + srchTxt, false)!!.observe(this, Observer {
+        mViewModel.initSearchData("" + srchTxt, true)!!.observe(this, Observer {
             if (it.status != null) {
 
                 if (it.data!=null && it.data.size>0){
                     rvProductList.visibility=View.VISIBLE
-                    noDataFond.visibility=View.GONE
+                    txtEmptyView.visibility=View.GONE
                     initAdapter(it.data)
                 }else{
                     rvProductList.visibility=View.GONE
-                    noDataFond.visibility=View.VISIBLE
+                    txtEmptyView.visibility=View.VISIBLE
                 }
 
+            }else{
+                rvProductList.visibility=View.GONE
+                txtEmptyView.visibility=View.VISIBLE
             }
 
 

@@ -19,7 +19,7 @@ class MyOrderViewModel(application: Application) : AndroidViewModel(application)
 
     fun initMyOderList(
         productId: String, showDialog: Boolean
-    ): MutableLiveData<ApiResponseModels.MyOderResponse>? {
+    ): MutableLiveData<ApiResponseModels.OrderLIstingNewResponse>? {
         mRegistrationtApiRepository = MyOrderRepository().getInstance()
         mRegistrationtApiRepository!!.callMyOrderListing(mContext, productId, showDialog)
             .let { return it }

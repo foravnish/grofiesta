@@ -24,7 +24,6 @@ import java.lang.Exception
 
 class AboutUsActivity : BaseActivity() {
 
-    var mTitle = ""
     lateinit var mViewModel: HomeViewModel
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -38,8 +37,7 @@ class AboutUsActivity : BaseActivity() {
         imgBack.setOnClickListener { finish() }
 
 
-        mTitle = intent.getStringExtra("mTitle")!!
-        txtPageTitle.text = mTitle
+        txtPageTitle.text = "About Us"
 
         callAboutUs()
 
@@ -50,46 +48,44 @@ class AboutUsActivity : BaseActivity() {
 
         mViewModel.initAboutTnCPrivacy(true)!!.observe(this, Observer {
             if (it!=null){
-                if (mTitle=="About Us") {
-                    if (it.about != null) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            txtTitle.setText(
-                                Html.fromHtml(
-                                    "" + it.about.title1,
-                                    Html.FROM_HTML_MODE_COMPACT
-                                )
-                            );
-                        } else {
-                            txtTitle.setText(Html.fromHtml("" + it.about.title1))
-                        }
-
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            txtSubTitle.setText(
-                                Html.fromHtml(
-                                    "" + it.about.sub_title,
-                                    Html.FROM_HTML_MODE_COMPACT
-                                )
-                            );
-                        } else {
-                            txtSubTitle.setText(Html.fromHtml("" + it.about.sub_title))
-                        }
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            txtData.setText(
-                                Html.fromHtml(
-                                    "" + it.about.desc1,
-                                    Html.FROM_HTML_MODE_COMPACT
-                                )
-                            );
-                        } else {
-                            txtData.setText(Html.fromHtml("" + it.about.desc1))
-                        }
-
-                        txtgrofiesta.text=""+it.about.grofiesta
-                        txtproduse.text=""+it.about.produse
-
-                        Glide.with(this).load(it.about.urlimage).into(imgAbt)
-
+                if (it.about != null) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        txtTitle.setText(
+                            Html.fromHtml(
+                                "" + it.about.title1,
+                                Html.FROM_HTML_MODE_COMPACT
+                            )
+                        );
+                    } else {
+                        txtTitle.setText(Html.fromHtml("" + it.about.title1))
                     }
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        txtSubTitle.setText(
+                            Html.fromHtml(
+                                "" + it.about.sub_title,
+                                Html.FROM_HTML_MODE_COMPACT
+                            )
+                        );
+                    } else {
+                        txtSubTitle.setText(Html.fromHtml("" + it.about.sub_title))
+                    }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        txtData.setText(
+                            Html.fromHtml(
+                                "" + it.about.desc1,
+                                Html.FROM_HTML_MODE_COMPACT
+                            )
+                        );
+                    } else {
+                        txtData.setText(Html.fromHtml("" + it.about.desc1))
+                    }
+
+                    txtgrofiesta.text=""+it.about.grofiesta
+                    txtproduse.text=""+it.about.produse
+
+                    Glide.with(this).load(it.about.urlimage).into(imgAbt)
+
                 }
 
             }

@@ -163,6 +163,45 @@
                 android:background="@color/recycleview_bg" />
 
             <LinearLayout
+                android:id="@+id/navDelBoy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple_background_lite"
+                android:clickable="true"
+                android:visibility="gone"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/_10sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_14sdp"
+                    android:layout_height="@dimen/_14sdp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    app:srcCompat="@drawable/ic_delivery"
+                    app:tint="@color/colorBlackLite" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:includeFontPadding="false"
+                    android:text="Delivery"
+                    android:textColor="@color/colorBlackLite"
+                    android:textSize="@dimen/_14sdp" />
+
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/v7"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_line"
+                android:visibility="gone"
+                android:background="@color/recycleview_bg" />
+
+            <LinearLayout
                 android:id="@+id/navOffers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -303,6 +342,7 @@
             </LinearLayout>
 
             <View
+                android:id="@+id/v7"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/view_line"
                 android:background="@color/recycleview_bg" />

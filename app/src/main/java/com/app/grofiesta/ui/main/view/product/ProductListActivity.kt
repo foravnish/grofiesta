@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import com.accountapp.accounts.utils.Prefences
 import com.ananda.retailer.Views.Activities.Grocery.viewmodel.GroceryViewModel
 import com.app.grofiesta.R
 import com.app.grofiesta.adapter.ProductListAdapter
@@ -26,6 +27,7 @@ class ProductListActivity : BaseActivity() {
     lateinit var binding: ActivityProductListingBinding
     var sid=""
     var flag: Boolean = true
+    var last_wishlist_id=""
     val viewModel: GroceryViewModel by viewModels()
     lateinit var mAdapter:ProductListAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,27 +105,44 @@ class ProductListActivity : BaseActivity() {
 
     private fun addToWishList(data: ApiResponseModels.ProductListingResponse.Data) {
 
+        if(Prefences.getIsLogin(this)) {
         if (!data.hasWishList) {
             data.hasWishList = true
             mAdapter.notifyDataSetChanged()
-            data.apply {
-                MyCartResponse(
-                    "" + product_id, "" + category_id, "" + sub_category_id,
-                    "" + product_name, "" + weight_size, "" + main_price,
-                    "" + display_price, "" + purchase_price, "" + display_price,
-                    "" + description, "" + short_desp, "" + urlimage,
-                    "1", "" + gst, ""+category_id
-                ).let {
-                    viewModel.insertItemInWishList(it)
-                }
-            }
+
+            mViewModel.initAddWishList(""+ Prefences.getUserId(this@ProductListActivity),
+                "" + data.product_id, false)!!.observe(this, Observer {
+                if (it.status) {
+                    last_wishlist_id=it.last_wishlist_id
+
+                } else Utility.showToast(this@ProductListActivity)
+            })
+
+//            data.apply {
+//                MyCartResponse(
+//                    "" + product_id, "" + category_id, "" + sub_category_id,
+//                    "" + product_name, "" + weight_size, "" + main_price,
+//                    "" + display_price, "" + purchase_price, "" + display_price,
+//                    "" + description, "" + short_desp, "" + urlimage,
+//                    "1", "" + gst, ""+category_id
+//                ).let {
+//                    viewModel.insertItemInWishList(it)
+//                }
+//            }
 
         } else {
             data.hasWishList = false
             mAdapter.notifyDataSetChanged()
-            viewModel.deleteItemFromWishList(data.product_id)
-        }
+//            viewModel.deleteItemFromWishList(data.product_id)
+            mViewModel.initRemoveWishList(
+                "" + last_wishlist_id, false)!!.observe(this, Observer {
+                if (it.status) {
 
+                } else Utility.showToast(this@ProductListActivity)
+            })
+
+        }
+        }else showToast("Please login first.")
 
     }
 

@@ -54,9 +54,12 @@ abstract class BaseActivity() : AppCompatActivity() {
         }
     }
 
+
+
     fun showErrorCustomerToast() {
         hideKeyboard()
-        Toast.makeText(this, "Some Error occur. Please contact customer care", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Some Error occur. Please contact customer care", Toast.LENGTH_SHORT)
+            .show()
     }
 
     fun dismissDialog() {
@@ -150,7 +153,7 @@ abstract class BaseActivity() : AppCompatActivity() {
 
     /*
     Hide KeyBoard
-   */
+    */
     fun hideKeyboard() {
         val view = this.currentFocus
         if (view != null) {

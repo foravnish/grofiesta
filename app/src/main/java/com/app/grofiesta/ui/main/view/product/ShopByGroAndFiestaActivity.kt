@@ -1,5 +1,6 @@
 package com.app.grofiesta.ui.main.view.product
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.databinding.DataBindingUtil
@@ -13,8 +14,10 @@ import com.app.grofiesta.data.model.ApiResponseModels
 import com.app.grofiesta.databinding.ActivityShopByGroAndFiestaBinding
 import com.app.grofiesta.ui.base.BaseActivity
 import com.app.grofiesta.utils.Utility
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_shop_by_gro_and_fiesta.*
 import kotlinx.android.synthetic.main.app_header_layout.*
+import kotlinx.android.synthetic.main.home_product_item.view.*
 
 class ShopByGroAndFiestaActivity : BaseActivity() {
     lateinit var binding: ActivityShopByGroAndFiestaBinding
@@ -90,6 +93,8 @@ class ShopByGroAndFiestaActivity : BaseActivity() {
                         initPagerViewer(it.success.slider)
                     if (it.success.image!=null && it.success.image.size>0)
                         initAdapter(it.success.image)
+                    if(it.success.breadcrumb_banner!=null && it.success.breadcrumb_banner!="")
+                        Glide.with(this@ShopByGroAndFiestaActivity).load(it.success.breadcrumb_banner).into(imgHeader)
                 } else {
 
                 }
@@ -109,6 +114,9 @@ class ShopByGroAndFiestaActivity : BaseActivity() {
                         initPagerViewer(it.success.slider)
                     if (it.success.image!=null && it.success.image.size>0)
                         initAdapter(it.success.image)
+                    if(it.success.breadcrumb_banner!=null && it.success.breadcrumb_banner!="")
+                        Glide.with(this@ShopByGroAndFiestaActivity).load(it.success.breadcrumb_banner).into(imgHeader)
+
                 } else {
 
                 }
@@ -121,7 +129,13 @@ class ShopByGroAndFiestaActivity : BaseActivity() {
 
         NUM_PAGES = slider.size
         binding.viewpager.adapter =
-            BannerGroFiestaPagerAdapter(this, slider)
+            BannerGroFiestaPagerAdapter(this, slider){
+                Intent(this, ImagePreviewActivity::class.java).apply {
+                    putExtra("image", slider[it].urlimage)
+                }.let {
+                    Utility.startActivityWithLeftToRightAnimation(this, it)
+                }
+            }
         binding.indicator.setViewPager(binding.viewpager)
 
     }
@@ -134,7 +148,11 @@ class ShopByGroAndFiestaActivity : BaseActivity() {
         )
         binding.rvGroAndFiesta.layoutManager = horizontalLayout
         val mAdapter = GroFiestaAdapter(image) {
-
+            Intent(this, ImagePreviewActivity::class.java).apply {
+                putExtra("image", image[it].urlimage)
+            }.let {
+                Utility.startActivityWithLeftToRightAnimation(this, it)
+            }
         }
         binding.rvGroAndFiesta.adapter = mAdapter
     }

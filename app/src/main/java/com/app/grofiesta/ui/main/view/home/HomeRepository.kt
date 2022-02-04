@@ -2,6 +2,7 @@ package com.app.grofiesta.ui.main.view.home
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.app.grofiesta.data.apiClient.ApiClient
 import com.app.grofiesta.data.apiClient.ApiInterface
@@ -207,6 +208,7 @@ class HomeRepository {
                         println(e.printStackTrace())
                     }
                 }, { error ->
+                    Log.d("cszfsfsdfdf",""+error.message)
                 })
         } else {
             NetworkHandling.getRetryDialog(context, RetryDialog.NO_INTERNET)
