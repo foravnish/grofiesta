@@ -48,6 +48,7 @@ class ProfileActivity : BaseActivity() {
 
         imgBack.setOnClickListener { finish() }
         txtPageTitle.text = "Profile"
+        binding.editMobile.setText(Prefences.getUserMobile(this))
 
         binding.imgCapture.setOnClickListener {
             callCamera()

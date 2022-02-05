@@ -42,6 +42,9 @@ class MyAddressAdapter(
 
                     if (Prefences.getAddressId(context).equals(address_id)) {
                         txtSetAsDefault.text = "Default"
+                        Prefences.setPincode(context, postcode)
+                        Prefences.setAddress(context, address)
+                        Prefences.setAddressId(context, address_id)
                     } else {
                         txtSetAsDefault.text = "Set As Default"
                     }

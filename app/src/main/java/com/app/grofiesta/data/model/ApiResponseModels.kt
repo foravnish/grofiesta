@@ -162,7 +162,8 @@ object ApiResponseModels {
             var urlimage: String,
             var weight_size: String,
             var hasWishList: Boolean = false,
-            var wi_id:String
+            var wi_id:String,
+            var minimum_price:String,
         )
     }
 
@@ -325,7 +326,8 @@ object ApiResponseModels {
             var slug: String,
             var featured: String,
             var Stringstatus: String,
-            var category_name: String
+            var category_name: String,
+            var minimum_price:String,
         )
     }
 

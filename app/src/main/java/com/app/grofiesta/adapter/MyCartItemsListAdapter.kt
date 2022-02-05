@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.ananda.retailer.Room.Tables.MyCart
 import com.app.grofiesta.R
 import com.app.grofiesta.data.model.ApiResponseModels
 import com.bumptech.glide.Glide
@@ -44,7 +43,7 @@ class MyCartItemsListAdapter(
                         txtPrice.text = "₹" + display_price
                         txtOffPrice.text = "₹" + main_price
                         txtSize.text = "" + weight_size
-                        if (qwantity != null && qwantity != ""){
+                        if (qwantity != null && qwantity != "") {
                             var mTotal = qwantity.toDouble() * display_price.toDouble()
                             txtTotalAmt.text = "Total : ₹" + mTotal
                         }
@@ -68,6 +67,7 @@ class MyCartItemsListAdapter(
             } catch (e: Exception) {
             }
         }
+
     }
 
 

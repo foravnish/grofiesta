@@ -185,7 +185,7 @@ class CheckoutActivity : BaseActivity() {
                     txtGrandTotal.text = "₹" + mGrandTotalAmt
                     txtTotalAmount.text = "₹" + mGrandTotalAmt
                     if (it.distance!=null && it.distance!=""){
-                        if (it.distance.toInt()>10)
+                        if (it.distance.toInt()<10)
                             lytDistance.visibility=View.VISIBLE
                         else
                             lytDistance.visibility=View.GONE

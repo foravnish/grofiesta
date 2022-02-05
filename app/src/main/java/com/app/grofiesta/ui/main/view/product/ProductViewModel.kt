@@ -112,21 +112,23 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun initDeleteMyCart(
-        cart_id: String,
+        product_id: String,
+        user_id: String,
         showDialog: Boolean
     ): MutableLiveData<ApiResponseModels.CommonRespose>? {
         mRegistrationtApiRepository = ProductRepository().getInstance()
-        mRegistrationtApiRepository!!.callDeleteMyCart(mContext,cart_id,  showDialog)
+        mRegistrationtApiRepository!!.callDeleteMyCart(mContext,product_id,user_id,  showDialog)
             .let { return it }
     }
 
     fun initUpdateMyCart(
-        cart_id: String,
+        product_id: String,
+        user_id: String,
         qty:String,
         showDialog: Boolean
     ): MutableLiveData<ApiResponseModels.CommonRespose>? {
         mRegistrationtApiRepository = ProductRepository().getInstance()
-        mRegistrationtApiRepository!!.callUpdateMyCart(mContext,cart_id,  qty,showDialog)
+        mRegistrationtApiRepository!!.callUpdateMyCart(mContext,product_id,user_id,  qty,showDialog)
             .let { return it }
     }
 

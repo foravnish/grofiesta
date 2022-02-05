@@ -277,12 +277,13 @@ class ProductRepository {
 
     @SuppressLint("CheckResult")
     fun callDeleteMyCart(
-        context: Context, cart_id:String, showDialog: Boolean
+        context: Context, product_id: String,
+        user_id: String, showDialog: Boolean
     ): MutableLiveData<ApiResponseModels.CommonRespose> {
         val mLiveData = MutableLiveData<ApiResponseModels.CommonRespose>()
         if (NetworkHandling.isConnected(context)) {
             if (showDialog) (context as BaseActivity).showDialog()
-            apiInterface!!.callDeleteMyCart(cart_id)
+            apiInterface!!.callDeleteMyCart(product_id,user_id)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).doOnError {
                     (context as BaseActivity).dismissDialog()
                     NetworkHandling.showNetworkError(context, it)
@@ -303,12 +304,13 @@ class ProductRepository {
 
     @SuppressLint("CheckResult")
     fun callUpdateMyCart(
-        context: Context, cart_id:String, qty:String,showDialog: Boolean
+        context: Context, product_id: String,
+        user_id: String, qty:String,showDialog: Boolean
     ): MutableLiveData<ApiResponseModels.CommonRespose> {
         val mLiveData = MutableLiveData<ApiResponseModels.CommonRespose>()
         if (NetworkHandling.isConnected(context)) {
             if (showDialog) (context as BaseActivity).showDialog()
-            apiInterface!!.callUpdateMyCart(cart_id,qty)
+            apiInterface!!.callUpdateMyCart(product_id,user_id,qty)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).doOnError {
                     (context as BaseActivity).dismissDialog()
                     NetworkHandling.showNetworkError(context, it)

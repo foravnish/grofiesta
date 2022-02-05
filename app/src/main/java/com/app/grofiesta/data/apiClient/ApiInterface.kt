@@ -139,13 +139,15 @@ interface ApiInterface {
     @FormUrlEncoded
     @POST(ApiUrls.MY_CART_DELETE)
     fun callDeleteMyCart(
-        @Field("cart_id") cart_id: String
+        @Field("product_id") product_id: String,
+        @Field("user_id") user_id: String,
     ): Observable<ApiResponseModels.CommonRespose>
 
     @FormUrlEncoded
     @POST(ApiUrls.MY_CART_UPDATE)
     fun callUpdateMyCart(
-        @Field("cart_id") cart_id: String,
+        @Field("product_id") product_id: String,
+        @Field("user_id") user_id: String,
         @Field("qty") qty: String,
         ): Observable<ApiResponseModels.CommonRespose>
 

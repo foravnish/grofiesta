@@ -115,9 +115,10 @@ class ProductDetailActivity : BaseActivity() {
                         "1", "" + gst, "" + category_name
                     ).let {
                         viewModel.insertItemInCart(it)
+                        callAddToCartApi(it)
                     }
                 }
-                callAddToCartApi(mData)
+
 
 
             } else if (btnAddToCart.text == "Go to Cart") {
@@ -132,7 +133,7 @@ class ProductDetailActivity : BaseActivity() {
 
     }
 
-    private fun callAddToCartApi(mData: ApiResponseModels.ProductDetailResponse.Success) {
+    private fun callAddToCartApi(mData: MyCartResponse) {
         if (Prefences.getIsLogin(this)) {
             mViewModelCheckout.initAddToCart(
                 Prefences.getUserId(this@ProductDetailActivity)!!,
@@ -259,7 +260,9 @@ class ProductDetailActivity : BaseActivity() {
                         urlimage,
                         weight_size,
                         flag,
-                        ""
+                        "",
+                        minimum_price
+
                     )
                 }
 
@@ -361,12 +364,12 @@ class ProductDetailActivity : BaseActivity() {
             var _qty = txtItemValue.text.toString().toInt()
             _qty = if (b) _qty + 1 else _qty - 1
             if (_qty >= 1){
-                mViewModel.initUpdateMyCart(""+item.cart_id,""+_qty,true)!!.observe(this@ProductDetailActivity, Observer {mData->
+                mViewModel.initUpdateMyCart(""+item.product_id,""+Prefences.getUserId(this@ProductDetailActivity),""+_qty,true)!!.observe(this@ProductDetailActivity, Observer {mData->
                     if (mData.status){
                     }
                 })
             } else {
-                mViewModel.initDeleteMyCart(""+cart_id,true)!!.observe(this@ProductDetailActivity, Observer {mData->
+                mViewModel.initDeleteMyCart(""+item.product_id,""+Prefences.getUserId(this@ProductDetailActivity),true)!!.observe(this@ProductDetailActivity, Observer {mData->
                     if (mData.status){
                     }
                 })
