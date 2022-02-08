@@ -541,6 +541,7 @@ object ApiResponseModels {
             var customer_id: String,
             var customer_mobile: String,
             var customer_name: String,
+            var status:String,
             var order_detail: List<OrderDetail>,
             var order_id: String
         ) {

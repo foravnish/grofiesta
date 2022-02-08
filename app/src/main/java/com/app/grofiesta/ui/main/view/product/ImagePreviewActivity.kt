@@ -13,6 +13,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import kotlinx.android.synthetic.main.activity_image_preview.*
+import kotlinx.android.synthetic.main.home_product_item.view.*
 
 class ImagePreviewActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +34,7 @@ class ImagePreviewActivity : BaseActivity() {
                 .priority(Priority.HIGH)
                 .dontAnimate()
                 .dontTransform()
+
 
             Glide.with(this)
                 .load(mImage) // Uri of the picture

@@ -72,7 +72,7 @@
                     android:queryHint="Search"
                     app:closeIcon="@drawable/ic_close_black_24dp"
                     app:iconifiedByDefault="false"
-                    app:queryHint="Search milk, product, etc"
+                    app:queryHint="Search Butter,Pepsi, etc"
                     app:searchIcon="@drawable/ic_search_red"
                     app:showAsAction="always"
                     app:theme="@style/SearchViewStyleB" />

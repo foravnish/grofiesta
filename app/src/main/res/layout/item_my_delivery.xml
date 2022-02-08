@@ -40,14 +40,13 @@
 
             <TextView
                 android:id="@+id/txtDetail"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
-                android:layout_marginRight="@dimen/_10sdp"
                 android:drawableRight="@drawable/ic_baseline_chevron_right"
                 android:drawableTint="@color/red"
-                android:gravity="center"
+                android:gravity="right"
                 android:text="Details"
                 android:textColor="@color/red"
                 android:textStyle="bold"
@@ -71,6 +70,44 @@
                 android:textColor="@color/colorBlackLite"/>
 
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lytStaus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status: "/>
+
+            <TextView
+                android:id="@+id/txtStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deliverd"
+                android:textColor="@color/green" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtOrderNumber"
+            android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:text="Order Date : 25-Jul-2021"/>
+
+
             <TextView
                 android:id="@+id/txtChageStatus"
                 android:layout_width="match_parent"
@@ -86,13 +123,6 @@
 
         </LinearLayout>
 
-
-        <TextView
-            android:id="@+id/txtAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_3sdp"
-            android:text="Order Date : 25-Jul-2021"/>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

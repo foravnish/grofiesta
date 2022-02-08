@@ -8,9 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.grofiesta.R
 import com.app.grofiesta.data.model.ApiResponseModels
 import kotlinx.android.synthetic.main.item_my_delivery.view.*
-import kotlinx.android.synthetic.main.item_my_order.view.*
-import kotlinx.android.synthetic.main.item_my_order.view.txtDetail
-import kotlinx.android.synthetic.main.item_my_order.view.txtOrderNumber
 
 
 @SuppressLint("SetTextI18n")
@@ -43,6 +40,17 @@ class MyDeliveryListAdapter(
                     txtCustomer_name.text="Name: "+customer_name
                     txtMobile.text="Mobile : "+customer_mobile
                     txtAddress.text="Address: "+address
+
+                    if (status=="1") {
+                        txtStatus.setTextColor(context.getColor(R.color.red))
+                        txtStatus.text = "Pending"
+                    } else if (status=="2") {
+                        txtStatus.setTextColor(context.getColor(R.color.orange))
+                        txtStatus.text = "Dispatch"
+                    } else if (status=="3") {
+                        txtStatus.setTextColor(context.getColor(R.color.green))
+                        txtStatus.text = "Delivered"
+                    }
 
                 }
             }

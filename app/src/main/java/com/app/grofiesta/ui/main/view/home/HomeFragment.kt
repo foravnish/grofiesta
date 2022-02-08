@@ -339,7 +339,7 @@ class HomeFragment : BaseFragment() {
         val mAdapter = HomeItemsAdapter("1", success) { pos, type ->
             when (type) {
                 "Detail" -> openDetailPage(success[pos].product_id)
-                "Add" -> addToCart(success[pos])
+                "Add" -> if(Prefences.getIsLogin(requireActivity())) addToCart(success[pos]) else Utility.showToastForLogin(requireActivity())
                 "GoTOCart" -> openMyCartScreen()
             }
         }
@@ -356,7 +356,7 @@ class HomeFragment : BaseFragment() {
         val mAdapter = HomeItemsAdapter("1", success) { pos, type ->
             when (type) {
                 "Detail" -> openDetailPage(success[pos].product_id)
-                "Add" -> addToCart(success[pos])
+                "Add" -> if(Prefences.getIsLogin(requireActivity())) addToCart(success[pos]) else Utility.showToastForLogin(requireActivity())
                 "GoTOCart" -> openMyCartScreen()
             }
 
@@ -429,7 +429,7 @@ class HomeFragment : BaseFragment() {
         val mAdapter = HomePageDynamicAdapter(mData,lifecycleScope,viewModel,requireActivity) { mItem,productId,mType ->
             when(mType){
                 "Detail" -> openDetailPage(productId)
-                "Add" -> addToCart(convertModel(mItem))
+                "Add" -> if(Prefences.getIsLogin(requireActivity())) addToCart(convertModel(mItem)) else Utility.showToastForLogin(requireActivity())
                 "GoTOCart" -> openMyCartScreen()
             }
         }

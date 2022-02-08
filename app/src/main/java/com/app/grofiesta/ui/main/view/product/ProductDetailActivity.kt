@@ -34,6 +34,7 @@ import com.accountapp.accounts.utils.Prefences
 import com.app.grofiesta.R
 import com.app.grofiesta.ui.main.view.cart.CheckoutViewModel
 import com.app.grofiesta.utils.animUtil.CircleAnimationUtil
+import kotlinx.android.synthetic.main.footer_detail.view.*
 
 
 class ProductDetailActivity : BaseActivity() {
@@ -69,8 +70,8 @@ class ProductDetailActivity : BaseActivity() {
 //        openBottomSheet()
 
 
-        binding.lytFooter.alpha = 0.5f
-        lytAddToCart.isEnabled = false
+        binding.lytFooterDetail.alpha = 0.5f
+        binding.lytFooterDetail.isEnabled = false
 
         callDetailAPi()
 
@@ -84,28 +85,42 @@ class ProductDetailActivity : BaseActivity() {
             }
 
         }
-        binding.lytFooter.setOnClickListener {
-            Utility.startActivityWithLeftToRightAnimation(
-                this,
-                Intent(this, MyCartActivity::class.java)
-            )
-
-        }
 
         lytCartView.setOnClickListener {
-//            if (flagCart) {
-            Utility.startActivityWithLeftToRightAnimation(
-                this,
-                Intent(this, MyCartActivity::class.java)
-            )
-//            }
+            Intent(this, MyCartActivity::class.java).apply {
+            }.let {
+                Utility.startActivityWithLeftToRightAnimation(this, it)
+            }
         }
 
-        lytAddToCart.setOnClickListener {
-            if (btnAddToCart.text == "Add To Cart") {
-                btnAddToCart.text = "Go to Cart"
-                lytPlusMinus.visibility = View.GONE
-                makeFlyAnimation(imageView)
+
+        binding.lytFooterDetail.lytBuyNow.setOnClickListener {
+            if(Prefences.getIsLogin(this@ProductDetailActivity)){
+
+                mData.apply {
+                        MyCartResponse(
+                            "" + product_id, "" + category_id, "" + sub_category_id,
+                            "" + product_name, "" + weight_size, "" + main_price,
+                            "" + display_price, "" + purchase_price, "" + display_price,
+                            "" + description, "" + short_desp, "" + urlimage,
+                            "1", "" + gst, "" + category_name
+                        ).let {
+                            callAddToCartApi(it,true)
+                        }
+                }
+            }else Utility.showToastForLogin(this@ProductDetailActivity)
+        }
+
+        binding.lytFooterDetail.lytAddToCart.setOnClickListener {
+            if(Prefences.getIsLogin(this@ProductDetailActivity)){
+
+                binding.lytFooterDetail.lytPlusMinus.visibility=View.VISIBLE
+                binding.lytFooterDetail.lytAddToCart.visibility=View.GONE
+                binding.lytFooterDetail.lytGoToCart.visibility=View.VISIBLE
+                binding.lytFooterDetail.lytBuyNow.visibility=View.GONE
+
+                makeFlyAnimation(binding.lytFooterDetail.imageView)
+
                 mData.apply {
                     MyCartResponse(
                         "" + product_id, "" + category_id, "" + sub_category_id,
@@ -115,25 +130,51 @@ class ProductDetailActivity : BaseActivity() {
                         "1", "" + gst, "" + category_name
                     ).let {
                         viewModel.insertItemInCart(it)
-                        callAddToCartApi(it)
+                        callAddToCartApi(it,false)
                     }
                 }
 
 
+//                if (btnAddToCart.text == "Add To Cart") {
+//                    btnAddToCart.text = "Go to Cart"
+//                    lytPlusMinus.visibility = View.GONE
+//                    makeFlyAnimation(imageView)
+//                    mData.apply {
+//                        MyCartResponse(
+//                            "" + product_id, "" + category_id, "" + sub_category_id,
+//                            "" + product_name, "" + weight_size, "" + main_price,
+//                            "" + display_price, "" + purchase_price, "" + display_price,
+//                            "" + description, "" + short_desp, "" + urlimage,
+//                            "1", "" + gst, "" + category_name
+//                        ).let {
+//                            viewModel.insertItemInCart(it)
+//                            callAddToCartApi(it)
+//                        }
+//                    }
+//
+//
+//                } else if (btnAddToCart.text == "Go to Cart") {
+//                    lytPlusMinus.visibility = View.VISIBLE
+//                    Utility.startActivityWithLeftToRightAnimation(
+//                        this,
+//                        Intent(this, MyCartActivity::class.java)
+//                    )
+//                }
 
-            } else if (btnAddToCart.text == "Go to Cart") {
-                lytPlusMinus.visibility = View.VISIBLE
-                Utility.startActivityWithLeftToRightAnimation(
-                    this,
-                    Intent(this, MyCartActivity::class.java)
-                )
-            }
+            }else Utility.showToastForLogin(this@ProductDetailActivity)
         }
 
+        binding.lytFooterDetail.lytGoToCart.setOnClickListener {
+            Utility.startActivityWithLeftToRightAnimation(
+                this,
+                Intent(this, MyCartActivity::class.java)
+            )
+
+        }
 
     }
 
-    private fun callAddToCartApi(mData: MyCartResponse) {
+    private fun callAddToCartApi(mData: MyCartResponse, isByuNow:Boolean) {
         if (Prefences.getIsLogin(this)) {
             mViewModelCheckout.initAddToCart(
                 Prefences.getUserId(this@ProductDetailActivity)!!,
@@ -141,11 +182,24 @@ class ProductDetailActivity : BaseActivity() {
             )!!
                 .observe(this@ProductDetailActivity, Observer { mData ->
                     if (mData.status) {
+                        if (isByuNow)
+                            buyNow()
+                    }else
+                        buyNow()
 
-                    }
 
                 })
         } else Utility.showToastForLogin(this)
+
+    }
+
+    private fun buyNow() {
+
+        Intent(this, MyCartActivity::class.java).apply {
+            putExtra("type", "buyNow")
+        }.let {
+            Utility.startActivityWithLeftToRightAnimation(this, it)
+        }
 
     }
 
@@ -184,13 +238,25 @@ class ProductDetailActivity : BaseActivity() {
         lifecycleScope.launchWhenStarted {
             viewModel.getMyCart(product_id).observe(this@ProductDetailActivity, Observer {
                 if (it != null && it.isNotEmpty()) {
-                    btnAddToCart.text = "Go to Cart"
-                    lytPlusMinus.visibility = View.VISIBLE
+
+                    binding.lytFooterDetail.lytPlusMinus.visibility=View.VISIBLE
+                    binding.lytFooterDetail.lytAddToCart.visibility=View.GONE
+                    binding.lytFooterDetail.lytGoToCart.visibility=View.VISIBLE
+                    binding.lytFooterDetail.lytBuyNow.visibility=View.GONE
+
+
+//                    btnAddToCart.text = "Go to Cart"
+//                    lytPlusMinus.visibility = View.VISIBLE
                     list = it
-                    txtItemValue.text = list[0].qty
+                    binding.lytFooterDetail.txtItemValue.text = list[0].qty
                 } else {
-                    btnAddToCart.text = "Add To Cart"
-                    lytPlusMinus.visibility = View.GONE
+                    binding.lytFooterDetail.lytPlusMinus.visibility=View.GONE
+                    binding.lytFooterDetail.lytAddToCart.visibility=View.VISIBLE
+                    binding.lytFooterDetail.lytGoToCart.visibility=View.GONE
+                    binding.lytFooterDetail.lytBuyNow.visibility=View.VISIBLE
+
+//                    btnAddToCart.text = "Add To Cart"
+//                    lytPlusMinus.visibility = View.GONE
                 }
 
             })
@@ -220,8 +286,8 @@ class ProductDetailActivity : BaseActivity() {
             shimmerLayout.visibility = View.GONE
             if (it.success != null) {
                 imgWishlist.visibility = View.VISIBLE
-                binding.lytFooter.alpha = 1f
-                lytAddToCart.isEnabled = true
+                binding.lytFooterDetail.alpha = 1f
+                binding.lytFooterDetail.isEnabled = true
                 mImage = it.success.urlimage
                 mData = it.success
 
@@ -283,6 +349,10 @@ class ProductDetailActivity : BaseActivity() {
                 } else {
                     txtDescripton.setText(Html.fromHtml("" + it.success.description))
                 }
+
+                if (it.success.description==null || it.success.description=="")
+                    lytDesc.visibility=View.GONE
+                else lytDesc.visibility=View.VISIBLE
 
                 Glide.with(mContext).load(it.success.urlimage).into(productImage)
 
@@ -348,20 +418,20 @@ class ProductDetailActivity : BaseActivity() {
 
     fun clickIncreaseQty(view: View) {
         viewModel.updateCartItemFromDetail(list[0], true)
-        txtItemValue.text = list[0].qty
+        lytFooterDetail.txtItemValue.text = list[0].qty
         updateMyCart(mMyCartData!!, true)
     }
 
     fun clickDecreaseQty(view: View) {
         viewModel.updateCartItemFromDetail(list[0], false)
-        txtItemValue.text = list[0].qty
+        lytFooterDetail.txtItemValue.text = list[0].qty
         updateMyCart(mMyCartData!!, false)
     }
 
     private fun updateMyCart(item: ApiResponseModels.ProductListingResponse.Data, b: Boolean) {
 
         item.apply {
-            var _qty = txtItemValue.text.toString().toInt()
+            var _qty = lytFooterDetail.txtItemValue.text.toString().toInt()
             _qty = if (b) _qty + 1 else _qty - 1
             if (_qty >= 1){
                 mViewModel.initUpdateMyCart(""+item.product_id,""+Prefences.getUserId(this@ProductDetailActivity),""+_qty,true)!!.observe(this@ProductDetailActivity, Observer {mData->

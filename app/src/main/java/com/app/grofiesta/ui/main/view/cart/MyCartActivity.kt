@@ -42,7 +42,11 @@ class MyCartActivity : BaseActivity() {
         mViewModelProduct.init(this)
 
         imgBack.setOnClickListener { finish() }
-        txtPageTitle.text = "My Cart"
+
+        if (intent.hasExtra("type"))
+            txtPageTitle.text = "Buy Now"
+        else
+            txtPageTitle.text = "My Cart"
 
         bindAddress()
 
@@ -196,7 +200,7 @@ class MyCartActivity : BaseActivity() {
     fun clickCheckout(view: View) {
         if (Prefences.getIsLogin(this)) {
 
-            if (minValueToOrder < mGeneralValueToPayment)
+            if (minValueToOrder <= mGeneralValueToPayment)
                 Utility.startActivityWithLeftToRightAnimation(
                     this,
                     Intent(this, CheckoutActivity::class.java)

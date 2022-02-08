@@ -117,7 +117,10 @@ class HomeActivity : BaseActivity() {
             v5.visibility=View.GONE
             v6.visibility=View.GONE
             v7.visibility=View.GONE
+
+            txtLoginOrLogout.text="Login"
         }else{
+            txtLoginOrLogout.text="Logout"
             if (Prefences.getIsDeliveryBoy(this)=="1"){
                 navDelBoy.visibility=View.VISIBLE
                 v7.visibility=View.VISIBLE
@@ -493,10 +496,19 @@ https://play.google.com/store/apps/details?id=${packageName}
                         return true
                     }
                     R.id.navigation_order -> {
-                        Utility.startActivityWithLeftToRightAnimation(
-                            this@HomeActivity,
-                            Intent(this@HomeActivity, MyOrderListActivity::class.java)
-                        )
+
+                        if (Prefences.getIsLogin(this@HomeActivity)) {
+                            Utility.startActivityWithLeftToRightAnimation(
+                                this@HomeActivity,
+                                Intent(this@HomeActivity, MyOrderListActivity::class.java)
+                            )
+                        }else{
+                            Utility.startActivityWithLeftToRightAnimation(
+                                this@HomeActivity,
+                                Intent(this@HomeActivity, LoginActivity::class.java)
+                            )
+                        }
+
                         return true
                     }
                     R.id.navigation_offer -> {

@@ -4,8 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.accountapp.accounts.utils.Prefences
 import com.app.grofiesta.R
 import com.app.grofiesta.data.model.ApiResponseModels
+import com.app.grofiesta.utils.Utility
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.home_product_item.view.*
 
@@ -79,12 +81,14 @@ class HomeItemsAdapter(
                 itemClick(adapterPosition,"Detail")
             }
             itemView.lytAddtoCart.setOnClickListener {
-                if (itemView.txtLabel.text=="Add to Cart"){
-                    itemView.txtLabel.text="Go to Cart"
-                    itemClick(adapterPosition,"Add")
-                }else{
-                    itemClick(adapterPosition,"GoTOCart")
-                }
+                if(Prefences.getIsLogin(itemView.context)) {
+                    if (itemView.txtLabel.text == "Add to Cart") {
+                        itemView.txtLabel.text = "Go to Cart"
+                        itemClick(adapterPosition, "Add")
+                    } else {
+                        itemClick(adapterPosition, "GoTOCart")
+                    }
+                }else Utility.showToastForLogin(itemView.context)
 
             }
 

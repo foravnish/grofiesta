@@ -10,7 +10,6 @@ import com.ananda.retailer.Room.Tables.MyWishList
 import com.app.grofiesta.data.model.ApiResponseModels
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_product_detail.*
-import kotlinx.android.synthetic.main.home_product_item.view.*
 import kotlinx.android.synthetic.main.item_product_list.view.*
 import kotlinx.android.synthetic.main.item_product_list.view.lytMain
 import kotlinx.android.synthetic.main.item_product_list.view.productImg
@@ -60,6 +59,12 @@ class ProductListAdapter(
                     txtWeightSize.text = "" + weight_size
                     txtDisplayPrice.text = "₹" + display_price
                     txtMainPrice.text = "₹" + main_price
+
+                    if (discount_percent!=null && discount_percent!="0"){
+                        txtDiscount.visibility=View.VISIBLE
+                        txtDiscount.text=""+discount_percent+"% Off"
+                    }else
+                        txtDiscount.visibility=View.GONE
 
                     if (hasWishList)
                         imgWishlist.setImageResource(R.drawable.ic_like_heart)
