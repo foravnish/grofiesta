@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.view.KeyEvent
+import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.lifecycle.Observer
@@ -15,6 +16,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.app.grofiesta.R
 import com.app.grofiesta.ui.base.BaseActivity
 import com.app.grofiesta.ui.main.view.home.HomeViewModel
+import com.app.grofiesta.ui.main.view.product.ImagePreviewActivity
+import com.app.grofiesta.utils.Utility
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_about_us.*
 import kotlinx.android.synthetic.main.activity_product_detail.*
@@ -25,7 +28,7 @@ import java.lang.Exception
 class AboutUsActivity : BaseActivity() {
 
     lateinit var mViewModel: HomeViewModel
-
+    var img=""
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,11 +39,18 @@ class AboutUsActivity : BaseActivity() {
 
         imgBack.setOnClickListener { finish() }
 
-
         txtPageTitle.text = "About Us"
 
         callAboutUs()
 
+        imgAbt.setOnClickListener {
+            Intent(this, ImagePreviewActivity::class.java).apply {
+                putExtra("image", img)
+            }.let {
+                Utility.startActivityWithLeftToRightAnimation(this, it)
+            }
+
+        }
 
     }
 
@@ -49,6 +59,7 @@ class AboutUsActivity : BaseActivity() {
         mViewModel.initAboutTnCPrivacy(true)!!.observe(this, Observer {
             if (it!=null){
                 if (it.about != null) {
+                    lytText.visibility=View.VISIBLE
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         txtTitle.setText(
                             Html.fromHtml(
@@ -86,6 +97,7 @@ class AboutUsActivity : BaseActivity() {
 
                     Glide.with(this).load(it.about.urlimage).into(imgAbt)
 
+                    img= it.about.urlimage
                 }
 
             }

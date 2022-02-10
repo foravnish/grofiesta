@@ -105,6 +105,7 @@ class ProductDetailActivity : BaseActivity() {
                             "" + description, "" + short_desp, "" + urlimage,
                             "1", "" + gst, "" + category_name
                         ).let {
+                            viewModel.insertItemInCart(it)
                             callAddToCartApi(it,true)
                         }
                 }
@@ -180,12 +181,12 @@ class ProductDetailActivity : BaseActivity() {
                 Prefences.getUserId(this@ProductDetailActivity)!!,
                 "" + mData.product_id, "" + mData.qty, true
             )!!
-                .observe(this@ProductDetailActivity, Observer { mData ->
-                    if (mData.status) {
+                .observe(this@ProductDetailActivity, Observer { mData_ ->
+                    if (mData_.status) {
                         if (isByuNow)
-                            buyNow()
+                            buyNow(mData.product_id)
                     }else
-                        buyNow()
+                        buyNow(mData.product_id)
 
 
                 })
@@ -193,10 +194,12 @@ class ProductDetailActivity : BaseActivity() {
 
     }
 
-    private fun buyNow() {
+    private fun buyNow(product_id:String) {
 
         Intent(this, MyCartActivity::class.java).apply {
             putExtra("type", "buyNow")
+            putExtra("product_id", product_id)
+
         }.let {
             Utility.startActivityWithLeftToRightAnimation(this, it)
         }
@@ -244,9 +247,6 @@ class ProductDetailActivity : BaseActivity() {
                     binding.lytFooterDetail.lytGoToCart.visibility=View.VISIBLE
                     binding.lytFooterDetail.lytBuyNow.visibility=View.GONE
 
-
-//                    btnAddToCart.text = "Go to Cart"
-//                    lytPlusMinus.visibility = View.VISIBLE
                     list = it
                     binding.lytFooterDetail.txtItemValue.text = list[0].qty
                 } else {
@@ -254,9 +254,6 @@ class ProductDetailActivity : BaseActivity() {
                     binding.lytFooterDetail.lytAddToCart.visibility=View.VISIBLE
                     binding.lytFooterDetail.lytGoToCart.visibility=View.GONE
                     binding.lytFooterDetail.lytBuyNow.visibility=View.VISIBLE
-
-//                    btnAddToCart.text = "Add To Cart"
-//                    lytPlusMinus.visibility = View.GONE
                 }
 
             })
@@ -467,17 +464,17 @@ class ProductDetailActivity : BaseActivity() {
                     } else Utility.showToast(mContext)
                 })
 
-//            mData.apply {
-//                MyCartResponse(
-//                    "" + product_id, "" + category_id, "" + sub_category_id,
-//                    "" + product_name, "" + weight_size, "" + main_price,
-//                    "" + display_price, "" + purchase_price, "" + display_price,
-//                    "" + description, "" + short_desp, "" + urlimage,
-//                    "1", "" + gst, "" + category_name
-//                ).let {
-//                    viewModel.insertItemInWishList(it)
-//                }
-//            }
+            mData.apply {
+                MyCartResponse(
+                    "" + product_id, "" + category_id, "" + sub_category_id,
+                    "" + product_name, "" + weight_size, "" + main_price,
+                    "" + display_price, "" + purchase_price, "" + display_price,
+                    "" + description, "" + short_desp, "" + urlimage,
+                    "1", "" + gst, "" + category_name
+                ).let {
+                    viewModel.insertItemInWishList(it)
+                }
+            }
 
             } else {
                 imgWishlist.setImageResource(R.drawable.ic_like_heart_unfilled)
@@ -490,7 +487,7 @@ class ProductDetailActivity : BaseActivity() {
                     } else Utility.showToast(mContext)
                 })
 
-//            viewModel.deleteItemFromWishList(mData.product_id)
+            viewModel.deleteItemFromWishList(mData.product_id)
             }
         } else Utility.showToastForLogin(this)
     }

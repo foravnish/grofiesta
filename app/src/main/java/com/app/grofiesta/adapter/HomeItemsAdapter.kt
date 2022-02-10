@@ -10,6 +10,13 @@ import com.app.grofiesta.data.model.ApiResponseModels
 import com.app.grofiesta.utils.Utility
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.home_product_item.view.*
+import kotlinx.android.synthetic.main.home_product_item.view.imgWishlist
+import kotlinx.android.synthetic.main.home_product_item.view.productImg
+import kotlinx.android.synthetic.main.home_product_item.view.txtDiscount
+import kotlinx.android.synthetic.main.home_product_item.view.txtDisplayPrice
+import kotlinx.android.synthetic.main.home_product_item.view.txtMainPrice
+import kotlinx.android.synthetic.main.home_product_item.view.txtName
+import kotlinx.android.synthetic.main.home_product_item.view.txtWeightSize
 
 class HomeItemsAdapter(
     var type: String,
@@ -61,7 +68,7 @@ class HomeItemsAdapter(
                         txtDisplayPrice.text="₹"+display_price
                         txtMainPrice.text="₹"+main_price
 
-                        if (discount_percent!=null && discount_percent!="0"){
+                        if (discount_percent!=null && discount_percent!="0" && discount_percent!=""){
                             txtDiscount.visibility=View.VISIBLE
                             txtDiscount.text=""+discount_percent+"% Off"
                         }else
@@ -72,6 +79,12 @@ class HomeItemsAdapter(
                             itemView.txtLabel.text="Go to Cart"
                         else
                             itemView.txtLabel.text="Add to Cart"
+
+//                        if (hasWishList)
+//                            imgWishlist.setImageResource(R.drawable.ic_like_heart)
+//                        else
+//                            imgWishlist.setImageResource(R.drawable.ic_like_heart_unfilled)
+
                     }
 
                 }

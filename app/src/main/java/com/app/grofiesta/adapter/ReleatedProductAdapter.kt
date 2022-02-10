@@ -56,7 +56,7 @@ class ReleatedProductAdapter(
                         txtDisplayPrice.text="₹"+display_price
                         txtMainPrice.text="₹"+main_price
 
-                        if (discount_percent!=null && discount_percent!="0"){
+                        if (discount_percent!=null && discount_percent!="0" && discount_percent!=""){
                             txtDiscount.visibility=View.VISIBLE
                             txtDiscount.text=""+discount_percent+"% Off"
                         }else

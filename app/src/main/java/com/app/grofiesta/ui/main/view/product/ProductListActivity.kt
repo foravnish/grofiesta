@@ -60,17 +60,17 @@ class ProductListActivity : BaseActivity() {
                         withContext(Dispatchers.IO) {
                             withContext(lifecycleScope.coroutineContext) {
 
-                                for (i in 0..mData.data.size - 1) {
-                                    lifecycleScope.launchWhenStarted {
-                                        viewModel.getMySignelWishList(mData.data[i].product_id)
-                                            .observe(this@ProductListActivity, Observer {
-                                                if (it != null && it.isNotEmpty()) {
-                                                    mData.data[i].hasWishList = true
-                                                }
-                                            })
-
-                                    }
-                                }
+//                                for (i in 0..mData.data.size - 1) {
+//                                    lifecycleScope.launchWhenStarted {
+//                                        viewModel.getMySignelWishList(mData.data[i].product_id)
+//                                            .observe(this@ProductListActivity, Observer {
+//                                                if (it != null && it.isNotEmpty()) {
+//                                                    mData.data[i].hasWishList = true
+//                                                }
+//                                            })
+//
+//                                    }
+//                                }
                             }
                         }
 
@@ -115,25 +115,26 @@ class ProductListActivity : BaseActivity() {
                 if (it.status) {
                     last_wishlist_id=it.last_wishlist_id
 
+                    data.apply {
+                        MyCartResponse(
+                            "" + product_id, "" + category_id, "" + sub_category_id,
+                            "" + product_name, "" + weight_size, "" + main_price,
+                            "" + display_price, "" + purchase_price, "" + display_price,
+                            "" + description, "" + short_desp, "" + urlimage,
+                            "1", "" + gst, ""+category_id
+                        ).let {
+                            viewModel.insertItemInWishList(it)
+                        }
+                    }
+
                 } else Utility.showToast(this@ProductListActivity)
             })
 
-//            data.apply {
-//                MyCartResponse(
-//                    "" + product_id, "" + category_id, "" + sub_category_id,
-//                    "" + product_name, "" + weight_size, "" + main_price,
-//                    "" + display_price, "" + purchase_price, "" + display_price,
-//                    "" + description, "" + short_desp, "" + urlimage,
-//                    "1", "" + gst, ""+category_id
-//                ).let {
-//                    viewModel.insertItemInWishList(it)
-//                }
-//            }
 
         } else {
             data.hasWishList = false
             mAdapter.notifyDataSetChanged()
-//            viewModel.deleteItemFromWishList(data.product_id)
+            viewModel.deleteItemFromWishList(data.product_id)
             mViewModel.initRemoveWishList(
                 "" + last_wishlist_id, false)!!.observe(this, Observer {
                 if (it.status) {

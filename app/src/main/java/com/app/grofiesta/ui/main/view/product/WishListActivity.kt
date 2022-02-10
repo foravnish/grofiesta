@@ -75,14 +75,14 @@ class WishListActivity : BaseActivity() {
         val mAdapter = WishListAdapter(list) { pos,type->
             when(type){
                 "detail"->openDetailPage(list[pos].product_id)
-                "close"-> deleteWishlist(list[pos].wi_id)
+                "close"-> deleteWishlist(list[pos].wi_id,list[pos].product_id)
             }
         }
         binding.rvProductList.adapter = mAdapter
     }
 
-    private fun deleteWishlist(w_id: String) {
-//        viewModel.deleteItemFromWishList(productId)
+    private fun deleteWishlist(w_id: String,product_id:String) {
+        viewModel.deleteItemFromWishList(product_id)
 
         mViewModel.initRemoveWishList(
             "" +  w_id, false)!!.observe(this, Observer {

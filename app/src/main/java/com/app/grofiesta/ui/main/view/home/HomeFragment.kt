@@ -252,6 +252,20 @@ class HomeFragment : BaseFragment() {
                                     }
                                 }
 
+//                                for (i in 0..mData.success.size - 1) {
+//                                    lifecycleScope.launchWhenStarted {
+//                                        viewModel.getMySignelWishList(mData.success[i].product_id)
+//                                            .observe(requireActivity(), Observer {
+//                                                if (it != null && it.isNotEmpty()) {
+//                                                    mData.success[i].hasWishList = true
+//                                                }
+//                                            })
+//
+//
+//                                    }
+//                                }
+
+
                             }
                         }
 

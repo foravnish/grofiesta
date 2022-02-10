@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_my_cart.*
 import kotlinx.android.synthetic.main.activity_o_t_p.*
 import kotlinx.android.synthetic.main.activity_servcie.*
+import kotlinx.android.synthetic.main.activity_wish_listing.*
 import kotlinx.android.synthetic.main.app_header_layout.*
 import kotlinx.android.synthetic.main.app_header_layout.imgBack
 import kotlinx.android.synthetic.main.app_header_layout.txtPageTitle
@@ -116,11 +117,55 @@ class OTPActivity : BaseActivity() {
             mViewModel.initSendOtp( it, true)!!.observe(this, Observer {
                 if (it.data!=null){
                     otp=""+it.data.opt
+
+
+                    callWishListApi()
+
                 }
 
             })
 
         }
+
+    }
+
+    private fun callWishListApi() {
+
+        mViewModelProduct.initListWishList(""+ customer_id,
+            true)!!.observe(this, Observer { mData->
+
+            lifecycleScope.launchWhenStarted {
+                withContext(Dispatchers.IO) {
+                    withContext(lifecycleScope.coroutineContext) {
+
+                        if (mData.status){
+                            if (mData.data!=null && mData.data.size>0 ){
+
+                                mData.data.forEach { mList->
+                                    mList.apply {
+                                        MyCartResponse(
+                                            "" + product_id, "" + category_id, "" + sub_category_id,
+                                            "" + product_name, "" + weight_size, "" + main_price,
+                                            "" + display_price, "" + purchase_price, "" + display_price,
+                                            "" + description, "" + short_desp, "" + urlimage,
+                                            "1", "" + gst, ""
+                                        ).let {
+                                            viewModel.insertItemInWishList(it)
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+
+
+                    }
+                }
+
+
+            }
+
+        })
 
     }
 
@@ -143,16 +188,6 @@ class OTPActivity : BaseActivity() {
     }
 
     private fun verifyOtp() {
-
-//        if (otp_view.text.toString().equals(otp)){
-//            Intent(this, HomeActivity::class.java).apply {
-//            }.let {
-//                Utility.startActivityWithLeftToRightAnimation(this,it)
-//            }
-//            finish()
-//        }else{
-//            showToast("Please correct OTP.")
-//        }
 
         mViewModel.verifyOtpApi(otp_view.text.toString(),otp_view.text.toString(),"",true)
             ?.observe(this, Observer {

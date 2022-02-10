@@ -553,13 +553,14 @@ https://play.google.com/store/apps/details?id=${packageName}
             if (urlimage!!.endsWith(".jpg") || urlimage!!.endsWith("jpeg ")
                 || urlimage!!.endsWith("png")){
                 Glide.with(this@HomeActivity).load(urlimage).into(imgNavProfilePic)
-            }
+            }else Glide.with(this@HomeActivity).load(R.drawable.ic_profile).into(imgNavProfilePic)
 
             navUsername.text = "" + Prefences.getFirstName(this@HomeActivity)
             txtNavUserMobile.text = "+91-" + Prefences.getUserMobile(this@HomeActivity)
         }else{
             navUsername.text = "Guest"
             txtNavUserMobile.text = "+91 ---------"
+            Glide.with(this@HomeActivity).load(R.drawable.ic_profile).into(imgNavProfilePic)
         }
     }
 

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
+import com.accountapp.accounts.utils.Prefences
 import com.ananda.retailer.Room.Tables.MyWishList
 import com.app.grofiesta.data.model.ApiResponseModels
 import com.bumptech.glide.Glide
@@ -19,11 +20,12 @@ import kotlinx.android.synthetic.main.item_product_list.view.txtName
 import kotlinx.android.synthetic.main.item_product_list.view.txtWeightSize
 
 import com.app.grofiesta.R
+import com.app.grofiesta.utils.Utility
 
 
 class ProductListAdapter(
     val mList: List<ApiResponseModels.ProductListingResponse.Data>,
-    var itemClick: (Int,String) -> Unit
+    var itemClick: (Int, String) -> Unit
 ) :
     RecyclerView.Adapter<ProductListAdapter.MyHolder>() {
 
@@ -60,26 +62,30 @@ class ProductListAdapter(
                     txtDisplayPrice.text = "₹" + display_price
                     txtMainPrice.text = "₹" + main_price
 
-                    if (discount_percent!=null && discount_percent!="0"){
-                        txtDiscount.visibility=View.VISIBLE
-                        txtDiscount.text=""+discount_percent+"% Off"
-                    }else
-                        txtDiscount.visibility=View.GONE
+                    if (discount_percent != null && discount_percent != "0" && discount_percent!="") {
+                        txtDiscount.visibility = View.VISIBLE
+                        txtDiscount.text = "" + discount_percent + "% Off"
+                    } else
+                        txtDiscount.visibility = View.GONE
 
-                    if (hasWishList)
-                        imgWishlist.setImageResource(R.drawable.ic_like_heart)
-                    else
-                        imgWishlist.setImageResource(R.drawable.ic_like_heart_unfilled)
+//                    if (hasWishList)
+//                        imgWishlist.setImageResource(R.drawable.ic_like_heart)
+//                    else
+//                        imgWishlist.setImageResource(R.drawable.ic_like_heart_unfilled)
 
 
                 }
 
-
             }
 
-            itemView.lytMain.setOnClickListener { itemClick(adapterPosition,"Detail") }
+            itemView.lytMain.setOnClickListener { itemClick(adapterPosition, "Detail") }
 
-            itemView.imgWishlist.setOnClickListener {  itemClick(adapterPosition,"Wishlist") }
+            itemView.imgWishlist.setOnClickListener {
+                if (Prefences.getIsLogin(itemView.context))
+                    itemClick(adapterPosition, "Wishlist")
+                else
+                    Utility.showToastForLogin(itemView.context)
+            }
 
 
         }

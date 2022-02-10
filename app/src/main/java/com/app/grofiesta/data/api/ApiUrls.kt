@@ -20,7 +20,7 @@ object ApiUrls {
     const val DYNAMIC_PRODUCTS = "api/homa_page_module_api"
     const val MARQUEE = "api/marquee_api"
     const val CONTACT_US = "api/getContact"
-    const val TNC_PRIVACY_ABOUT_US = "welcome/about_tnc_privacy_policy"
+    const val TNC_PRIVACY_ABOUT_US = "api/about_tnc_privacy_policy"
     const val FIESTA_PRODUCTS = "welcome/getfiestaProductsApi"
     const val BEST_SELLER_PRODUCTS = "welcome/getBestsellerProductsApi"
     const val SEARCH_PRODUCT = "api/getKeywordApi"

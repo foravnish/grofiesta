@@ -32,6 +32,7 @@ class MyCartActivity : BaseActivity() {
     lateinit var mViewModelProduct: ProductViewModel
     var minValueToOrder = 0.0
     var mGeneralValueToPayment = 0.0
+    var product_id=""
     val viewModel: GroceryViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +44,11 @@ class MyCartActivity : BaseActivity() {
 
         imgBack.setOnClickListener { finish() }
 
-        if (intent.hasExtra("type"))
+        if (intent.hasExtra("type")){
+            product_id=intent.getStringExtra("product_id")!!
             txtPageTitle.text = "Buy Now"
+        }
+
         else
             txtPageTitle.text = "My Cart"
 
@@ -54,6 +58,13 @@ class MyCartActivity : BaseActivity() {
 
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (intent.hasExtra("type")){
+            callDeleteMyCart(product_id, "", false)
+        }
+
+    }
     fun clickContinueShoping(view: View) {
         var intent = Intent(this, HomeActivity::class.java)
         intent!!.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -142,7 +153,7 @@ class MyCartActivity : BaseActivity() {
             when (type) {
                 "Plus" -> updateMyCart(item!!, true)
                 "Minus" -> updateMyCart(item!!, false)
-                "Delete" -> callDeleteMyCart(item.product_id, item.cart_id)
+                "Delete" -> callDeleteMyCart(item.product_id, item.cart_id, true)
 
             }
         }
@@ -181,12 +192,12 @@ class MyCartActivity : BaseActivity() {
 
     }
 
-    private fun callDeleteMyCart(productId: String, cart_id: String) {
+    private fun callDeleteMyCart(productId: String, cart_id: String, isLoader:Boolean) {
         viewModel.deleteItemFromCart(productId)
 
         mViewModelProduct.initDeleteMyCart(
             "" + productId, "" + Prefences.getUserId(this@MyCartActivity),
-            true
+            isLoader
         )!!.observe(this, Observer { mData ->
             if (mData.status) {
                 getAllMyCart()

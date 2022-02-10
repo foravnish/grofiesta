@@ -19,7 +19,6 @@
             android:weightSum="2"
             android:orientation="horizontal">
 
-
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -137,7 +136,7 @@
             <View
                 android:layout_width="0.5dp"
                 android:layout_height="wrap_content"
-                android:background="@color/mahroon" />
+                android:background="@color/while_color" />
 
             <com.skydoves.elasticviews.ElasticLayout
                 android:layout_width="0dp"

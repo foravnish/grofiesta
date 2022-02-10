@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ananda.retailer.Views.Activities.Grocery.viewmodel.GroceryViewModel
@@ -76,6 +77,19 @@ class HomePageDynamicAdapter(
 
                                     }
                                 }
+//                                for (i in 0..mList.productsdata.size - 1) {
+//                                    lifecycleScope.launchWhenStarted {
+//                                        viewModel.getMySignelWishList(mList.productsdata[i].product_id)
+//                                            .observe(requireActivity, Observer {
+//                                                if (it != null && it.isNotEmpty()) {
+//                                                    mList.productsdata[i].hasWishList = true
+//                                                }
+//                                            })
+//
+//
+//                                    }
+//                                }
+
 
                             }
                         }
