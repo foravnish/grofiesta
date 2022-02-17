@@ -4,14 +4,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.accountapp.accounts.utils.Prefences
 import com.app.grofiesta.R
 import com.app.grofiesta.data.model.ApiResponseModels
+import com.app.grofiesta.utils.Utility
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.home_product_item.view.*
+import kotlinx.android.synthetic.main.home_product_item.view.lytMain
+import kotlinx.android.synthetic.main.home_product_item.view.productImg
+import kotlinx.android.synthetic.main.home_product_item.view.txtDiscount
+import kotlinx.android.synthetic.main.home_product_item.view.txtDisplayPrice
+import kotlinx.android.synthetic.main.home_product_item.view.txtMainPrice
+import kotlinx.android.synthetic.main.home_product_item.view.txtName
+import kotlinx.android.synthetic.main.home_product_item.view.txtWeightSize
 
 class ReleatedProductAdapter(
     val mList: ArrayList<ApiResponseModels.RelatedProductResponse.Success>,
-    var itemClick: (Int) -> Unit
+    var itemClick: (Int,String) -> Unit
 ) :
     RecyclerView.Adapter<ReleatedProductAdapter.MyHolder>() {
 
@@ -67,52 +76,20 @@ class ReleatedProductAdapter(
 
                 }
 
-//            }
-//            else if (type == "2")
-//                itemView.productImg.setImageDrawable(
-//                    itemView.context.getResources().getDrawable(R.drawable.images2)
-//                );
-//            else if (type == "3" || type  == "4")
-//                itemView.productImg.setImageDrawable(
-//                    itemView.context.getResources().getDrawable(R.drawable.images3)
-//                )
-//            else if (type == "5")
-//                itemView.productImg.setImageDrawable(
-//                    itemView.context.getResources().getDrawable(R.drawable.image4)
-//                )
 
-            itemView.setOnClickListener {
-                itemClick(adapterPosition)
+            itemView.lytMain.setOnClickListener { itemClick(adapterPosition, "Detail") }
+            itemView.lytAddtoCart.setOnClickListener {
+                if(Prefences.getIsLogin(itemView.context)) {
+                    if (itemView.txtLabel.text == "Add to Cart") {
+                        itemView.txtLabel.text = "Go to Cart"
+                        itemClick(adapterPosition, "Add")
+                    } else {
+                        itemClick(adapterPosition, "GoTOCart")
+                    }
+                }else Utility.showToastForLogin(itemView.context)
+
             }
 
-//            if (mIndex == adapterPosition) {
-//                itemView.cardViewAccount.setCardBackgroundColor(itemView.resources.getColor(R.color.colorAccentLite11))
-//                itemView.imgTick.visibility = View.VISIBLE
-//            } else {
-//                itemView.cardViewAccount.setCardBackgroundColor(itemView.resources.getColor(R.color.colorWhite))
-//                itemView.imgTick.visibility = View.GONE
-//            }
-//
-//            itemView.txtUserName.text = mList.name
-//            itemView.txtGmail.text = mList.loginID
-//            itemView.txtNickName.text = mList.name
-//
-//            if (mList.isWorking) {
-//                if(mList.companyName.length>0)
-//                    itemView.txtStatus.text="Working (${mList.companyName})"
-//                else itemView.txtStatus.text="Working"
-//                itemView.txtStatus.setTextColor(itemView.context.resources.getColor(R.color.secondary_text_default_material_light))
-//            }else{
-//                itemView.txtStatus.setTextColor(itemView.context.resources.getColor(R.color.colorRed))
-//                itemView.txtStatus.text = "Expired"
-//            }
-//
-//
-//            itemView.cardViewAccount.setOnClickListener {
-//                mIndex = adapterPosition
-//                itemClick(adapterPosition)
-//                notifyDataSetChanged()
-//            }
         }
     }
 

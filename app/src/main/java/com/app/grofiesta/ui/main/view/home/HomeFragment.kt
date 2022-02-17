@@ -1,12 +1,14 @@
 package com.app.grofiesta.ui.main.view.home
 
 
+import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.LinearInterpolator
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -160,9 +162,24 @@ class HomeFragment : BaseFragment() {
             if (it!=null){
                 if (it.status){
                     if (it.data!=null && it.data!="") {
-                        binding.txtMarquee.isSelected = true
                         binding.txtMarquee.visibility = View.VISIBLE
+                        binding.txtMarquee.isSelected = true
                         binding.txtMarquee.text = "" + it.data
+
+
+//                        val animator = ValueAnimator.ofFloat(1.0f, 0.0f).apply {
+//                            this.repeatCount = ValueAnimator.INFINITE
+//                            this.interpolator = LinearInterpolator()
+//                            this.duration = 6000L
+//                            this.addUpdateListener { animation ->
+//                                val progress = animation.animatedValue as Float
+//                                val width = binding.lytMarquee.width.toFloat()
+//                                val translationX = width * progress
+//                                binding.lytMarquee.translationX = translationX - width
+////                                tv_dummy_text.translationX = translationX
+//                            }
+//                        }
+//                        animator.start()
                     }else binding.txtMarquee.visibility=View.GONE
                 }else
                     binding.txtMarquee.visibility=View.GONE

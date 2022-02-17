@@ -116,10 +116,7 @@ class ProductDetailActivity : BaseActivity() {
 //        }
 
         lytCartView.setOnClickListener {
-            Intent(this, MyCartActivity::class.java).apply {
-            }.let {
-                Utility.startActivityWithLeftToRightAnimation(this, it)
-            }
+          openMyCartScreen()
         }
 
 
@@ -168,12 +165,26 @@ class ProductDetailActivity : BaseActivity() {
         }
 
         binding.lytFooterDetail.lytGoToCart.setOnClickListener {
-            Utility.startActivityWithLeftToRightAnimation(
-                this,
-                Intent(this, MyCartActivity::class.java)
-            )
 
+            openMyCartScreen()
         }
+
+    }
+
+    private fun callAddToCartApi(mData: ApiResponseModels.RelatedProductResponse.Success) {
+
+        if(Prefences.getIsLogin(this@ProductDetailActivity)) {
+            mViewModelCheckout.initAddToCart(
+                Prefences.getUserId(this@ProductDetailActivity)!!,
+                "" + mData.product_id, "1", true
+            )!!
+                .observe(this@ProductDetailActivity, Observer { mData ->
+                    if (mData.status) {
+
+                    }
+
+                })
+        }else Utility.showToastForLogin(this@ProductDetailActivity)
 
     }
 
@@ -419,11 +430,41 @@ class ProductDetailActivity : BaseActivity() {
             false
         )
         binding.lytRelated.rvRelated.layoutManager = horizontalLayout
-        val mAdapter = ReleatedProductAdapter(success) {
-            openDetailPage(success[it].product_id)
+        val mAdapter = ReleatedProductAdapter(success) {pos,type->
+            when(type){
+                "Detail"->openDetailPage(success[pos].product_id)
+                "Add" -> if(Prefences.getIsLogin(this@ProductDetailActivity)) addToCart(success[pos]) else Utility.showToastForLogin(this@ProductDetailActivity)
+                "GoTOCart" -> openMyCartScreen()
+            }
         }
         binding.lytRelated.rvRelated.adapter = mAdapter
     }
+
+    private fun openMyCartScreen() {
+
+        Utility.startActivityWithLeftToRightAnimation(
+            this@ProductDetailActivity,
+            Intent(this@ProductDetailActivity, MyCartActivity::class.java)
+        )
+
+    }
+
+    private fun addToCart(mData: ApiResponseModels.RelatedProductResponse.Success) {
+        mData.apply {
+            MyCartResponse(
+                "" + product_id, "", "",
+                "" + product_name, "" + weight_size, "" + main_price,
+                "" + display_price, "", "" + display_price,
+                "", "", "" + urlimage,
+                "1", "", "test"
+            ).let {
+                viewModel.insertItemInCart(it)
+            }
+        }
+
+        callAddToCartApi(mData)
+    }
+
 
     private fun openDetailPage(product_id: String) {
 

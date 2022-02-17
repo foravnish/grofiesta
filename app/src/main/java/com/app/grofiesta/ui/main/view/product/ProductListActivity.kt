@@ -17,6 +17,8 @@ import com.app.grofiesta.data.model.ApiResponseModels
 import com.app.grofiesta.databinding.ActivityProductListingBinding
 import com.app.grofiesta.room.response.MyCartResponse
 import com.app.grofiesta.ui.base.BaseActivity
+import com.app.grofiesta.ui.main.view.cart.CheckoutViewModel
+import com.app.grofiesta.ui.main.view.cart.MyCartActivity
 import com.app.grofiesta.utils.Utility
 import kotlinx.android.synthetic.main.app_header_layout.*
 import kotlinx.coroutines.Dispatchers
@@ -24,6 +26,8 @@ import kotlinx.coroutines.withContext
 
 class ProductListActivity : BaseActivity() {
     lateinit var mViewModel: ProductViewModel
+    lateinit var mViewModelCheckout: CheckoutViewModel
+
     lateinit var binding: ActivityProductListingBinding
     var sid=""
     var flag: Boolean = true
@@ -37,7 +41,9 @@ class ProductListActivity : BaseActivity() {
         mViewModel = ViewModelProvider.AndroidViewModelFactory(application)
             .create(ProductViewModel::class.java)
         mViewModel.init(this)
-
+        mViewModelCheckout = ViewModelProvider.AndroidViewModelFactory(application)
+            .create(CheckoutViewModel::class.java)
+        mViewModelCheckout.init(this)
 
         imgBack.setOnClickListener { finish() }
         txtPageTitle.text = "Products"
@@ -96,12 +102,56 @@ class ProductListActivity : BaseActivity() {
             when(type){
                 "Detail"->openDetailPage(success[pos].product_id)
                 "Wishlist"-> addToWishList(success[pos])
+                "Add" -> if(Prefences.getIsLogin(this@ProductListActivity)) addToCart(success[pos]) else Utility.showToastForLogin(this@ProductListActivity)
+                "GoTOCart" -> openMyCartScreen()
             }
 
 
         }
         binding.rvProductList.adapter = mAdapter
     }
+
+    private fun openMyCartScreen() {
+
+        Utility.startActivityWithLeftToRightAnimation(
+            this@ProductListActivity,
+            Intent(this@ProductListActivity, MyCartActivity::class.java)
+        )
+
+    }
+
+    private fun addToCart(mData: ApiResponseModels.ProductListingResponse.Data) {
+        mData.apply {
+            MyCartResponse(
+                "" + product_id, "", "",
+                "" + product_name, "" + weight_size, "" + main_price,
+                "" + display_price, "", "" + display_price,
+                "", "", "" + urlimage,
+                "1", "", "test"
+            ).let {
+                viewModel.insertItemInCart(it)
+            }
+        }
+
+        callAddToCartApi(mData)
+    }
+    private fun callAddToCartApi(mData: ApiResponseModels.ProductListingResponse.Data) {
+
+        if(Prefences.getIsLogin(this@ProductListActivity)) {
+            mViewModelCheckout.initAddToCart(
+                Prefences.getUserId(this@ProductListActivity)!!,
+                "" + mData.product_id, "1", true
+            )!!
+                .observe(this@ProductListActivity, Observer { mData ->
+                    if (mData.status) {
+
+                    }
+
+                })
+        }else Utility.showToastForLogin(this@ProductListActivity)
+
+    }
+
 
     private fun addToWishList(data: ApiResponseModels.ProductListingResponse.Data) {
 

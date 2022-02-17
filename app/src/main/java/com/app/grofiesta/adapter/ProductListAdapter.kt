@@ -21,6 +21,11 @@ import kotlinx.android.synthetic.main.item_product_list.view.txtWeightSize
 
 import com.app.grofiesta.R
 import com.app.grofiesta.utils.Utility
+import kotlinx.android.synthetic.main.home_product_item.view.*
+import kotlinx.android.synthetic.main.item_product_list.view.imgWishlist
+import kotlinx.android.synthetic.main.item_product_list.view.lytAddtoCart
+import kotlinx.android.synthetic.main.item_product_list.view.txtDiscount
+import kotlinx.android.synthetic.main.item_product_list.view.txtLabel
 
 
 class ProductListAdapter(
@@ -85,6 +90,18 @@ class ProductListAdapter(
                     itemClick(adapterPosition, "Wishlist")
                 else
                     Utility.showToastForLogin(itemView.context)
+            }
+
+            itemView.lytAddtoCart.setOnClickListener {
+                if(Prefences.getIsLogin(itemView.context)) {
+                    if (itemView.txtLabel.text == "Add to Cart") {
+                        itemView.txtLabel.text = "Go to Cart"
+                        itemClick(adapterPosition, "Add")
+                    } else {
+                        itemClick(adapterPosition, "GoTOCart")
+                    }
+                }else Utility.showToastForLogin(itemView.context)
+
             }
 
 
