@@ -75,6 +75,10 @@ class CheckoutActivity : BaseActivity() {
 
         mCartData = ArrayList()
 
+
+        txtPayNow.alpha = 0.5f
+        txtPayNow.isEnabled = false
+
         getAllMyCart()
 
         callGetShippingCharge()
@@ -118,6 +122,8 @@ class CheckoutActivity : BaseActivity() {
                     if (it.data.current_balance != null) {
                         shimmerLayout.visibility = View.GONE
                         lytBalance.visibility = View.VISIBLE
+                        txtPayNow.alpha = 1f
+                        txtPayNow.isEnabled = true
 
                         binding.apply {
                             if (it.data.current_balance.wallet_value != "") {

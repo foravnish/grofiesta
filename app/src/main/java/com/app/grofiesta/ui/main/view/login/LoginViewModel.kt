@@ -30,10 +30,10 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun verifyOtpApi(
-        post_otp: String,locaOtp:String,email:String, showDialog: Boolean
+        post_otp: String,locaOtp:String,mMobile:String, showDialog: Boolean
     ): MutableLiveData<ApiResponseModels.LoginResponse>? {
         mRegistrationtApiRepository = LoginRepository().getInstance()
-        mRegistrationtApiRepository!!.callVerifyOtpApi(mContext,  post_otp,locaOtp,email, showDialog)
+        mRegistrationtApiRepository!!.callVerifyOtpApi(mContext,  post_otp,locaOtp,mMobile, showDialog)
             .let { return it }
     }
 

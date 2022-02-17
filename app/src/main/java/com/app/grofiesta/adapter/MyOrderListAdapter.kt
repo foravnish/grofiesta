@@ -15,7 +15,7 @@ class MyOrderListAdapter(
     var mList: List<ApiResponseModels.OrderLIstingNewResponse.Data>,
 //    var activity: MyCartActivity,
 //    var divSr:String,
-    var itemClick: (Int) -> Unit
+    var itemClick: (Int,String) -> Unit
 ) :
     RecyclerView.Adapter<MyOrderListAdapter.MyHolder>() {
     lateinit var onClick: onClickView
@@ -42,20 +42,34 @@ class MyOrderListAdapter(
                     txtTotalPrice.text="Total Price: ₹"+total
 
                     if (status=="1") {
-                        txtStatus.setTextColor(context.getColor(R.color.red))
-                        txtStatus.text = "Pending"
-                    } else if (status=="2") {
                         txtStatus.setTextColor(context.getColor(R.color.orange))
-                        txtStatus.text = "Dispatch"
+                        txtStatus.text = "Order Confirm"
+                        txtCancel.visibility=View.VISIBLE
+                    } else if (status=="2") {
+                        txtStatus.setTextColor(context.getColor(R.color.item_color))
+                        txtStatus.text = "Under Process"
+                        txtCancel.visibility=View.VISIBLE
                     } else if (status=="3") {
+                        txtStatus.setTextColor(context.getColor(R.color.item_color))
+                        txtStatus.text = "Dispatch"
+                        txtCancel.visibility=View.GONE
+                    }else if (status=="4") {
                         txtStatus.setTextColor(context.getColor(R.color.green))
                         txtStatus.text = "Delivered"
+                        txtCancel.visibility=View.GONE
+                    }else if (status=="5") {
+                        txtStatus.setTextColor(context.getColor(R.color.red))
+                        txtStatus.text = "Cancelled"
+                        txtCancel.visibility=View.GONE
                     }
 
                 }
             }
             itemView.txtDetail.setOnClickListener {
-                itemClick(adapterPosition)
+                itemClick(adapterPosition,"Detail")
+            }
+            itemView.txtCancel.setOnClickListener {
+                itemClick(adapterPosition,"Cancel")
             }
 
         }

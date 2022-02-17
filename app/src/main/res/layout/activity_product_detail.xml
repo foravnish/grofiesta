@@ -24,7 +24,6 @@
                 android:orientation="vertical">
 
 
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -102,12 +101,35 @@
 
 
 
-                <ImageView
-                    android:id="@+id/productImage"
+<!--                <ImageView-->
+<!--                    android:id="@+id/productImage"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"/>-->
+
+
+                <RelativeLayout
+                    android:id="@+id/relativePager"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="@dimen/_250sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:visibility="visible">
 
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/viewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true" />
 
+                    <me.relex.circleindicator.CircleIndicator
+                        android:id="@+id/indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="@dimen/_220sdp"
+                        app:ci_drawable="@drawable/circle_indicator_black"
+                        app:ci_drawable_unselected="@drawable/circle_indicator_gray"
+                        app:ci_height="@dimen/_4sdp"
+                        app:ci_width="@dimen/_4sdp" />
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -265,7 +287,6 @@
                     android:visibility="gone"
                     android:padding="@dimen/_10sdp">
 
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -289,7 +310,6 @@
                             android:fontFamily="@font/poppins_medium"
                             android:gravity="start"
                             android:maxLines="2"
-                            android:text=""
                             android:textColor="@color/colorBlackLite"
                             android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
@@ -307,7 +327,7 @@
                             android:ellipsize="end"
                             android:gravity="start"
                             android:layout_marginTop="@dimen/_5sdp"
-                            tools:text="Lorem Ipsum is simply dummy text."
+                            android:text="@string/desc_data"
                             android:textColor="@color/header_color"
                             android:textSize="@dimen/_12sdp" />
 
@@ -333,9 +353,9 @@
 
         <include
             android:id="@+id/lytFooterDetail"
-            android:layout_alignParentBottom="true"
+            layout="@layout/footer_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            layout="@layout/footer_detail"/>
+            android:layout_alignParentBottom="true" />
     </RelativeLayout>
 </layout>

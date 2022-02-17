@@ -305,30 +305,36 @@ object ApiResponseModels {
         val success: Success
     ) : Serializable {
         data class Success(
-            var product_id: String,
-            var gfid: String,
-            var category_id: String,
-            var sub_category_id: String,
-            var product_name: String,
-            var weight_size: String,
-            var main_price: String,
-            var display_price: String,
-            var purchase_price: String,
-            var discount_percent: String,
-            var description: String,
-            var short_desp: String,
-            var urlimage: String,
-            var qty: String,
-            var keyword: String,
-            var sku: String,
-            var hsn: String,
-            var gst: String,
-            var slug: String,
-            var featured: String,
-            var Stringstatus: String,
-            var category_name: String,
-            var minimum_price:String,
-        )
+            var product_detail: ProductDetail,
+            var multiimages: List<String>
+        ):Serializable{
+            data class ProductDetail(
+                var product_id: String,
+                var gfid: String,
+                var category_id: String,
+                var sub_category_id: String,
+                var product_name: String,
+                var weight_size: String,
+                var main_price: String,
+                var display_price: String,
+                var purchase_price: String,
+                var discount_percent: String,
+                var description: String,
+                var short_desp: String,
+                var urlimage: String,
+                var qty: String,
+                var keyword: String,
+                var sku: String,
+                var hsn: String,
+                var gst: String,
+                var slug: String,
+                var featured: String,
+                var Stringstatus: String,
+                var category_name: String,
+                var minimum_price:String
+            )
+        }
+
     }
 
 
@@ -448,6 +454,7 @@ object ApiResponseModels {
                 var id: String,
                 var image: String,
                 var name: String,
+                val link:String,
                 var offer_status: String
             )
 

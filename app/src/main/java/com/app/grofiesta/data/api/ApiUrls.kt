@@ -34,6 +34,7 @@ object ApiUrls {
     const val DROP_DOWN_SERVICE = "api/getMainMenuGroApi"
     const val RELEATED_PRODUCT = "api/getrelatedProductsApi"
     const val MY_ORDER_LISTING = "api/order_list_api"
+    const val ORDER_CANCEL = "api/cancel_order_api"
     const val MY_DELIVERY_LISTING = "api/delivery_order_list"
     const val MY_DELIVERY_CHANGE_STATUS = "api/order_status_update_api"
     const val MY_DROPDOWN_LISTING = "api/getproductDropdownApi"

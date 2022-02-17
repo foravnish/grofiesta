@@ -25,6 +25,14 @@ class MyOrderViewModel(application: Application) : AndroidViewModel(application)
             .let { return it }
     }
 
+    fun initCancelOrder(
+        order_id: String,showDialog: Boolean
+    ): MutableLiveData<ApiResponseModels.CommonRespose>? {
+        mRegistrationtApiRepository = MyOrderRepository().getInstance()
+        mRegistrationtApiRepository!!.callCancelOrder(mContext, order_id,showDialog)
+            .let { return it }
+    }
+
 
 
 }

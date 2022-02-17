@@ -88,12 +88,12 @@ class LoginRepository {
 
     @SuppressLint("CheckResult")
     fun callVerifyOtpApi(
-        context: Context, post_otp: String,locaOtp:String,email:String, showDialog: Boolean
+        context: Context, post_otp: String,locaOtp:String,mMobile:String, showDialog: Boolean
     ): MutableLiveData<ApiResponseModels.LoginResponse> {
         val mLiveData = MutableLiveData<ApiResponseModels.LoginResponse>()
         if (NetworkHandling.isConnected(context)) {
             if (showDialog) (context as BaseActivity).showDialog()
-            apiInterface!!.callVerifyOtpApi( post_otp,locaOtp,email)
+            apiInterface!!.callVerifyOtpApi( post_otp,locaOtp,mMobile)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).doOnError {
                     (context as BaseActivity).dismissDialog()
                     NetworkHandling.showNetworkError(context, it)

@@ -52,6 +52,9 @@ class MyCartActivity : BaseActivity() {
         else
             txtPageTitle.text = "My Cart"
 
+        txtPayNow.alpha = 0.5f
+        txtPayNow.isEnabled = false
+
         bindAddress()
 
         getAllMyCart()
@@ -76,6 +79,9 @@ class MyCartActivity : BaseActivity() {
             .observe(this, Observer { mData ->
                 if (mData.status) {
                     if (mData.data != null && mData.data.size > 0) {
+
+                        txtPayNow.alpha = 1f
+                        txtPayNow.isEnabled = true
 
                         lytEmptyCart.visibility = View.GONE
                         nestedScroll.visibility = View.VISIBLE

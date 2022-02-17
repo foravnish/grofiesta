@@ -21,13 +21,18 @@ class WebViewActivity : BaseActivity() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_web_view)
+
+        webUrl = intent.getStringExtra("webUrl")!!
+        webTitle = intent.getStringExtra("webTitle")!!
+        if (webTitle == "About Us")
+            setContentView(R.layout.activity_web_view_about_us)
+        else
+            setContentView(R.layout.activity_web_view)
+
 
         imgBack.setOnClickListener { finish() }
 
 
-        webUrl = intent.getStringExtra("webUrl")!!
-        webTitle = intent.getStringExtra("webTitle")!!
         txtPageTitle.text = webTitle
 
         try {

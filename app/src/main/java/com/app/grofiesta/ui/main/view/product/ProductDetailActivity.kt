@@ -27,13 +27,16 @@ import kotlinx.android.synthetic.main.app_main_header_layout_with_search_trans.*
 import kotlinx.android.synthetic.main.home_product_item.view.*
 
 import android.animation.Animator
+import android.os.Handler
 import android.widget.ImageView
 import android.widget.LinearLayout
 
 import com.accountapp.accounts.utils.Prefences
 import com.app.grofiesta.R
+import com.app.grofiesta.adapter.BannerGroFiestaPagerAdapter
 import com.app.grofiesta.ui.main.view.cart.CheckoutViewModel
 import com.app.grofiesta.utils.animUtil.CircleAnimationUtil
+import kotlinx.android.synthetic.main.dymanic_home_product_item.view.*
 import kotlinx.android.synthetic.main.footer_detail.view.*
 
 
@@ -51,8 +54,37 @@ class ProductDetailActivity : BaseActivity() {
     val mContext by lazy { this@ProductDetailActivity }
     lateinit var list: List<MyCart>
     lateinit var mMyCartData: ApiResponseModels.ProductListingResponse.Data
-    lateinit var mData: ApiResponseModels.ProductDetailResponse.Success
+    lateinit var mData: ApiResponseModels.ProductDetailResponse.Success.ProductDetail
     var mImage = ""
+    private var NUM_PAGES = 0
+    internal val PERIOD_MS: Long = 3 * 1000
+    private var handler = Handler()
+    internal var position: Int = 0
+
+//    public override fun onPause() {
+//        super.onPause()
+//        handler?.removeCallbacks(runnale)
+//    }
+
+    override fun onResume() {
+        super.onResume()
+        getAllMyCart()
+        getMyCart(product_id)
+//        handler.postDelayed(runnale, PERIOD_MS)
+    }
+
+//    private val runnale = object : Runnable {
+//        override fun run() {
+//            binding.viewpager.setCurrentItem(position, true)
+//            if (position >= NUM_PAGES)
+//                position = 0
+//            else
+//                position++
+//            // Move to the next page after 3s
+//            handler.postDelayed(this, PERIOD_MS)
+//        }
+//    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_detail)
@@ -67,9 +99,6 @@ class ProductDetailActivity : BaseActivity() {
         txtPageTitle.text = "Product Detail"
         product_id = intent.getStringExtra("product_id")!!
 
-//        openBottomSheet()
-
-
         binding.lytFooterDetail.alpha = 0.5f
         binding.lytFooterDetail.isEnabled = false
 
@@ -77,14 +106,14 @@ class ProductDetailActivity : BaseActivity() {
 
         callMyWishList(product_id)
 
-        binding.productImage.setOnClickListener {
-            Intent(this, ImagePreviewActivity::class.java).apply {
-                putExtra("image", mImage)
-            }.let {
-                Utility.startActivityWithLeftToRightAnimation(this, it)
-            }
-
-        }
+//        binding.productImage.setOnClickListener {
+//            Intent(this, ImagePreviewActivity::class.java).apply {
+//                putExtra("image", mImage)
+//            }.let {
+//                Utility.startActivityWithLeftToRightAnimation(this, it)
+//            }
+//
+//        }
 
         lytCartView.setOnClickListener {
             Intent(this, MyCartActivity::class.java).apply {
@@ -95,30 +124,30 @@ class ProductDetailActivity : BaseActivity() {
 
 
         binding.lytFooterDetail.lytBuyNow.setOnClickListener {
-            if(Prefences.getIsLogin(this@ProductDetailActivity)){
+            if (Prefences.getIsLogin(this@ProductDetailActivity)) {
 
                 mData.apply {
-                        MyCartResponse(
-                            "" + product_id, "" + category_id, "" + sub_category_id,
-                            "" + product_name, "" + weight_size, "" + main_price,
-                            "" + display_price, "" + purchase_price, "" + display_price,
-                            "" + description, "" + short_desp, "" + urlimage,
-                            "1", "" + gst, "" + category_name
-                        ).let {
-                            viewModel.insertItemInCart(it)
-                            callAddToCartApi(it,true)
-                        }
+                    MyCartResponse(
+                        "" + product_id, "" + category_id, "" + sub_category_id,
+                        "" + product_name, "" + weight_size, "" + main_price,
+                        "" + display_price, "" + purchase_price, "" + display_price,
+                        "" + description, "" + short_desp, "" + mImage,
+                        "1", "" + gst, "" + category_name
+                    ).let {
+                        viewModel.insertItemInCart(it)
+                        callAddToCartApi(it, true)
+                    }
                 }
-            }else Utility.showToastForLogin(this@ProductDetailActivity)
+            } else Utility.showToastForLogin(this@ProductDetailActivity)
         }
 
         binding.lytFooterDetail.lytAddToCart.setOnClickListener {
-            if(Prefences.getIsLogin(this@ProductDetailActivity)){
+            if (Prefences.getIsLogin(this@ProductDetailActivity)) {
 
-                binding.lytFooterDetail.lytPlusMinus.visibility=View.VISIBLE
-                binding.lytFooterDetail.lytAddToCart.visibility=View.GONE
-                binding.lytFooterDetail.lytGoToCart.visibility=View.VISIBLE
-                binding.lytFooterDetail.lytBuyNow.visibility=View.GONE
+                binding.lytFooterDetail.lytPlusMinus.visibility = View.VISIBLE
+                binding.lytFooterDetail.lytAddToCart.visibility = View.GONE
+                binding.lytFooterDetail.lytGoToCart.visibility = View.VISIBLE
+                binding.lytFooterDetail.lytBuyNow.visibility = View.GONE
 
                 makeFlyAnimation(binding.lytFooterDetail.imageView)
 
@@ -127,42 +156,15 @@ class ProductDetailActivity : BaseActivity() {
                         "" + product_id, "" + category_id, "" + sub_category_id,
                         "" + product_name, "" + weight_size, "" + main_price,
                         "" + display_price, "" + purchase_price, "" + display_price,
-                        "" + description, "" + short_desp, "" + urlimage,
+                        "" + description, "" + short_desp, "" + mImage,
                         "1", "" + gst, "" + category_name
                     ).let {
                         viewModel.insertItemInCart(it)
-                        callAddToCartApi(it,false)
+                        callAddToCartApi(it, false)
                     }
                 }
 
-
-//                if (btnAddToCart.text == "Add To Cart") {
-//                    btnAddToCart.text = "Go to Cart"
-//                    lytPlusMinus.visibility = View.GONE
-//                    makeFlyAnimation(imageView)
-//                    mData.apply {
-//                        MyCartResponse(
-//                            "" + product_id, "" + category_id, "" + sub_category_id,
-//                            "" + product_name, "" + weight_size, "" + main_price,
-//                            "" + display_price, "" + purchase_price, "" + display_price,
-//                            "" + description, "" + short_desp, "" + urlimage,
-//                            "1", "" + gst, "" + category_name
-//                        ).let {
-//                            viewModel.insertItemInCart(it)
-//                            callAddToCartApi(it)
-//                        }
-//                    }
-//
-//
-//                } else if (btnAddToCart.text == "Go to Cart") {
-//                    lytPlusMinus.visibility = View.VISIBLE
-//                    Utility.startActivityWithLeftToRightAnimation(
-//                        this,
-//                        Intent(this, MyCartActivity::class.java)
-//                    )
-//                }
-
-            }else Utility.showToastForLogin(this@ProductDetailActivity)
+            } else Utility.showToastForLogin(this@ProductDetailActivity)
         }
 
         binding.lytFooterDetail.lytGoToCart.setOnClickListener {
@@ -175,7 +177,7 @@ class ProductDetailActivity : BaseActivity() {
 
     }
 
-    private fun callAddToCartApi(mData: MyCartResponse, isByuNow:Boolean) {
+    private fun callAddToCartApi(mData: MyCartResponse, isByuNow: Boolean) {
         if (Prefences.getIsLogin(this)) {
             mViewModelCheckout.initAddToCart(
                 Prefences.getUserId(this@ProductDetailActivity)!!,
@@ -185,7 +187,7 @@ class ProductDetailActivity : BaseActivity() {
                     if (mData_.status) {
                         if (isByuNow)
                             buyNow(mData.product_id)
-                    }else
+                    } else
                         buyNow(mData.product_id)
 
 
@@ -194,7 +196,7 @@ class ProductDetailActivity : BaseActivity() {
 
     }
 
-    private fun buyNow(product_id:String) {
+    private fun buyNow(product_id: String) {
 
         Intent(this, MyCartActivity::class.java).apply {
             putExtra("type", "buyNow")
@@ -242,18 +244,18 @@ class ProductDetailActivity : BaseActivity() {
             viewModel.getMyCart(product_id).observe(this@ProductDetailActivity, Observer {
                 if (it != null && it.isNotEmpty()) {
 
-                    binding.lytFooterDetail.lytPlusMinus.visibility=View.VISIBLE
-                    binding.lytFooterDetail.lytAddToCart.visibility=View.GONE
-                    binding.lytFooterDetail.lytGoToCart.visibility=View.VISIBLE
-                    binding.lytFooterDetail.lytBuyNow.visibility=View.GONE
+                    binding.lytFooterDetail.lytPlusMinus.visibility = View.VISIBLE
+                    binding.lytFooterDetail.lytAddToCart.visibility = View.GONE
+                    binding.lytFooterDetail.lytGoToCart.visibility = View.VISIBLE
+                    binding.lytFooterDetail.lytBuyNow.visibility = View.GONE
 
                     list = it
                     binding.lytFooterDetail.txtItemValue.text = list[0].qty
                 } else {
-                    binding.lytFooterDetail.lytPlusMinus.visibility=View.GONE
-                    binding.lytFooterDetail.lytAddToCart.visibility=View.VISIBLE
-                    binding.lytFooterDetail.lytGoToCart.visibility=View.GONE
-                    binding.lytFooterDetail.lytBuyNow.visibility=View.VISIBLE
+                    binding.lytFooterDetail.lytPlusMinus.visibility = View.GONE
+                    binding.lytFooterDetail.lytAddToCart.visibility = View.VISIBLE
+                    binding.lytFooterDetail.lytGoToCart.visibility = View.GONE
+                    binding.lytFooterDetail.lytBuyNow.visibility = View.VISIBLE
                 }
 
             })
@@ -285,18 +287,19 @@ class ProductDetailActivity : BaseActivity() {
                 imgWishlist.visibility = View.VISIBLE
                 binding.lytFooterDetail.alpha = 1f
                 binding.lytFooterDetail.isEnabled = true
-                mImage = it.success.urlimage
-                mData = it.success
+                mData = it.success.product_detail
+                if (it.success.multiimages != null)
+                    mImage = it.success.multiimages[0]
 
-                txtItemName.text = "" + it.success.product_name
-                txtCategory.text = "" + it.success.category_name
-                txtSKU.text = "" + it.success.sku
-                txtSize.text = "" + it.success.weight_size
-                txtSalePrice.text = "₹" + it.success.display_price
-                txtPrice.text = "₹" + it.success.main_price
+                txtItemName.text = "" + it.success.product_detail.product_name
+                txtCategory.text = "" + it.success.product_detail.category_name
+                txtSKU.text = "" + it.success.product_detail.sku
+                txtSize.text = "" + it.success.product_detail.weight_size
+                txtSalePrice.text = "₹" + it.success.product_detail.display_price
+                txtPrice.text = "₹" + it.success.product_detail.main_price
 
 
-                it.success.apply {
+                it.success.product_detail.apply {
                     mMyCartData = ApiResponseModels.ProductListingResponse.Data(
                         "",
                         category_id,
@@ -308,7 +311,7 @@ class ProductDetailActivity : BaseActivity() {
                         qty,
                         gst,
                         hsn,
-                        urlimage,
+                        "" + mImage,
                         keyword,
                         main_price,
                         product_id,
@@ -320,7 +323,7 @@ class ProductDetailActivity : BaseActivity() {
                         slug,
                         "",
                         sub_category_id,
-                        urlimage,
+                        "" + mImage,
                         weight_size,
                         flag,
                         "",
@@ -329,29 +332,33 @@ class ProductDetailActivity : BaseActivity() {
                     )
                 }
 
-                if (it.success.discount_percent != null && it.success.discount_percent != "0") {
+                if (it.success.product_detail.discount_percent != null && it.success.product_detail.discount_percent != "0" && it.success.product_detail.discount_percent != "") {
                     txtDiscount.visibility = View.VISIBLE
-                    txtDiscount.text = "" + it.success.discount_percent + "% Off"
+                    txtDiscount.text = "" + it.success.product_detail.discount_percent + "% Off"
                 } else
                     txtDiscount.visibility = View.GONE
 
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    txtDescripton.setText(
-                        Html.fromHtml(
-                            "" + it.success.description,
-                            Html.FROM_HTML_MODE_COMPACT
-                        )
-                    );
-                } else {
-                    txtDescripton.setText(Html.fromHtml("" + it.success.description))
-                }
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                    txtDescripton.setText(
+//                        Html.fromHtml(
+//                            "" + it.success.description,
+//                            Html.FROM_HTML_MODE_COMPACT
+//                        )
+//                    );
+//                } else {
+//                    txtDescripton.setText(Html.fromHtml("" + it.success.description))
+//                }
 
-                if (it.success.description==null || it.success.description=="")
-                    lytDesc.visibility=View.GONE
-                else lytDesc.visibility=View.VISIBLE
+//                if (it.success.description==null || it.success.description=="")
+//                    lytDesc.visibility=View.GONE
+//                else
+                lytDesc.visibility = View.VISIBLE
 
-                Glide.with(mContext).load(it.success.urlimage).into(productImage)
+                if (it.success.multiimages.size > 0)
+                    initPagerViewer(it.success.multiimages)
+
+//                Glide.with(mContext).load(it.success.urlimage).into(productImage)
 
             } else Utility.showToast(mContext)
 
@@ -370,6 +377,38 @@ class ProductDetailActivity : BaseActivity() {
             } else Utility.showToast(this)
         })
 
+    }
+
+    private fun initPagerViewer(images: List<String>) {
+
+        NUM_PAGES = images.size
+        var mList = java.util.ArrayList<ApiResponseModels.GroFiestaPageResponse.Success.Slider>()
+
+        images.forEach {
+
+            mList.add(
+                ApiResponseModels.GroFiestaPageResponse.Success.Slider(
+                    "", "", "", "", "",
+                    "", "", "" + it, "", "", "",
+                    "", ""
+                )
+            )
+
+        }
+
+        viewpager.adapter =
+            BannerGroFiestaPagerAdapter(this@ProductDetailActivity, mList) {
+                Intent(this@ProductDetailActivity, ImagePreviewActivity::class.java).apply {
+                    putExtra("image", mList[it].urlimage)
+                }.let {
+                    Utility.startActivityWithLeftToRightAnimationContext(
+                        this@ProductDetailActivity!!,
+                        it
+                    )
+                }
+            }
+        if (mList.size > 1)
+            indicator.setViewPager(viewpager)
     }
 
 
@@ -430,20 +469,28 @@ class ProductDetailActivity : BaseActivity() {
         item.apply {
             var _qty = lytFooterDetail.txtItemValue.text.toString().toInt()
             _qty = if (b) _qty + 1 else _qty - 1
-            if (_qty >= 1){
-                mViewModel.initUpdateMyCart(""+item.product_id,""+Prefences.getUserId(this@ProductDetailActivity),""+_qty,true)!!.observe(this@ProductDetailActivity, Observer {mData->
-                    if (mData.status){
+            if (_qty >= 1) {
+                mViewModel.initUpdateMyCart(
+                    "" + item.product_id,
+                    "" + Prefences.getUserId(this@ProductDetailActivity),
+                    "" + _qty,
+                    true
+                )!!.observe(this@ProductDetailActivity, Observer { mData ->
+                    if (mData.status) {
                     }
                 })
             } else {
-                mViewModel.initDeleteMyCart(""+item.product_id,""+Prefences.getUserId(this@ProductDetailActivity),true)!!.observe(this@ProductDetailActivity, Observer {mData->
-                    if (mData.status){
+                mViewModel.initDeleteMyCart(
+                    "" + item.product_id,
+                    "" + Prefences.getUserId(this@ProductDetailActivity),
+                    true
+                )!!.observe(this@ProductDetailActivity, Observer { mData ->
+                    if (mData.status) {
                     }
                 })
 
             }
         }
-
 
 
     }
@@ -464,17 +511,17 @@ class ProductDetailActivity : BaseActivity() {
                     } else Utility.showToast(mContext)
                 })
 
-            mData.apply {
-                MyCartResponse(
-                    "" + product_id, "" + category_id, "" + sub_category_id,
-                    "" + product_name, "" + weight_size, "" + main_price,
-                    "" + display_price, "" + purchase_price, "" + display_price,
-                    "" + description, "" + short_desp, "" + urlimage,
-                    "1", "" + gst, "" + category_name
-                ).let {
-                    viewModel.insertItemInWishList(it)
+                mData.apply {
+                    MyCartResponse(
+                        "" + product_id, "" + category_id, "" + sub_category_id,
+                        "" + product_name, "" + weight_size, "" + main_price,
+                        "" + display_price, "" + purchase_price, "" + display_price,
+                        "" + description, "" + short_desp, "" + mImage,
+                        "1", "" + gst, "" + category_name
+                    ).let {
+                        viewModel.insertItemInWishList(it)
+                    }
                 }
-            }
 
             } else {
                 imgWishlist.setImageResource(R.drawable.ic_like_heart_unfilled)
@@ -487,15 +534,10 @@ class ProductDetailActivity : BaseActivity() {
                     } else Utility.showToast(mContext)
                 })
 
-            viewModel.deleteItemFromWishList(mData.product_id)
+                viewModel.deleteItemFromWishList(mData.product_id)
             }
         } else Utility.showToastForLogin(this)
     }
 
 
-    override fun onResume() {
-        super.onResume()
-        getAllMyCart()
-        getMyCart(product_id)
-    }
 }

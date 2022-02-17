@@ -118,9 +118,7 @@ class OTPActivity : BaseActivity() {
                 if (it.data!=null){
                     otp=""+it.data.opt
 
-
                     callWishListApi()
-
                 }
 
             })
@@ -189,39 +187,42 @@ class OTPActivity : BaseActivity() {
 
     private fun verifyOtp() {
 
-        mViewModel.verifyOtpApi(otp_view.text.toString(),otp_view.text.toString(),"",true)
-            ?.observe(this, Observer {
+        if (otp_view.text.toString()==otp){
+            mViewModel.callUserDetail( customer_id, true)!!.observe(this, Observer {
+                if (it.success!=null) {
 
-                if (it.status) {
+                    it.success.apply {
+                        Prefences.setIsLogin(this@OTPActivity, true)
+                        Prefences.setFirstName(this@OTPActivity,firstname)
+                        Prefences.setLastName(this@OTPActivity,lastname)
+                        Prefences.setUserMobile(this@OTPActivity,telephone)
+                        Prefences.setUserEmailId(this@OTPActivity,email)
+                        Prefences.setUserId(this@OTPActivity,customer_id)
+                        Prefences.setPincode(this@OTPActivity,postcode)
+                        Prefences.setAddress(this@OTPActivity,address)
+                        Prefences.setAddressId(this@OTPActivity,""+address_id)
+                        Prefences.setUserImage(this@OTPActivity,""+urlimage)
+                        Prefences.setIsDeliveryBoy(this@OTPActivity,""+delevery_boy_status)
 
-                    mViewModel.callUserDetail( customer_id, true)!!.observe(this, Observer {
-                        if (it.success!=null) {
-
-                            it.success.apply {
-                                Prefences.setIsLogin(this@OTPActivity, true)
-                                Prefences.setFirstName(this@OTPActivity,firstname)
-                                Prefences.setLastName(this@OTPActivity,lastname)
-                                Prefences.setUserMobile(this@OTPActivity,telephone)
-                                Prefences.setUserEmailId(this@OTPActivity,email)
-                                Prefences.setUserId(this@OTPActivity,customer_id)
-                                Prefences.setPincode(this@OTPActivity,postcode)
-                                Prefences.setAddress(this@OTPActivity,address)
-                                Prefences.setAddressId(this@OTPActivity,""+address_id)
-                                Prefences.setUserImage(this@OTPActivity,""+urlimage)
-                                Prefences.setIsDeliveryBoy(this@OTPActivity,""+delevery_boy_status)
-
-                            }
-                            callMyCartListing(customer_id)
-
-
-                        } else Utility.showToast(this)
-                    })
+                    }
+                    callMyCartListing(customer_id)
 
 
                 } else Utility.showToast(this)
-
-
             })
+
+        }else showToast("Otp not match. please try valid Otp.")
+//        mViewModel.verifyOtpApi(""+otp_view.text.toString(),""+otp,""+mMobile,true)
+//            ?.observe(this, Observer {
+//
+//                if (it.status) {
+//
+//
+//
+//                } else Utility.showToast(this)
+//
+//
+//            })
 
     }
 

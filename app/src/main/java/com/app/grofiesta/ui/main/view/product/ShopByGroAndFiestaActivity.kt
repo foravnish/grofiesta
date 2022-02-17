@@ -13,6 +13,7 @@ import com.app.grofiesta.adapter.GroFiestaAdapter
 import com.app.grofiesta.data.model.ApiResponseModels
 import com.app.grofiesta.databinding.ActivityShopByGroAndFiestaBinding
 import com.app.grofiesta.ui.base.BaseActivity
+import com.app.grofiesta.ui.main.view.WebViewActivity
 import com.app.grofiesta.utils.Utility
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_shop_by_gro_and_fiesta.*
@@ -130,11 +131,18 @@ class ShopByGroAndFiestaActivity : BaseActivity() {
         NUM_PAGES = slider.size
         binding.viewpager.adapter =
             BannerGroFiestaPagerAdapter(this, slider){
-                Intent(this, ImagePreviewActivity::class.java).apply {
-                    putExtra("image", slider[it].urlimage)
+                Intent(this@ShopByGroAndFiestaActivity, WebViewActivity::class.java).apply {
+                    putExtra("webUrl",""+slider[it].link)
+                    putExtra("webTitle",""+slider[it].company_name)
                 }.let {
-                    Utility.startActivityWithLeftToRightAnimation(this, it)
+                    Utility.startActivityWithLeftToRightAnimation(this,it)
                 }
+
+//                Intent(this, ImagePreviewActivity::class.java).apply {
+//                    putExtra("image", slider[it].urlimage)
+//                }.let {
+//                    Utility.startActivityWithLeftToRightAnimation(this, it)
+//                }
             }
         binding.indicator.setViewPager(binding.viewpager)
 
@@ -148,11 +156,18 @@ class ShopByGroAndFiestaActivity : BaseActivity() {
         )
         binding.rvGroAndFiesta.layoutManager = horizontalLayout
         val mAdapter = GroFiestaAdapter(image) {
-            Intent(this, ImagePreviewActivity::class.java).apply {
-                putExtra("image", image[it].urlimage)
+            Intent(this@ShopByGroAndFiestaActivity, WebViewActivity::class.java).apply {
+                putExtra("webUrl",""+image[it].link)
+                putExtra("webTitle",""+image[it].name)
             }.let {
-                Utility.startActivityWithLeftToRightAnimation(this, it)
+                Utility.startActivityWithLeftToRightAnimation(this,it)
             }
+
+//            Intent(this, ImagePreviewActivity::class.java).apply {
+//                putExtra("image", image[it].urlimage)
+//            }.let {
+//                Utility.startActivityWithLeftToRightAnimation(this, it)
+//            }
         }
         binding.rvGroAndFiesta.adapter = mAdapter
     }

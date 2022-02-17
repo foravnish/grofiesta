@@ -284,7 +284,10 @@ https://play.google.com/store/apps/details?id=${packageName}
 
         navAboutUs.setOnClickListener(View.OnClickListener {
             closeDrawer()
-            Intent(this@HomeActivity, AboutUsActivity::class.java).apply {
+//            Intent(this@HomeActivity, AboutUsActivity::class.java).apply {
+                Intent(this@HomeActivity, WebViewActivity::class.java).apply {
+                    putExtra("webUrl","https://nayapatta.com/grofiesta/welcome/about")
+                    putExtra("webTitle","About Us")
             }.let {
                 Utility.startActivityWithLeftToRightAnimation(this,it)
             }

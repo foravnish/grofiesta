@@ -59,6 +59,31 @@ class MyOrderRepository {
 
 
 
+    @SuppressLint("CheckResult")
+    fun callCancelOrder(
+        context: Context, order_id: String, showDialog: Boolean
+    ): MutableLiveData<ApiResponseModels.CommonRespose> {
+        val mLiveData = MutableLiveData<ApiResponseModels.CommonRespose>()
+        if (NetworkHandling.isConnected(context)) {
+            if (showDialog) (context as BaseActivity).showDialog()
+            apiInterface!!.callCancelOrder(order_id)
+                .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).doOnError {
+                    (context as BaseActivity).dismissDialog()
+                    NetworkHandling.showNetworkError(context, it)
+                }.subscribe({
+                    try {
+                        (context as BaseActivity).dismissDialog()
+                        mLiveData.value = it
+                    } catch (e: Exception) {
+                        println(e.printStackTrace())
+                    }
+                }, { error ->
+                })
+        } else {
+            NetworkHandling.getRetryDialog(context, RetryDialog.NO_INTERNET)
+        }
+        return mLiveData
+    }
 
 
 

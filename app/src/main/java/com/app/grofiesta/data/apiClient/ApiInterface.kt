@@ -34,7 +34,7 @@ interface ApiInterface {
     fun callVerifyOtpApi(
         @Field("post_otp") post_otp: String,
         @Field("local_otp") local_otp: String,
-        @Field("email") email: String
+        @Field("mobile") mobile: String
     ): Observable<ApiResponseModels.LoginResponse>
 
     @FormUrlEncoded
@@ -164,6 +164,13 @@ interface ApiInterface {
     fun callMyOrderListing(
         @Field("customer_id") customer_id: String
     ): Observable<ApiResponseModels.OrderLIstingNewResponse>
+
+    @FormUrlEncoded
+    @POST(ApiUrls.ORDER_CANCEL)
+    fun callCancelOrder(
+        @Field("orderid") orderid: String,
+//        @Field("user_id") user_id: String
+    ): Observable<ApiResponseModels.CommonRespose>
 
     @GET(ApiUrls.MY_DELIVERY_LISTING + "/{id}")
     fun callMyDeliveryListing(
