@@ -29,22 +29,32 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Handler
 import android.view.Window
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.TextView
+import com.ananda.retailer.Room.CanDatabase
 import com.app.grofiesta.data.model.ApiResponseModels
 import com.app.grofiesta.ui.main.view.home.HomeActivity
+import com.app.grofiesta.ui.main.view.login.LoginActivity
 import com.app.grofiesta.ui.main.view.wallet.WalletModel
+import com.razorpay.Checkout
+import com.razorpay.PaymentResultListener
 import kotlinx.android.synthetic.main.activity_checkout.shimmerLayout
 import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.dialog_deliver_once.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONException
+import org.json.JSONObject
 import java.lang.Exception
 import java.util.*
 
 import kotlin.collections.ArrayList
 
 
-class CheckoutActivity : BaseActivity() {
+class CheckoutActivity : BaseActivity(), PaymentResultListener {
     lateinit var binding: ActivityCheckoutBinding
     lateinit var mViewModel: CheckoutViewModel
     lateinit var mViewModelWallet: WalletModel
@@ -58,6 +68,9 @@ class CheckoutActivity : BaseActivity() {
     var mGST = 0.0
     var mCoupon = 0.0
     var mWallet = 0.0
+    var mSendWallet = 0.0
+    var paymentStatus = "online"
+    var isPayFromWallet: Boolean = false
     lateinit var mCartData: ArrayList<ApiResponseModels.AddToCart.Data>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,25 +97,50 @@ class CheckoutActivity : BaseActivity() {
         callGetShippingCharge()
         callMyWallet()
 
+
+        radio_group.setOnCheckedChangeListener(
+            { group, checkedId ->
+                val radio: RadioButton = findViewById(checkedId)
+
+                if (radio.text == "Pay Online") {
+                    txtPayNow.text = "Pay Now"
+                    paymentStatus = "online"
+                    lytBalance.visibility = View.VISIBLE
+                    mSendWallet = mWallet
+                } else {
+                    txtPayNow.text = "Buy Now"
+                    paymentStatus = "cod"
+                    lytBalance.visibility = View.GONE
+                    mSendWallet = 0.0
+
+                    var amt1 = mTotalAmt + mShippingCharge + mGST
+                    var amt2 = mCoupon + 0.0
+                    mGrandTotalAmt = amt1 - amt2
+                    txtTotalAmount.text = "₹" + mGrandTotalAmt
+                }
+            })
+
         ckwallet.setOnCheckedChangeListener { compoundButton, b ->
             if (b) {
                 if (mGrandTotalAmt > mWallet) {
                     txtWallet.text = "- ₹ " + mWallet
-
                     var amt1 = mTotalAmt + mShippingCharge + mGST
                     var amt2 = mCoupon + mWallet
                     mGrandTotalAmt = amt1 - amt2
                     txtGrandTotal.text = "₹" + mGrandTotalAmt
                     txtTotalAmount.text = "₹" + mGrandTotalAmt
+                    txtPayNow.text = "Pay Now"
                 } else {
                     txtWallet.text = "- ₹ " + mGrandTotalAmt
-                    mWallet = mGrandTotalAmt
                     var amt1 = mTotalAmt + mShippingCharge + mGST
-                    var amt2 = mCoupon + mWallet
+                    var amt2 = mCoupon + mGrandTotalAmt
                     mGrandTotalAmt = amt1 - amt2
                     txtGrandTotal.text = "₹" + mGrandTotalAmt
                     txtTotalAmount.text = "₹" + mGrandTotalAmt
+                    txtPayNow.text = "Buy Now"
                 }
+                mSendWallet = mWallet
+                isPayFromWallet = true
             } else {
                 var amt1 = mTotalAmt + mShippingCharge + mGST
                 var amt2 = mCoupon + 0.0
@@ -110,8 +148,25 @@ class CheckoutActivity : BaseActivity() {
                 txtGrandTotal.text = "₹" + mGrandTotalAmt
                 txtTotalAmount.text = "₹" + mGrandTotalAmt
                 txtWallet.text = "- ₹ 0.0"
+                mSendWallet = 0.0
+                isPayFromWallet = false
             }
         }
+
+    }
+
+    fun clickPayNow(view: View) {
+        if (paymentStatus == "online") {
+            if (isPayFromWallet) {
+                if (mGrandTotalAmt > mWallet) {
+                    gotoPaymentGatway(mGrandTotalAmt)
+                } else
+                    placeOrderNow()
+
+            } else
+                gotoPaymentGatway(mGrandTotalAmt)
+
+        } else placeOrderNow()
 
     }
 
@@ -120,6 +175,7 @@ class CheckoutActivity : BaseActivity() {
             .observe(this, Observer {
                 if (it.data != null) {
                     if (it.data.current_balance != null) {
+//                        if (it.data.current_balance.current_bal != "null") {
                         shimmerLayout.visibility = View.GONE
                         lytBalance.visibility = View.VISIBLE
                         txtPayNow.alpha = 1f
@@ -134,13 +190,33 @@ class CheckoutActivity : BaseActivity() {
                                 txtwalletamt.text = "₹ " + mWallet + " Wallet balance"
                             }
                         }
+//                        } else {
+//                            showToast("Unauthorized user please login.")
+//                            goForLogout()
+//                        }
+
                     } else {
-                        Utility.showToast(this)
+                        showToast("Unauthorized user please login.")
+                        goForLogout()
                     }
 
 
                 } else Utility.showToast(mContext)
             })
+
+    }
+
+    private fun goForLogout() {
+        Prefences.resetUserData(this)
+        CoroutineScope(Dispatchers.IO).launch {
+            CanDatabase.INSTANCE?.clearAllTables()
+        }
+
+        Intent(this@CheckoutActivity, LoginActivity::class.java).apply {
+        }.let {
+            Utility.startActivityWithLeftToRightAnimation(this, it)
+        }
+        finishAffinity()
 
     }
 
@@ -190,11 +266,11 @@ class CheckoutActivity : BaseActivity() {
                     mGrandTotalAmt = amt1 - amt2
                     txtGrandTotal.text = "₹" + mGrandTotalAmt
                     txtTotalAmount.text = "₹" + mGrandTotalAmt
-                    if (it.distance!=null && it.distance!=""){
-                        if (it.distance.toInt()<10)
-                            lytDistance.visibility=View.VISIBLE
+                    if (it.distance != null && it.distance != "") {
+                        if (it.distance.toInt() < 10)
+                            lytDistance.visibility = View.VISIBLE
                         else
-                            lytDistance.visibility=View.GONE
+                            lytDistance.visibility = View.GONE
                     }
                 } else {
                     mShippingCharge = 0.0
@@ -284,60 +360,36 @@ class CheckoutActivity : BaseActivity() {
 
     }
 
-    fun clickPayNow(view: View) {
-
-//        val checkout = Checkout()
-//        checkout.setKeyID("Enter your key id here");
-//        checkout.setImage(R.drawable.logo)
-//
-//        val obj = JSONObject()
-//        try {
-//            obj.put("name", "Geeks for Geeks")
-//            obj.put("description", "Test payment")
-//            obj.put("theme.color", "")
-//            obj.put("currency", "INR")
-//            obj.put("amount", "1")
-//            obj.put("prefill.contact", "9284064503")
-//            obj.put("prefill.email", "chaitanyamunje@gmail.com")
-//            checkout.open(this@CheckoutActivity, obj)
-//        } catch (e: JSONException) {
-//            e.printStackTrace()
-//        }
-
-//        openDialogSucessfull()
-
+    override fun onPaymentSuccess(p0: String?) {
         placeOrderNow()
+    }
 
-//        lifecycleScope.launchWhenStarted {
-//            withContext(Dispatchers.IO) {
-//                withContext(lifecycleScope.coroutineContext) {
-//
-//                    mCartData.forEach {
-//
-//                        mViewModel.initAddToCart(
-//                            Prefences.getUserId(this@CheckoutActivity)!!,
-//                            "" + it.product_id, "" + it.qty, true
-//                        )!!
-//                            .observe(this@CheckoutActivity, Observer { mData ->
-//                                if (mData.status) {
-//
-//                                    viewModel.deleteItemFromCart(it.product_id)
-//
-//                                } else showErrorCustomerToast()
-//
-//                            })
-//
-//                    }
-//
-//                }
-//            }
-//            Handler().postDelayed(Runnable {
-//                placeOrderNow()
-//            }, 2000)
-//
-//        }
+    override fun onPaymentError(p0: Int, p1: String?) {
+        showToast("failed")
+    }
 
 
+    private fun gotoPaymentGatway(mToPayAmt: Double) {
+
+        val amount = Math.round(mToPayAmt.toFloat() * 100)
+
+        val checkout = Checkout()
+        checkout.setKeyID("rzp_test_zWkObtMZjeYJXG");
+        checkout.setImage(R.drawable.logo)
+
+        val obj = JSONObject()
+        try {
+            obj.put("name", "Grofiesta")
+            obj.put("description", "Test payment")
+            obj.put("theme.color", "")
+            obj.put("currency", "INR")
+            obj.put("amount", amount)
+            obj.put("prefill.contact", "9284064503")
+            obj.put("prefill.email", "chaitanyamunje@gmail.com")
+            checkout.open(this@CheckoutActivity, obj)
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
     }
 
     private fun placeOrderNow() {
@@ -346,8 +398,8 @@ class CheckoutActivity : BaseActivity() {
             "" + Prefences.getFirstName(this@CheckoutActivity)!!,
             "" + Prefences.getUserEmailId(this@CheckoutActivity)!!,
             "" + Prefences.getUserMobile(this@CheckoutActivity)!!,
-            "" + mWallet,
-            "cod",
+            "" + mSendWallet,
+            "" + paymentStatus,
             "1",
             "" + mShippingCharge,
             "" + mGST,
@@ -361,14 +413,14 @@ class CheckoutActivity : BaseActivity() {
                 if (mData.status) {
 
                     viewModel.deleteMyCartAll()
-                    openDialogSucessfull(mGrandTotalAmt,mData.order_id)
+                    openDialogSucessfull(mGrandTotalAmt, mData.order_id)
                 }
             })
 
 
     }
 
-    fun openDialogSucessfull(mGrandTotalAmt: Double,order_id:String) {
+    fun openDialogSucessfull(mGrandTotalAmt: Double, order_id: String) {
         try {
             d = Dialog(this@CheckoutActivity)
             d!!.requestWindowFeature(Window.FEATURE_NO_TITLE)

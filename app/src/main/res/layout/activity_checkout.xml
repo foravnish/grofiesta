@@ -235,12 +235,56 @@
                             </LinearLayout>
                         </com.facebook.shimmer.ShimmerFrameLayout>
 
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@color/white"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:paddingLeft="5dp"
+                            android:paddingTop="5dp"
+                            android:paddingRight="5dp">
+
+                            <RadioGroup
+                                android:id="@+id/radio_group"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                            <RadioButton
+                                android:id="@+id/rdPayOnline"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_vertical"
+                                android:text="Pay Online"
+                                android:buttonTint="@color/green"
+                                android:checked="true"
+                                android:textColor="@color/colorBlackLite" />
+
+                            <RadioButton
+                                android:id="@+id/rdPayCod"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_vertical"
+                                android:buttonTint="@color/green"
+                                android:text="Cash on Delivery"
+                                android:checked="false"
+                                android:textColor="@color/colorBlackLite" />
+
+
+                            </RadioGroup>
+                        </LinearLayout>
+
                         <RelativeLayout
                             android:id="@+id/lytBalance"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_margin="10dp"
                             android:background="@color/white"
                             android:gravity="center_vertical"
                             android:orientation="vertical"
@@ -258,6 +302,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:gravity="center_vertical"
                                 android:text="Use your "
+                                android:buttonTint="@color/green"
                                 android:textColor="@color/colorBlackLite" />
 
 
@@ -797,7 +842,7 @@
                     android:includeFontPadding="false"
                     android:onClick="clickPayNow"
                     android:padding="@dimen/_5sdp"
-                    android:text="Buy Now"
+                    android:text="Pay Now"
                     android:textAllCaps="false"
                     android:textColor="@color/while_color"
                     android:textSize="@dimen/_12sdp"

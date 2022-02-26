@@ -220,6 +220,7 @@ object ApiResponseModels {
         ) : Serializable {
             data class CurrentBalance(
                 var wid: String,
+                var current_bal:String,
                 var customer_id: String,
                 var wallet_value: String
             )

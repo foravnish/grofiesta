@@ -77,13 +77,13 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-<!--        <meta-data-->
-<!--            android:name="com.razorpay.ApiKey"-->
-<!--            android:value="rzp_live_ILgsfZCZoFIKMb"-->
-<!--            />-->
-<!--        <meta-data-->
-<!--            android:name="com.google.android.gms.wallet.api.enabled"-->
-<!--            android:value="true" />-->
+        <meta-data
+            android:name="com.razorpay.ApiKey"
+            android:value="rzp_test_zWkObtMZjeYJXG"
+            />
+        <meta-data
+            android:name="com.google.android.gms.wallet.api.enabled"
+            android:value="true" />
     </application>
 
 </manifest>
