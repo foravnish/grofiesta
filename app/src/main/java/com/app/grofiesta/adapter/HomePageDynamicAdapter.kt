@@ -169,7 +169,7 @@ class HomePageDynamicAdapter(
         )
         itemView.rvDynamicProductHorizontal.layoutManager = horizontalLayout
 
-        val mAdapter = HomeItemsAdapter("1", Utility.convertModel(mData)) { pos, type ->
+        val mAdapter = HomeItemsAdapter("1", Utility.convertModel(mData),viewModel,requireActivity) { pos, type ->
             when (type) {
                 "Detail" -> openDetailPage(mData[pos], mData[pos].product_id, "Detail")
                 "Add" -> addToCart(mData[pos], "Add")

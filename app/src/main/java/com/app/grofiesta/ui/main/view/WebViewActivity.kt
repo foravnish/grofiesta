@@ -3,14 +3,20 @@ package com.app.grofiesta.ui.main.view
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.ProgressBar
 import com.app.grofiesta.R
 import com.app.grofiesta.ui.base.BaseActivity
+import com.skydoves.elasticviews.ElasticImageView
 import kotlinx.android.synthetic.main.activity_web_view.*
+import kotlinx.android.synthetic.main.activity_web_view.webview
+import kotlinx.android.synthetic.main.activity_web_view_about_us.*
 import kotlinx.android.synthetic.main.app_header_layout.*
 
 class WebViewActivity : BaseActivity() {
@@ -24,6 +30,7 @@ class WebViewActivity : BaseActivity() {
 
         webUrl = intent.getStringExtra("webUrl")!!
         webTitle = intent.getStringExtra("webTitle")!!
+
         if (webTitle == "About Us")
             setContentView(R.layout.activity_web_view_about_us)
         else
@@ -49,7 +56,25 @@ class WebViewActivity : BaseActivity() {
     }
 
 
-    private class MyWebViewClient : WebViewClient() {
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK && this.webview.canGoBack()) {
+            this.webview.goBack()
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        webview.destroy()
+        finish()
+    }
+
+
+
+
+    inner class MyWebViewClient : WebViewClient() {
         override fun shouldOverrideUrlLoading(
             webView: WebView,
             url: String
@@ -113,26 +138,13 @@ class WebViewActivity : BaseActivity() {
 //            favicon: Bitmap
 //        ) {
 //            super.onPageStarted(view, url, favicon)
-////            this.progressBar.setVisibility(View.VISIBLE)
+////            this.webloadProgressBar.setVisibility(View.VISIBLE)
 //        }
-//
-//        override fun onPageFinished(view: WebView, url: String) {
-//            super.onPageFinished(view, url)
-////            progressBar.setVisibility(View.GONE)
-//        }
-    }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK && this.webview.canGoBack()) {
-            this.webview.goBack()
-            return true
+        override fun onPageFinished(view: WebView, url: String) {
+            super.onPageFinished(view, url)
+            webloadProgressBar.setVisibility(View.GONE)
         }
-        return super.onKeyDown(keyCode, event)
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        webview.destroy()
-        finish()
-    }
 }

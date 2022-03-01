@@ -296,8 +296,6 @@ class ProductDetailActivity : BaseActivity() {
             shimmerLayout.visibility = View.GONE
             if (it.success != null) {
                 imgWishlist.visibility = View.VISIBLE
-                binding.lytFooterDetail.alpha = 1f
-                binding.lytFooterDetail.isEnabled = true
                 mData = it.success.product_detail
                 if (it.success.multiimages != null)
                     mImage = it.success.multiimages[0]
@@ -308,6 +306,14 @@ class ProductDetailActivity : BaseActivity() {
                 txtSize.text = "" + it.success.product_detail.weight_size
                 txtSalePrice.text = "₹" + it.success.product_detail.display_price
                 txtPrice.text = "₹" + it.success.product_detail.main_price
+
+                if (it.success.product_detail.qty=="" || it.success.product_detail.qty =="0")
+                    txtOutOfStock.visibility = View.VISIBLE
+                 else {
+                    binding.lytFooterDetail.alpha = 1f
+                    binding.lytFooterDetail.isEnabled = true
+                    txtOutOfStock.visibility = View.GONE
+                }
 
 
                 it.success.product_detail.apply {
@@ -435,9 +441,34 @@ class ProductDetailActivity : BaseActivity() {
                 "Detail"->openDetailPage(success[pos].product_id)
                 "Add" -> if(Prefences.getIsLogin(this@ProductDetailActivity)) addToCart(success[pos]) else Utility.showToastForLogin(this@ProductDetailActivity)
                 "GoTOCart" -> openMyCartScreen()
+                "Wishlist" -> addWishlist(success[pos])
             }
         }
         binding.lytRelated.rvRelated.adapter = mAdapter
+    }
+
+    private fun addWishlist(
+        mData: ApiResponseModels.RelatedProductResponse.Success
+    ) {
+        mViewModel.initAddWishList(
+            "" + Prefences.getUserId(this@ProductDetailActivity),
+            "" + mData.product_id, false
+        )!!.observe(this@ProductDetailActivity, Observer {
+            if (it.status) {
+            }
+        })
+
+        mData.apply {
+            MyCartResponse(
+                "" + product_id, "" , ""+sub_category_id ,
+                "" + product_name, "" + weight_size, "" + main_price,
+                "" + display_price, ""+purchase_price, "" + display_price,
+                ""+description, ""+description, "" ,
+                "1", ""+gst , ""+category_name
+            ).let {
+                viewModel.insertItemInWishList(it)
+            }
+        }
     }
 
     private fun openMyCartScreen() {
@@ -549,7 +580,7 @@ class ProductDetailActivity : BaseActivity() {
                 )!!.observe(this, Observer {
                     if (it.status) {
                         mWid = "" + it.last_wishlist_id
-                    } else Utility.showToast(mContext)
+                    }
                 })
 
                 mData.apply {

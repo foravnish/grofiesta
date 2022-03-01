@@ -177,7 +177,7 @@ class ProductListActivity : BaseActivity() {
                         }
                     }
 
-                } else Utility.showToast(this@ProductListActivity)
+                }
             })
 
 

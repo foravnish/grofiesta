@@ -32,8 +32,6 @@ class SignupActivity : BaseActivity() {
             showAlert("Enter First Name")
         else if (editLastName.text.toString().isEmpty())
             showAlert("Enter Last Name")
-        else if (editEmail.text.toString().isEmpty())
-            showAlert("Enter Email id")
         else if (editMobileNumber.text.toString().isEmpty())
             showAlert("Enter Mobile Number")
         else if (editAddress.text.toString().isEmpty())

@@ -1,14 +1,12 @@
 package com.app.grofiesta.ui.main.view.home
 
 
-import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.LinearInterpolator
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -29,6 +27,7 @@ import com.app.grofiesta.room.response.MyCartResponse
 import com.app.grofiesta.ui.main.view.cart.CheckoutViewModel
 import com.app.grofiesta.ui.main.view.cart.MyCartActivity
 import com.app.grofiesta.ui.main.view.product.ProductDetailActivity
+import com.app.grofiesta.ui.main.view.product.ProductViewModel
 import com.app.grofiesta.ui.main.view.product.SearchProductActivity
 import com.app.grofiesta.ui.main.view.product.ShopByGroAndFiestaActivity
 import com.app.grofiesta.utils.Utility
@@ -71,6 +70,7 @@ class HomeFragment : BaseFragment() {
     private var handler2 = Handler()
 
     lateinit var mViewModel: HomeViewModel
+    lateinit var mViewModelProduct: ProductViewModel
 
     public override fun onPause() {
         super.onPause()
@@ -117,6 +117,9 @@ class HomeFragment : BaseFragment() {
         mViewModelCheckout = ViewModelProvider.AndroidViewModelFactory(requireActivity().application)
             .create(CheckoutViewModel::class.java)
         mViewModelCheckout.init(requireActivity())
+        mViewModelProduct = ViewModelProvider.AndroidViewModelFactory(requireActivity().application)
+            .create(ProductViewModel::class.java)
+        mViewModelProduct.init(requireActivity())
         callBannerApi()
 
 
@@ -367,14 +370,41 @@ class HomeFragment : BaseFragment() {
             false
         )
         binding.lytGro.rvGro.layoutManager = horizontalLayout
-        val mAdapter = HomeItemsAdapter("1", success) { pos, type ->
+        val mAdapter = HomeItemsAdapter("1", success,viewModel,requireActivity()) { pos, type ->
             when (type) {
                 "Detail" -> openDetailPage(success[pos].product_id)
                 "Add" -> if(Prefences.getIsLogin(requireActivity())) addToCart(success[pos]) else Utility.showToastForLogin(requireActivity())
                 "GoTOCart" -> openMyCartScreen()
+                "Wishlist" -> addWishlist(success[pos])
             }
         }
         binding.lytGro.rvGro.adapter = mAdapter
+    }
+
+    private fun addWishlist(
+        mData: ApiResponseModels.GroProductResponse.Success
+    ) {
+
+
+        mViewModelProduct.initAddWishList(
+            "" + Prefences.getUserId(requireActivity()),
+            "" + mData.product_id, false
+        )!!.observe(requireActivity(), Observer {
+            if (it.status) {
+            }
+        })
+
+        mData.apply {
+            MyCartResponse(
+                "" + product_id, "" , "" ,
+                "" + product_name, "" + weight_size, "" + main_price,
+                "" + display_price, "", "" + display_price,
+                "", "", "" ,
+                "1", "" , ""
+            ).let {
+                viewModel.insertItemInWishList(it)
+            }
+        }
     }
 
     private fun initAdapter2(success: ArrayList<ApiResponseModels.GroProductResponse.Success>) {
@@ -384,11 +414,12 @@ class HomeFragment : BaseFragment() {
             false
         )
         binding.lytfiesta.rvFiesta.layoutManager = horizontalLayout
-        val mAdapter = HomeItemsAdapter("1", success) { pos, type ->
+        val mAdapter = HomeItemsAdapter("1", success,viewModel,requireActivity()) { pos, type ->
             when (type) {
                 "Detail" -> openDetailPage(success[pos].product_id)
                 "Add" -> if(Prefences.getIsLogin(requireActivity())) addToCart(success[pos]) else Utility.showToastForLogin(requireActivity())
                 "GoTOCart" -> openMyCartScreen()
+                "Wishlist" -> addWishlist(success[pos])
             }
 
         }
@@ -472,7 +503,7 @@ class HomeFragment : BaseFragment() {
        var list= ApiResponseModels.GroProductResponse.Success(
             ""+mItem.product_id,""+mItem.product_name,""+mItem.weight_size,
             ""+mItem.main_price,""+mItem.display_price,""+mItem.display_price,
-           ""+mItem.image,mItem.hasCart
+           ""+mItem.image,mItem.qty,mItem.hasCart
         )
         return list
     }

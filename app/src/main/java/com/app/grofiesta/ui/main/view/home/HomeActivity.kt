@@ -21,7 +21,6 @@ import androidx.lifecycle.lifecycleScope
 import com.accountapp.accounts.utils.Prefences
 import com.ananda.retailer.Room.CanDatabase
 import com.ananda.retailer.Views.Activities.Grocery.viewmodel.GroceryViewModel
-import com.app.grofiesta.AboutUsActivity
 import com.app.grofiesta.R
 import com.app.grofiesta.TermsConditionsActivity
 import com.app.grofiesta.data.api.ApiUrls

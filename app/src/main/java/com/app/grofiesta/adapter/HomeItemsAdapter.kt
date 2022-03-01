@@ -1,14 +1,21 @@
 package com.app.grofiesta.adapter
 
+import android.app.Activity
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.accountapp.accounts.utils.Prefences
+import com.airbnb.lottie.animation.content.Content
+import com.ananda.retailer.Views.Activities.Grocery.viewmodel.GroceryViewModel
 import com.app.grofiesta.R
 import com.app.grofiesta.data.model.ApiResponseModels
 import com.app.grofiesta.utils.Utility
 import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.home_product_item.view.*
 import kotlinx.android.synthetic.main.home_product_item.view.imgWishlist
 import kotlinx.android.synthetic.main.home_product_item.view.productImg
@@ -21,29 +28,20 @@ import kotlinx.android.synthetic.main.home_product_item.view.txtWeightSize
 class HomeItemsAdapter(
     var type: String,
     val mList: ArrayList<ApiResponseModels.GroProductResponse.Success>,
+    var viewModel: GroceryViewModel,
+    val act: LifecycleOwner,
     var itemClick: (Int,String) -> Unit
 ) :
     RecyclerView.Adapter<HomeItemsAdapter.MyHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): MyHolder {
         var v: View
-        if (type=="4")
-        v =
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.home_product_item2, parent, false)
-        else
-        v =
-            LayoutInflater.from(parent.context)
+
+        v = LayoutInflater.from(parent.context)
                 .inflate(R.layout.home_product_item, parent, false)
 
         return MyHolder(v)
     }
-
-//    fun addList(mUpdateList: ArrayList<ApiResponseModels.Response.UserList>) {
-//        mList.clear()
-//        mList.addAll(mUpdateList)
-//        notifyDataSetChanged()
-//    }
 
     override fun getItemCount(): Int {
         if (mList==null)
@@ -75,10 +73,33 @@ class HomeItemsAdapter(
                             txtDiscount.visibility=View.GONE
 
 
+                        if (qty=="" || qty =="0") {
+                            lytAddtoCart.alpha = 0.7f
+                            lytAddtoCart.isEnabled = false
+                            txtOutOfStock.visibility = View.VISIBLE
+                        } else {
+                            lytAddtoCart.alpha = 1f
+                            lytAddtoCart.isEnabled = true
+                            txtOutOfStock.visibility = View.GONE
+                        }
                         if (hasCart)
                             itemView.txtLabel.text="Go to Cart"
                         else
                             itemView.txtLabel.text="Add to Cart"
+
+
+//                        viewModel.getMySignelWishList().observe(act, Observer {
+//                            if (it != null && it.isNotEmpty()) {
+//
+//                                it.forEach { it->
+//                                    if (it.product_id==product_id)
+//                                        imgWishlist.setImageResource(R.drawable.ic_like_heart)
+//                                    else
+//                                        imgWishlist.setImageResource(R.drawable.ic_like_heart_unfilled)
+//                                }
+//                            }
+//
+//                        })
 
 //                        if (hasWishList)
 //                            imgWishlist.setImageResource(R.drawable.ic_like_heart)
@@ -89,6 +110,14 @@ class HomeItemsAdapter(
 
                 }
 
+            itemView.imgWishlist.setOnClickListener {
+                if (Prefences.getIsLogin(itemView.context)) {
+                    itemClick(adapterPosition, "Wishlist")
+                    itemView.imgWishlist.setImageResource(R.drawable.ic_like_heart)
+                }
+                else
+                    Utility.showToastForLogin(itemView.context)
+            }
 
             itemView.productImg.setOnClickListener {
                 itemClick(adapterPosition,"Detail")

@@ -12,6 +12,7 @@
         <entry key="..\:/MvvmTask/app/src/main/res/layout/item_user_raw.xml" value="0.264" />
         <entry key="..\:/MvvmTask/app/src/main/res/layout/progress_layout.xml" value="0.253125" />
         <entry key="..\:/SNT/grofiesta/app/src/main/res/drawable/back_border_discount.xml" value="0.2037037037037037" />
+        <entry key="..\:/SNT/grofiesta/app/src/main/res/drawable/back_border_red.xml" value="0.22592592592592592" />
         <entry key="..\:/SNT/grofiesta/app/src/main/res/drawable/back_border_round_add_to_cart.xml" value="0.2074074074074074" />
         <entry key="..\:/SNT/grofiesta/app/src/main/res/drawable/back_border_round_white.xml" value="0.19814814814814816" />
         <entry key="..\:/SNT/grofiesta/app/src/main/res/drawable/back_round_line.xml" value="0.22685185185185186" />
@@ -126,7 +127,7 @@
         <entry key="..\:/SNT/grofiesta/app/src/main/res/layout/activity_o_t_p.xml" value="0.17592592592592593" />
         <entry key="..\:/SNT/grofiesta/app/src/main/res/layout/activity_offers.xml" value="0.23802083333333332" />
         <entry key="..\:/SNT/grofiesta/app/src/main/res/layout/activity_order.xml" value="0.2265625" />
-        <entry key="..\:/SNT/grofiesta/app/src/main/res/layout/activity_product_detail.xml" value="0.2" />
+        <entry key="..\:/SNT/grofiesta/app/src/main/res/layout/activity_product_detail.xml" value="0.152" />
         <entry key="..\:/SNT/grofiesta/app/src/main/res/layout/activity_product_detail_new.xml" value="0.23802083333333332" />
         <entry key="..\:/SNT/grofiesta/app/src/main/res/layout/activity_product_drop_down_listing.xml" value="0.152" />
         <entry key="..\:/SNT/grofiesta/app/src/main/res/layout/activity_product_listing.xml" value="0.17222222222222222" />

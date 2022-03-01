@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.item_product_list.view.imgWishlist
 import kotlinx.android.synthetic.main.item_product_list.view.lytAddtoCart
 import kotlinx.android.synthetic.main.item_product_list.view.txtDiscount
 import kotlinx.android.synthetic.main.item_product_list.view.txtLabel
+import kotlinx.android.synthetic.main.item_product_list.view.txtOutOfStock
 
 
 class ProductListAdapter(
@@ -73,10 +74,15 @@ class ProductListAdapter(
                     } else
                         txtDiscount.visibility = View.GONE
 
-//                    if (hasWishList)
-//                        imgWishlist.setImageResource(R.drawable.ic_like_heart)
-//                    else
-//                        imgWishlist.setImageResource(R.drawable.ic_like_heart_unfilled)
+                    if (qty=="" || qty =="0") {
+                        lytAddtoCart.alpha = 0.7f
+                        lytAddtoCart.isEnabled = false
+                        txtOutOfStock.visibility = View.VISIBLE
+                    } else {
+                        lytAddtoCart.alpha = 1f
+                        lytAddtoCart.isEnabled = true
+                        txtOutOfStock.visibility = View.GONE
+                    }
 
 
                 }
@@ -86,8 +92,10 @@ class ProductListAdapter(
             itemView.lytMain.setOnClickListener { itemClick(adapterPosition, "Detail") }
 
             itemView.imgWishlist.setOnClickListener {
-                if (Prefences.getIsLogin(itemView.context))
+                if (Prefences.getIsLogin(itemView.context)) {
                     itemClick(adapterPosition, "Wishlist")
+                    itemView.imgWishlist.setImageResource(R.drawable.ic_like_heart)
+                }
                 else
                     Utility.showToastForLogin(itemView.context)
             }

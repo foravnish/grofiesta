@@ -376,6 +376,7 @@ object ApiResponseModels {
                 var product_id: String,
                 var product_name: String,
                 var weight_size: String,
+                val qty:String,
                 var hasCart: Boolean = false
             )
         }
@@ -392,6 +393,7 @@ object ApiResponseModels {
             val discount_percent: String = "",
             val display_price: String = "",
             val urlimage: String = "",
+            val qty:String?,
             var hasCart: Boolean = false
         )
     }

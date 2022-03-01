@@ -99,7 +99,7 @@ class Utility {
                     ApiResponseModels.GroProductResponse.Success(
                     ""+it.product_id,""+it.product_name,""+it.weight_size,
                     ""+it.main_price,""+it.discount_percent,
-                        ""+it.display_price,""+it.image,it.hasCart
+                        ""+it.display_price,""+it.image,it.qty,it.hasCart
                 ))
             }
 

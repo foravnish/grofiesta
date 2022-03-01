@@ -34,11 +34,6 @@ class ReleatedProductAdapter(
         return MyHolder(v)
     }
 
-//    fun addList(mUpdateList: ArrayList<ApiResponseModels.Response.UserList>) {
-//        mList.clear()
-//        mList.addAll(mUpdateList)
-//        notifyDataSetChanged()
-//    }
 
     override fun getItemCount(): Int {
         if (mList==null)
@@ -71,10 +66,28 @@ class ReleatedProductAdapter(
                         }else
                             txtDiscount.visibility=View.GONE
 
+                        if (qty=="" || qty =="0") {
+                            lytAddtoCart.alpha = 0.7f
+                            lytAddtoCart.isEnabled = false
+                            txtOutOfStock.visibility = View.VISIBLE
+                        } else {
+                            lytAddtoCart.alpha = 1f
+                            lytAddtoCart.isEnabled = true
+                            txtOutOfStock.visibility = View.GONE
+                        }
                     }
 
 
                 }
+
+            itemView.imgWishlist.setOnClickListener {
+                if (Prefences.getIsLogin(itemView.context)) {
+                    itemClick(adapterPosition, "Wishlist")
+                    itemView.imgWishlist.setImageResource(R.drawable.ic_like_heart)
+                }
+                else
+                    Utility.showToastForLogin(itemView.context)
+            }
 
 
             itemView.lytMain.setOnClickListener { itemClick(adapterPosition, "Detail") }
