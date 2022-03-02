@@ -9,6 +9,7 @@ import com.app.grofiesta.R
 import com.app.grofiesta.data.model.ApiResponseModels
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_product_cart.view.*
+import kotlinx.android.synthetic.main.item_product_cart.view.txtOutOfStock
 
 
 @SuppressLint("SetTextI18n")
@@ -52,6 +53,11 @@ class MyCartItemsListAdapter(
 
                         Glide.with(itemView.context).load(urlimage).error(R.drawable.place_holder)
                             .into(imgProduct!!)
+
+                        if (qty=="" || qty =="0")
+                            txtOutOfStock.visibility = View.VISIBLE
+                        else
+                            txtOutOfStock.visibility = View.GONE
 
                         imgIncrease.setOnClickListener {
                             itemClick(adapterPosition, mListItem, "Plus")

@@ -32,7 +32,7 @@ class MyCartActivity : BaseActivity() {
     lateinit var mViewModelProduct: ProductViewModel
     var minValueToOrder = 0.0
     var mGeneralValueToPayment = 0.0
-    var product_id=""
+    var product_id = ""
     val viewModel: GroceryViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,12 +44,10 @@ class MyCartActivity : BaseActivity() {
 
         imgBack.setOnClickListener { finish() }
 
-        if (intent.hasExtra("type")){
-            product_id=intent.getStringExtra("product_id")!!
+        if (intent.hasExtra("type")) {
+            product_id = intent.getStringExtra("product_id")!!
             txtPageTitle.text = "Buy Now"
-        }
-
-        else
+        } else
             txtPageTitle.text = "My Cart"
 
         txtPayNow.alpha = 0.5f
@@ -63,11 +61,12 @@ class MyCartActivity : BaseActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        if (intent.hasExtra("type")){
+        if (intent.hasExtra("type")) {
             callDeleteMyCart(product_id, "", false)
         }
 
     }
+
     fun clickContinueShoping(view: View) {
         var intent = Intent(this, HomeActivity::class.java)
         intent!!.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -75,6 +74,7 @@ class MyCartActivity : BaseActivity() {
     }
 
     private fun getAllMyCart() {
+        var flag=false
         mViewModelProduct.initMyCartListing("" + Prefences.getUserId(this), true)!!
             .observe(this, Observer { mData ->
                 if (mData.status) {
@@ -86,16 +86,6 @@ class MyCartActivity : BaseActivity() {
                         lytEmptyCart.visibility = View.GONE
                         nestedScroll.visibility = View.VISIBLE
                         lytFooter.visibility = View.VISIBLE
-//                    var mTotalAmt = 0.0
-//                    var qty=0
-//                    for (mData in mData.data) {
-//                        mTotalAmt = mTotalAmt + mData.totalAmount.toDouble()
-//                        qty= qty + mData.qty.toInt()
-//                    }
-//                    txtItemTotal.text = "₹" + mTotalAmt
-//                    txtToPayAmt.text=  "₹" + mTotalAmt
-//                    txtTotalAmount.text=  "₹" + mTotalAmt
-//                    txtPktQty.text=""+qty +" PKT"
 
                         initAdapter(mData.data)
 
@@ -104,8 +94,16 @@ class MyCartActivity : BaseActivity() {
                         mData.data.forEach {
                             if (it.minimum_price != null && it.minimum_price != "")
                                 list.add(it.minimum_price.toInt())
-                        }
 
+                            if (it.qty=="" || it.qty=="0")
+                                flag=true
+
+                        }
+                        if (flag){
+                            txtPayNow.alpha = 0.5f
+                            txtPayNow.isEnabled = false
+
+                        }
                         minValueToOrder = findMax(list)!!.toDouble()
 
                     } else {
@@ -198,7 +196,7 @@ class MyCartActivity : BaseActivity() {
 
     }
 
-    private fun callDeleteMyCart(productId: String, cart_id: String, isLoader:Boolean) {
+    private fun callDeleteMyCart(productId: String, cart_id: String, isLoader: Boolean) {
         viewModel.deleteItemFromCart(productId)
 
         mViewModelProduct.initDeleteMyCart(

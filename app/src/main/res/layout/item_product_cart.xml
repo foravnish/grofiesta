@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/lytMain2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -244,6 +245,20 @@
                 android:textColor="@color/colorBlackLite"
                 android:textSize="@dimen/_10sdp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtOutOfStock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Out of stock"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:paddingLeft="@dimen/_5sdp"
+                android:paddingRight="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:background="@drawable/back_border_red"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_10sdp" />
 
         </RelativeLayout>
     </RelativeLayout>

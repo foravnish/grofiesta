@@ -100,20 +100,14 @@ class ProductDetailActivity : BaseActivity() {
         product_id = intent.getStringExtra("product_id")!!
 
         binding.lytFooterDetail.alpha = 0.5f
-        binding.lytFooterDetail.isEnabled = false
+        binding.lytFooterDetail.lytAddToCart.isClickable = false
+        binding.lytFooterDetail.lytAddToCart.isEnabled = false
+        binding.lytFooterDetail.lytBuyNow.isClickable = false
+        binding.lytFooterDetail.lytBuyNow.isEnabled = false
 
         callDetailAPi()
 
         callMyWishList(product_id)
-
-//        binding.productImage.setOnClickListener {
-//            Intent(this, ImagePreviewActivity::class.java).apply {
-//                putExtra("image", mImage)
-//            }.let {
-//                Utility.startActivityWithLeftToRightAnimation(this, it)
-//            }
-//
-//        }
 
         lytCartView.setOnClickListener {
           openMyCartScreen()
@@ -311,7 +305,10 @@ class ProductDetailActivity : BaseActivity() {
                     txtOutOfStock.visibility = View.VISIBLE
                  else {
                     binding.lytFooterDetail.alpha = 1f
-                    binding.lytFooterDetail.isEnabled = true
+                    binding.lytFooterDetail.lytAddToCart.isClickable = true
+                    binding.lytFooterDetail.lytAddToCart.isEnabled = true
+                    binding.lytFooterDetail.lytBuyNow.isClickable = true
+                    binding.lytFooterDetail.lytBuyNow.isEnabled = true
                     txtOutOfStock.visibility = View.GONE
                 }
 
