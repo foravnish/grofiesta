@@ -33,6 +33,7 @@ class MyCartActivity : BaseActivity() {
     var minValueToOrder = 0.0
     var mGeneralValueToPayment = 0.0
     var product_id = ""
+    var flag: Boolean = false
     val viewModel: GroceryViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,20 +62,29 @@ class MyCartActivity : BaseActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        if (intent.hasExtra("type")) {
+        if (intent.hasExtra("type"))
             callDeleteMyCart(product_id, "", false)
+
+        if (flag){
+            flag=false
+            continueShoping()
         }
 
     }
 
     fun clickContinueShoping(view: View) {
+        continueShoping()
+    }
+
+    private fun continueShoping() {
+
         var intent = Intent(this, HomeActivity::class.java)
         intent!!.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         Utility.startActivityWithLeftToRightAnimation(this, intent)
     }
 
     private fun getAllMyCart() {
-        var flag=false
+        var flag = false
         mViewModelProduct.initMyCartListing("" + Prefences.getUserId(this), true)!!
             .observe(this, Observer { mData ->
                 if (mData.status) {
@@ -95,11 +105,11 @@ class MyCartActivity : BaseActivity() {
                             if (it.minimum_price != null && it.minimum_price != "")
                                 list.add(it.minimum_price.toInt())
 
-                            if (it.qty=="" || it.qty=="0")
-                                flag=true
+                            if (it.qty == "" || it.qty == "0")
+                                flag = true
 
                         }
-                        if (flag){
+                        if (flag) {
                             txtPayNow.alpha = 0.5f
                             txtPayNow.isEnabled = false
 
@@ -185,6 +195,7 @@ class MyCartActivity : BaseActivity() {
                     "" + item.product_id, "" + Prefences.getUserId(this@MyCartActivity),
                     true
                 )!!.observe(this@MyCartActivity, Observer { mData ->
+                    flag=true
                     if (mData.status) {
                         getAllMyCart()
                     }
@@ -203,6 +214,7 @@ class MyCartActivity : BaseActivity() {
             "" + productId, "" + Prefences.getUserId(this@MyCartActivity),
             isLoader
         )!!.observe(this, Observer { mData ->
+            flag=true
             if (mData.status) {
                 getAllMyCart()
             }
@@ -258,6 +270,7 @@ class MyCartActivity : BaseActivity() {
         bindAddress()
         getAllMyCart()
     }
+
 
     private fun bindAddress() {
         txtDeliveryAddress.text = "" + Prefences.getAddress(this@MyCartActivity)

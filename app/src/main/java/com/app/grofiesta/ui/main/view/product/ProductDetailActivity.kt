@@ -118,12 +118,13 @@ class ProductDetailActivity : BaseActivity() {
             if (Prefences.getIsLogin(this@ProductDetailActivity)) {
 
                 mData.apply {
+                    var gstCal=(display_price.toDouble() * gst!!.toDouble())/100
                     MyCartResponse(
                         "" + product_id, "" + category_id, "" + sub_category_id,
                         "" + product_name, "" + weight_size, "" + main_price,
                         "" + display_price, "" + purchase_price, "" + display_price,
                         "" + description, "" + short_desp, "" + mImage,
-                        "1", "" + gst, "" + category_name
+                        "1", "" + gstCal, "" + category_name
                     ).let {
                         viewModel.insertItemInCart(it)
                         callAddToCartApi(it, true)
@@ -143,12 +144,13 @@ class ProductDetailActivity : BaseActivity() {
                 makeFlyAnimation(binding.lytFooterDetail.imageView)
 
                 mData.apply {
+                    var gstCal=(display_price.toDouble() * gst!!.toDouble())/100
                     MyCartResponse(
                         "" + product_id, "" + category_id, "" + sub_category_id,
                         "" + product_name, "" + weight_size, "" + main_price,
                         "" + display_price, "" + purchase_price, "" + display_price,
                         "" + description, "" + short_desp, "" + mImage,
-                        "1", "" + gst, "" + category_name
+                        "1", "" + gstCal, "" + category_name
                     ).let {
                         viewModel.insertItemInCart(it)
                         callAddToCartApi(it, false)
@@ -479,12 +481,13 @@ class ProductDetailActivity : BaseActivity() {
 
     private fun addToCart(mData: ApiResponseModels.RelatedProductResponse.Success) {
         mData.apply {
+            var gstCal=(display_price.toDouble() * gst!!.toDouble())/100
             MyCartResponse(
                 "" + product_id, "", "",
                 "" + product_name, "" + weight_size, "" + main_price,
                 "" + display_price, "", "" + display_price,
                 "", "", "" + urlimage,
-                "1", "", "test"
+                "1", ""+gstCal, "test"
             ).let {
                 viewModel.insertItemInCart(it)
             }

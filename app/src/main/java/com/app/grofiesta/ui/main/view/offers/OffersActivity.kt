@@ -14,6 +14,7 @@ import com.app.grofiesta.adapter.OffersListAdapter
 import com.app.grofiesta.data.model.ApiResponseModels
 import com.app.grofiesta.databinding.ActivityOffersBinding
 import com.app.grofiesta.ui.base.BaseActivity
+import com.app.grofiesta.ui.main.view.WebViewActivity
 import com.app.grofiesta.ui.main.view.product.ImagePreviewActivity
 import com.app.grofiesta.utils.Utility
 import kotlinx.android.synthetic.main.activity_offers.*
@@ -61,15 +62,18 @@ class OffersActivity : BaseActivity() {
 
     }
 
-    private fun initAdapter(success: ArrayList<ApiResponseModels.OffersResponse.Success>) {
+    private fun initAdapter(mData: ArrayList<ApiResponseModels.OffersResponse.Success>) {
 
         rvOffersList.layoutManager = GridLayoutManager(this,2)
-        val mAdapter = OffersListAdapter(success) {
-            Intent(this, ImagePreviewActivity::class.java).apply {
-                putExtra("image", success[it].urlimage)
+        val mAdapter = OffersListAdapter(mData) {
+
+            Intent(this@OffersActivity, WebViewActivity::class.java).apply {
+                putExtra("webUrl",""+mData[it].link)
+                putExtra("webTitle",""+mData[it].name)
             }.let {
-                Utility.startActivityWithLeftToRightAnimation(this, it)
+                Utility.startActivityWithLeftToRightAnimation(this,it)
             }
+
 
         }
         rvOffersList.adapter = mAdapter

@@ -8,13 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ananda.retailer.Views.Activities.Grocery.viewmodel.GroceryViewModel
 import com.app.grofiesta.R
 import com.app.grofiesta.data.model.ApiResponseModels
-import com.app.grofiesta.ui.main.view.product.ImagePreviewActivity
+import com.app.grofiesta.ui.main.view.WebViewActivity
 import com.app.grofiesta.utils.Utility
 import kotlinx.android.synthetic.main.dymanic_home_product_item.view.*
 import kotlinx.coroutines.Dispatchers
@@ -98,7 +97,7 @@ class HomePageDynamicAdapter(
                             initAdapter(context, itemView, mList.productsdata)
 
                         if (mList.module_banner.size > 0)
-                            initPagerViewer(context, itemView, mList.module_banner)
+                            initPagerViewer(context, itemView, mList.section_banner,base_url)
                     }
 
 
@@ -125,7 +124,8 @@ class HomePageDynamicAdapter(
 
     private fun initPagerViewer(
         context: Context,
-        itemView: View, slider: List<String>
+        itemView: View, slider: List<ApiResponseModels.DymainHomeProductResponse.Data.SectionBanner>,
+        base_url:String
     ) {
         itemView.relativePager.visibility = View.VISIBLE
         NUM_PAGES2 = slider.size
@@ -137,7 +137,7 @@ class HomePageDynamicAdapter(
             mList.add(
                 ApiResponseModels.GroFiestaPageResponse.Success.Slider(
                     "", "", "", "", "",
-                    "", "", "" + it, "", "", "",
+                    "", "", "" + base_url+""+it.image, "", "", ""+it.link,
                     "", ""
                 )
             )
@@ -146,11 +146,18 @@ class HomePageDynamicAdapter(
 
         itemView.viewpager.adapter =
             BannerGroFiestaPagerAdapter(context, mList) {
-                Intent(context, ImagePreviewActivity::class.java).apply {
-                    putExtra("image", mList[it].urlimage)
+
+                Intent(context, WebViewActivity::class.java).apply {
+                    putExtra("webUrl",""+mList[it].link)
+                    putExtra("webTitle",""+mList[it].company_name)
                 }.let {
-                    Utility.startActivityWithLeftToRightAnimationContext(context!!, it)
+                    Utility.startActivityWithLeftToRightAnimationContext(context!!,it)
                 }
+//                Intent(context, ImagePreviewActivity::class.java).apply {
+//                    putExtra("image", mList[it].urlimage)
+//                }.let {
+//                    Utility.startActivityWithLeftToRightAnimationContext(context!!, it)
+//                }
             }
         if (mList.size > 1)
             itemView.indicator.setViewPager(itemView.viewpager)

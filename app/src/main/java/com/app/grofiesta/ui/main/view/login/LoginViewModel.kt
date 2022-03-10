@@ -22,10 +22,10 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun initSendOtp(
-        req: SendOtpRequest, showDialog: Boolean
+        telephone: String, showDialog: Boolean
     ): MutableLiveData<ApiResponseModels.SendOtpResponse>? {
         mRegistrationtApiRepository = LoginRepository().getInstance()
-        mRegistrationtApiRepository!!.callSendOtp(mContext, req, showDialog)
+        mRegistrationtApiRepository!!.callSendOtp(mContext, telephone, showDialog)
             .let { return it }
     }
 

@@ -122,12 +122,13 @@ class ProductListActivity : BaseActivity() {
 
     private fun addToCart(mData: ApiResponseModels.ProductListingResponse.Data) {
         mData.apply {
+            var gstCal=(display_price.toDouble() * gst!!.toDouble())/100
             MyCartResponse(
                 "" + product_id, "", "",
                 "" + product_name, "" + weight_size, "" + main_price,
                 "" + display_price, "", "" + display_price,
                 "", "", "" + urlimage,
-                "1", "", "test"
+                "1", ""+gstCal, "test"
             ).let {
                 viewModel.insertItemInCart(it)
             }

@@ -24,9 +24,10 @@ interface ApiInterface {
         @Field("mobNum") mobNum: String
     ): Observable<ApiResponseModels.LoginResponse>
 
+    @FormUrlEncoded
     @POST(ApiUrls.SEND_OTP)
     fun callSendOtp(
-        @Body body: SendOtpRequest
+        @Field("telephone") telephone: String
     ): Observable<ApiResponseModels.SendOtpResponse>
 
     @FormUrlEncoded
@@ -218,6 +219,10 @@ interface ApiInterface {
         @Field("postcode") postcode: String
     ): Observable<ApiResponseModels.ShipingChargeResponse>
 
+    @GET(ApiUrls.COUPAN_LIST)
+    fun getCouponsList(
+    ): Observable<ApiResponseModels.CouponListResponse>
+
     @FormUrlEncoded
     @POST(ApiUrls.PLACE_ORDER)
     fun callPlaceOrder(
@@ -234,6 +239,7 @@ interface ApiInterface {
         @Field("coupon_val") coupon_val: String,
         @Field("postcode") postcode: String,
         @Field("address") address: String,
+        @Field("debit_amount") debit_amount : String,
 
         ): Observable<ApiResponseModels.PlaceOrderResponse>
 

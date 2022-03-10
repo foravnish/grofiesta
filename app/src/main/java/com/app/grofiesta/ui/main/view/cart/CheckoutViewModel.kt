@@ -20,7 +20,7 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun initCoupon(
-        edtCoupon: String, userId:String,showDialog: Boolean
+        edtCoupon: String, userId: String, showDialog: Boolean
     ): MutableLiveData<ApiResponseModels.CouponCodeResponse>? {
         mRegistrationtApiRepository = CheckoutRepository().getInstance()
         mRegistrationtApiRepository!!.callCoupon(mContext, edtCoupon, userId, showDialog)
@@ -35,6 +35,13 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
             .let { return it }
     }
 
+    fun initGetCouponList(
+        showDialog: Boolean
+    ): MutableLiveData<ApiResponseModels.CouponListResponse>? {
+        mRegistrationtApiRepository = CheckoutRepository().getInstance()
+        mRegistrationtApiRepository!!.getCouponsList(mContext, showDialog)
+            .let { return it }
+    }
 
     fun initPlaceOrder(
         customer_id: String,
@@ -48,12 +55,14 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
         gst_val: String,
         total: String,
         coupon_val: String,
-        postcode:String,
-        address:String,
+        postcode: String,
+        address: String,
+        debit_amount:String,
         showDialog: Boolean
     ): MutableLiveData<ApiResponseModels.PlaceOrderResponse>? {
         mRegistrationtApiRepository = CheckoutRepository().getInstance()
-        mRegistrationtApiRepository!!.callPlaceOrder(mContext,
+        mRegistrationtApiRepository!!.callPlaceOrder(
+            mContext,
             customer_id,
             customer_name,
             customer_email,
@@ -64,19 +73,28 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
             shipping_charge,
             gst_val,
             total,
-            coupon_val,postcode,address, showDialog)
+            coupon_val,
+            postcode,
+            address,
+            debit_amount,
+            showDialog
+        )
             .let { return it }
     }
 
     fun initAddToCart(
-        customer_id: String,product_id: String,quantity: String, showDialog: Boolean
+        customer_id: String, product_id: String, quantity: String, showDialog: Boolean
     ): MutableLiveData<ApiResponseModels.ShipingChargeResponse>? {
         mRegistrationtApiRepository = CheckoutRepository().getInstance()
-        mRegistrationtApiRepository!!.callAddToCart(mContext, customer_id,product_id,quantity, showDialog)
+        mRegistrationtApiRepository!!.callAddToCart(
+            mContext,
+            customer_id,
+            product_id,
+            quantity,
+            showDialog
+        )
             .let { return it }
     }
-
-
 
 
 }

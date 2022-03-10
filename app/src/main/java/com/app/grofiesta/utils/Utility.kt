@@ -12,13 +12,12 @@ import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
 import android.text.TextUtils
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.databinding.BindingAdapter
@@ -41,9 +40,10 @@ import java.util.*
 
 class Utility {
     companion object {
-        var selectedDate:String=""
+        var selectedDate: String = ""
 
         var isLadger: Boolean = true
+
         //        private var mediaFactory: MediaFactory? = null
         var dateM: Date? = null
 //    fun setConnectivity(context: Context) {
@@ -56,7 +56,57 @@ class Utility {
 //        }
 //    }
 
-        fun showToastForLogin(ctx:Context) {
+        fun setSpinnerAdatper(
+            stringArrayList: ArrayList<String>,
+            spinner: Spinner,
+            context: Context?
+        ) {
+            val dataAdapter: ArrayAdapter<String?> = object : ArrayAdapter<String?>(
+                context!!, android.R.layout.simple_list_item_1, android.R.id.text1,
+                stringArrayList as List<String?>
+            ) {
+                override fun isEnabled(position: Int): Boolean {
+                    return if (position == 0) {
+                        true
+                    } else {
+                        true
+                    }
+                }
+
+                override fun getDropDownView(
+                    position: Int,
+                    convertView: View,
+                    parent: ViewGroup
+                ): View {
+                    val view = super.getDropDownView(position, convertView, parent)
+                    val tv = view as TextView
+                    if (position == 0) {
+                        // Set the hint text color gray
+                        tv.setTextColor(Color.parseColor("#A4A4A4"))
+                    } else {
+                        tv.setTextColor(Color.parseColor("#494949"))
+                    }
+                    tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f)
+                    return view
+                }
+
+                override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                    val view = super.getView(position, convertView, parent)
+                    val text = view.findViewById<View>(android.R.id.text1) as TextView
+                    if (position == 0) {
+                        text.setTextColor(Color.parseColor("#A4A4A4"))
+                    } else {
+                        text.setTextColor(Color.parseColor("#494949"))
+                    }
+                    text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f)
+                    return view
+                }
+            }
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1)
+            spinner.adapter = dataAdapter
+        }
+
+        fun showToastForLogin(ctx: Context) {
             Toast.makeText(ctx, "Please Login first.", Toast.LENGTH_SHORT).show()
         }
 
@@ -92,15 +142,16 @@ class Utility {
 
         fun convertModel(mData: List<ApiResponseModels.DymainHomeProductResponse.Data.Productsdata>): ArrayList<ApiResponseModels.GroProductResponse.Success> {
 
-            var  mList= ArrayList<ApiResponseModels.GroProductResponse.Success>()
+            var mList = ArrayList<ApiResponseModels.GroProductResponse.Success>()
 
             mData.forEach {
                 mList.add(
                     ApiResponseModels.GroProductResponse.Success(
-                    ""+it.product_id,""+it.product_name,""+it.weight_size,
-                    ""+it.main_price,""+it.discount_percent,
-                        ""+it.display_price,""+it.image,it.qty,it.hasCart
-                ))
+                        "" + it.product_id, "" + it.product_name, "" + it.weight_size,
+                        "" + it.main_price, "" + it.discount_percent,
+                        "" + it.display_price, "" + it.image, it.qty, it.gst, it.hasCart
+                    )
+                )
             }
 
             return mList
@@ -303,29 +354,35 @@ class Utility {
 //        }
 
 
-        fun openCalender(context: Context, txtDate: TextView){
+        fun openCalender(context: Context, txtDate: TextView) {
             val c = Calendar.getInstance()
             val year = c.get(Calendar.YEAR)
             val month = c.get(Calendar.MONTH)
             val day = c.get(Calendar.DAY_OF_MONTH)
-            var mt:String=""
-            var dy:String=""
+            var mt: String = ""
+            var dy: String = ""
 
-            val dpd = DatePickerDialog(context!!, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                var months=monthOfYear+1
-                if(months<10)
-                    mt="0"+months; //if month less than 10 then ad 0 before month
-                else mt= months.toString()
-
-
-                if(dayOfMonth<10)
-                    dy = "0"+dayOfMonth;
-                else dy = dayOfMonth.toString()
-
-                txtDate.setText(""+"" + year + "-" +mt + "-" + dy)
+            val dpd = DatePickerDialog(
+                context!!,
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    var months = monthOfYear + 1
+                    if (months < 10)
+                        mt = "0" + months; //if month less than 10 then ad 0 before month
+                    else mt = months.toString()
 
 
-            }, year, month, day)
+                    if (dayOfMonth < 10)
+                        dy = "0" + dayOfMonth;
+                    else dy = dayOfMonth.toString()
+
+                    txtDate.setText("" + "" + year + "-" + mt + "-" + dy)
+
+
+                },
+                year,
+                month,
+                day
+            )
 
             dpd.getDatePicker().setMaxDate(c.getTimeInMillis());
             dpd!!.show()
@@ -333,14 +390,14 @@ class Utility {
         }
 
 
-        fun getCurrentdate():String{
+        fun getCurrentdate(): String {
             val c: Date = Calendar.getInstance().getTime()
             val df = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val currentDate: String = df.format(c)
             return currentDate
         }
 
-        fun getPrevous10Date():String{
+        fun getPrevous10Date(): String {
 
             val c: Date = Calendar.getInstance().getTime()
             val df = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -357,20 +414,18 @@ class Utility {
 
         }
 
-        fun getFromDefaultTime():String{
-            val defautFromTime="00:00:00"
+        fun getFromDefaultTime(): String {
+            val defautFromTime = "00:00:00"
             return defautFromTime
         }
 
-        fun getToDefaultTime():String{
-            val defautFromTime="23:30:00"
+        fun getToDefaultTime(): String {
+            val defautFromTime = "23:30:00"
             return defautFromTime
         }
 
 
-
-
-        fun openWatch(context: Context, txtTime: TextView){
+        fun openWatch(context: Context, txtTime: TextView) {
             val mHour: Int
             val mMinute: Int
 

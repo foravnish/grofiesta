@@ -79,7 +79,7 @@
 
         <meta-data
             android:name="com.razorpay.ApiKey"
-            android:value="rzp_test_zWkObtMZjeYJXG"
+            android:value="rzp_live_uNY256Lq96yKVU"
             />
         <meta-data
             android:name="com.google.android.gms.wallet.api.enabled"

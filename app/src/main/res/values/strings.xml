@@ -29,6 +29,7 @@
     <string name="server_error_title">Oops!</string>
     <string name="server_error_message_new">A software update is in progress and will take about 2min. Please retry after 2min. If issue persists, contact customer care.</string>
     <string name="desc_data">The product image(s) shown are representative of the actual product. The actual picture may slightly vary in packaging or the content of packaging. It is recommended to read the labels, batch details, manufacturing details, expiration date, list of ingredients, directions, and warnings, etc., as contained in the actual product label before consuming or utilising the product. For other information or query, please contact us.</string>
+    <string name="str_secure" >Your Personal data will be used only to process your order, delivery and support your experience throughout your shopping with us. GroFiesta, ensures to keep their clients data safe and secure.</string>
 
 
 </resources>

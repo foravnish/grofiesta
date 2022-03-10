@@ -13,17 +13,21 @@ import com.app.grofiesta.utils.Utility
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.home_product_item.view.*
 
-class BannerPagerAdapter(context: Context, val images: ArrayList<ApiResponseModels.BannerResponse.Success>) : PagerAdapter() {
+class BannerPagerAdapter(
+    context: Context,
+    val images: ArrayList<ApiResponseModels.BannerResponse.Success>,
+    var itemClick: (Int) -> Unit
+) : PagerAdapter() {
 
     var context: Context
-    var imageView : ImageView? = null
+    var imageView: ImageView? = null
 
     init {
-        this.context =context
+        this.context = context
     }
 
     override fun getCount(): Int {
-        return  images!!.size
+        return images!!.size
     }
 
     override fun isViewFromObject(view: View, p1: Any): Boolean {
@@ -36,11 +40,14 @@ class BannerPagerAdapter(context: Context, val images: ArrayList<ApiResponseMode
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val itemView = LayoutInflater.from(container?.context)
-            .inflate(R.layout.banner_item,container,false)
+            .inflate(R.layout.banner_item, container, false)
 
 
         imageView = itemView.findViewById(R.id.imageView) as ImageView
 
+        imageView!!.setOnClickListener {
+            itemClick(position)
+        }
         Glide.with(itemView.context).load(images.get(position).urlimage).into(imageView!!)
 
         container.addView(itemView)

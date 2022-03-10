@@ -16,7 +16,6 @@ import com.app.grofiesta.ui.base.BaseActivity
 import com.skydoves.elasticviews.ElasticImageView
 import kotlinx.android.synthetic.main.activity_web_view.*
 import kotlinx.android.synthetic.main.activity_web_view.webview
-import kotlinx.android.synthetic.main.activity_web_view_about_us.*
 import kotlinx.android.synthetic.main.app_header_layout.*
 
 class WebViewActivity : BaseActivity() {
@@ -31,9 +30,9 @@ class WebViewActivity : BaseActivity() {
         webUrl = intent.getStringExtra("webUrl")!!
         webTitle = intent.getStringExtra("webTitle")!!
 
-        if (webTitle == "About Us")
-            setContentView(R.layout.activity_web_view_about_us)
-        else
+//        if (webTitle == "About Us")
+//            setContentView(R.layout.activity_web_view_about_us)
+//        else
             setContentView(R.layout.activity_web_view)
 
 

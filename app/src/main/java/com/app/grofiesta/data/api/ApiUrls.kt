@@ -44,6 +44,7 @@ object ApiUrls {
     const val SAVE_PROFILE = "api/userProfileUpdateApi"
     const val COUPAN = "api/manage_coupon_api"
     const val SHIPPING_CHARGE = "api/getshipchargeApi"
+    const val COUPAN_LIST = "api/all_coupon_codes"
     const val GRO_PAGE = "api/getGroPageApi"
     const val FIESTA_PAGE = "api/getFistaPageApi"
     const val ADD_TO_CART = "api/cart_add_api"

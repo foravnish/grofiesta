@@ -5,4 +5,8 @@
         <item name="boxStrokeColor">@color/text_input_box_stroke</item>
     </style>
 
+    <style name="SpinnerTheme" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/custom_spinner</item>
+    </style>
+
 </resources>

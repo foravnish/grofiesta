@@ -113,17 +113,14 @@ class OTPActivity : BaseActivity() {
     }
 
     private fun callSendOtp() {
-        SendOtpRequest(""+mMobile).let {
-            mViewModel.initSendOtp( it, true)!!.observe(this, Observer {
-                if (it.data!=null){
-                    otp=""+it.data.opt
+        mViewModel.initSendOtp( ""+mMobile, true)!!.observe(this, Observer {
+            if (it.data!=null){
+                otp=""+it.data.opt
 
-                    callWishListApi()
-                }
+                callWishListApi()
+            }
 
-            })
-
-        }
+        })
 
     }
 
@@ -212,6 +209,8 @@ class OTPActivity : BaseActivity() {
             })
 
         }else showToast("Otp not match. please try valid Otp.")
+
+
 //        mViewModel.verifyOtpApi(""+otp_view.text.toString(),""+otp,""+mMobile,true)
 //            ?.observe(this, Observer {
 //
@@ -239,12 +238,13 @@ class OTPActivity : BaseActivity() {
 
                                 mData.data.forEach { mList->
                                     mList.apply {
+                                        var gstCal=(display_price.toDouble() * gst!!.toDouble())/100
                                         MyCartResponse(
                                             "" + product_id, "" + category_id, "" + sub_category_id,
                                             "" + product_name, "" + weight_size, "" + main_price,
                                             "" + display_price, "" + purchase_price, "" + display_price,
                                             "" + description, "" + short_desp, "" + urlimage,
-                                            ""+qwantity, "" + gst, ""
+                                            ""+qwantity, "" + gstCal, ""
                                         ).let {
                                             viewModel.insertItemInCart(it)
                                         }
@@ -305,16 +305,13 @@ class OTPActivity : BaseActivity() {
 
 
     fun resendOtp(view: View) {
-        SendOtpRequest(""+mMobile).let {
-            mViewModel.initSendOtp( it, true)!!.observe(this, Observer {
-                if (it.data!=null){
-                    countDownOtp()
-                    otp=""+it.data.opt
-                }
+        mViewModel.initSendOtp( mMobile, true)!!.observe(this, Observer {
+            if (it.data!=null){
+                countDownOtp()
+                otp=""+it.data.opt
+            }
 
-            })
-
-        }
+        })
     }
 
 

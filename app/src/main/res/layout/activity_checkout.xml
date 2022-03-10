@@ -100,6 +100,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
+
                             <EditText
                                 android:id="@+id/edtCoupon"
                                 android:layout_width="match_parent"
@@ -107,9 +108,9 @@
                                 android:layout_alignParentLeft="true"
                                 android:layout_toLeftOf="@id/txtApply"
                                 android:background="@android:color/transparent"
-                                android:focusable="true"
-                                android:focusableInTouchMode="true"
-                                android:hint="Enter coupon code"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:hint="Select coupon code"
                                 android:padding="@dimen/_10sdp"
                                 android:singleLine="true"
                                 android:textAllCaps="true"
@@ -278,6 +279,16 @@
 
 
                             </RadioGroup>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:includeFontPadding="false"
+                                android:text="@string/str_secure"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:textColor="@color/colorBlackLite"
+                                android:textSize="@dimen/_12sdp" />
+
                         </LinearLayout>
 
                         <RelativeLayout

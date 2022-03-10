@@ -13,17 +13,6 @@
         android:layout_alignParentTop="true"
         android:padding="10dp">
 
-
-<!--        <ImageView-->
-<!--            android:id="@+id/imgpig"-->
-<!--            android:layout_width="@dimen/_150sdp"-->
-<!--            android:layout_height="@dimen/_150sdp"-->
-<!--            android:layout_centerHorizontal="true"-->
-<!--            android:layout_gravity="center_vertical"-->
-<!--            android:layout_marginLeft="@dimen/_10sdp"-->
-<!--            app:srcCompat="@drawable/ic_apply_coupon"-->
-<!--            app:tint="@color/green" />-->
-
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/imgpig"
             android:layout_width="@dimen/_230sdp"

@@ -24,6 +24,7 @@ import com.app.grofiesta.adapter.*
 import com.app.grofiesta.data.model.ApiResponseModels
 import com.app.grofiesta.databinding.FragmentHomeBinding
 import com.app.grofiesta.room.response.MyCartResponse
+import com.app.grofiesta.ui.main.view.WebViewActivity
 import com.app.grofiesta.ui.main.view.cart.CheckoutViewModel
 import com.app.grofiesta.ui.main.view.cart.MyCartActivity
 import com.app.grofiesta.ui.main.view.product.ProductDetailActivity
@@ -353,11 +354,17 @@ class HomeFragment : BaseFragment() {
 
     }
 
-    private fun initPagerViewer(success: ArrayList<ApiResponseModels.BannerResponse.Success>) {
+    private fun initPagerViewer(mData: ArrayList<ApiResponseModels.BannerResponse.Success>) {
 
-        NUM_PAGES = success.size
-        binding.viewpager.adapter =
-            BannerPagerAdapter(requireContext(), success)
+        NUM_PAGES = mData.size
+        binding.viewpager.adapter = BannerPagerAdapter(requireContext(), mData){
+            Intent(requireActivity(), WebViewActivity::class.java).apply {
+                putExtra("webUrl",""+mData[it].heading)
+                putExtra("webTitle",""+mData[it].title)
+            }.let {
+                Utility.startActivityWithLeftToRightAnimation(requireActivity(),it)
+            }
+        }
         binding.indicator.setViewPager(binding.viewpager)
 
 
@@ -430,12 +437,13 @@ class HomeFragment : BaseFragment() {
 
     private fun addToCart(mData: ApiResponseModels.GroProductResponse.Success) {
         mData.apply {
+            var gstCal=(display_price.toDouble() * gst!!.toDouble())/100
             MyCartResponse(
                 "" + product_id, "", "",
                 "" + product_name, "" + weight_size, "" + main_price,
                 "" + display_price, "", "" + display_price,
                 "", "", "" + urlimage,
-                "1", "", "test"
+                "1", ""+gstCal, "test"
             ).let {
                 viewModel.insertItemInCart(it)
             }
@@ -503,7 +511,7 @@ class HomeFragment : BaseFragment() {
        var list= ApiResponseModels.GroProductResponse.Success(
             ""+mItem.product_id,""+mItem.product_name,""+mItem.weight_size,
             ""+mItem.main_price,""+mItem.display_price,""+mItem.display_price,
-           ""+mItem.image,mItem.qty,mItem.hasCart
+           ""+mItem.image,mItem.qty,mItem.gst,mItem.hasCart
         )
         return list
     }

@@ -62,12 +62,12 @@ class LoginRepository {
 
     @SuppressLint("CheckResult")
     fun callSendOtp(
-        context: Context, req: SendOtpRequest, showDialog: Boolean
+        context: Context, telephone: String, showDialog: Boolean
     ): MutableLiveData<ApiResponseModels.SendOtpResponse> {
         val mLiveData = MutableLiveData<ApiResponseModels.SendOtpResponse>()
         if (NetworkHandling.isConnected(context)) {
             if (showDialog) (context as BaseActivity).showDialog()
-            apiInterface!!.callSendOtp(req)
+            apiInterface!!.callSendOtp(telephone)
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).doOnError {
                     (context as BaseActivity).dismissDialog()
                     NetworkHandling.showNetworkError(context, it)

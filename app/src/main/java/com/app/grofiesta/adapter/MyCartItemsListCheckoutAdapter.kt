@@ -38,7 +38,7 @@ class MyCartItemsListCheckoutAdapter(
             itemView.apply {
                 mListItem.apply {
                     txtProductName.text=""+product_name
-                    txtCatName.text=""+category_name
+                    txtGST.text="GST: ₹"+gst
                     txtPrice.text="₹"+display_price
                     txtSize.text=""+weight_size
                     txtTotalAmt.text="Total : ₹"+totalAmount

@@ -75,6 +75,18 @@ object ApiResponseModels {
         )
     }
 
+    data class CouponListResponse(
+        val status: Boolean,
+        val data: ArrayList<Data>
+    ) : Serializable {
+        data class Data(
+            var coupon_name: String,
+            var coupon_type: String,
+            var coupon_value: String,
+            var coupon_desc: String
+        )
+    }
+
     data class ShipingChargeResponse(
         val status: Boolean,
         val shipping: String,
@@ -204,7 +216,8 @@ object ApiResponseModels {
             var oid: String,
             var name: String,
             var urlimage: String,
-            var offer_status: String
+            var offer_status: String,
+            val link:String,
         )
     }
 
@@ -354,6 +367,8 @@ object ApiResponseModels {
         data class Success(
             val slider_id: String = "",
             val urlimage: String = "",
+            val heading:String,
+            val title:String
         )
     }
 
@@ -366,6 +381,8 @@ object ApiResponseModels {
             var images: String,
             var module_status: String,
             var module_banner: List<String>,
+            var base_url:String,
+            var section_banner: List<SectionBanner>,
             var productsdata: List<Productsdata>
         ) {
             data class Productsdata(
@@ -377,8 +394,13 @@ object ApiResponseModels {
                 var product_name: String,
                 var weight_size: String,
                 val qty:String,
+                val gst:String,
                 var hasCart: Boolean = false
             )
+            data class SectionBanner(
+                    var link: String,
+                    var image: String,
+                )
         }
     }
 
@@ -394,6 +416,7 @@ object ApiResponseModels {
             val display_price: String = "",
             val urlimage: String = "",
             val qty:String?,
+            val gst:String?,
             var hasCart: Boolean = false
         )
     }

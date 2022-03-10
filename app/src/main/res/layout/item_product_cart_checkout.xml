@@ -68,10 +68,9 @@
                     android:textSize="@dimen/_11sdp" />
 
                 <TextView
-                    android:id="@+id/txtCatName"
+                    android:id="@+id/txtGST"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins"
                     android:includeFontPadding="false"
                     android:text="Apple"
                     android:textColor="@color/colorBlackLite"

@@ -9,7 +9,14 @@ import com.app.grofiesta.R
 import com.app.grofiesta.data.model.ApiResponseModels
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_product_cart.view.*
+import kotlinx.android.synthetic.main.item_product_cart.view.imgProduct
+import kotlinx.android.synthetic.main.item_product_cart.view.txtGST
 import kotlinx.android.synthetic.main.item_product_cart.view.txtOutOfStock
+import kotlinx.android.synthetic.main.item_product_cart.view.txtPrice
+import kotlinx.android.synthetic.main.item_product_cart.view.txtProductName
+import kotlinx.android.synthetic.main.item_product_cart.view.txtSize
+import kotlinx.android.synthetic.main.item_product_cart.view.txtTotalAmt
+import kotlinx.android.synthetic.main.item_product_cart_checkout.view.*
 
 
 @SuppressLint("SetTextI18n")
@@ -40,7 +47,8 @@ class MyCartItemsListAdapter(
                 itemView.apply {
                     mListItem.apply {
                         txtProductName.text = "" + product_name
-                        txtCatName.text = "" + category_id
+                        var gstCak=gst.toDouble() * display_price.toDouble()/100
+                        txtGST.text="GST: ₹"+gstCak
                         txtPrice.text = "₹" + display_price
                         txtOffPrice.text = "₹" + main_price
                         txtSize.text = "" + weight_size

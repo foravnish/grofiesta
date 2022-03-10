@@ -87,6 +87,32 @@ class CheckoutRepository {
     }
 
     @SuppressLint("CheckResult")
+    fun getCouponsList(
+        context: Context,  showDialog: Boolean
+    ): MutableLiveData<ApiResponseModels.CouponListResponse> {
+        val mLiveData = MutableLiveData<ApiResponseModels.CouponListResponse>()
+        if (NetworkHandling.isConnected(context)) {
+            if (showDialog) (context as BaseActivity).showDialog()
+            apiInterface!!.getCouponsList()
+                .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).doOnError {
+                    (context as BaseActivity).dismissDialog()
+                    NetworkHandling.showNetworkError(context, it)
+                }.subscribe({
+                    try {
+                        (context as BaseActivity).dismissDialog()
+                        mLiveData.value = it
+                    } catch (e: Exception) {
+                        println(e.printStackTrace())
+                    }
+                }, { error ->
+                })
+        } else {
+            NetworkHandling.getRetryDialog(context, RetryDialog.NO_INTERNET)
+        }
+        return mLiveData
+    }
+
+    @SuppressLint("CheckResult")
     fun callPlaceOrder(
         context: Context,
         customer_id: String,
@@ -102,6 +128,7 @@ class CheckoutRepository {
         coupon_val: String,
         postcode:String,
         address:String,
+        debit_amount:String,
         showDialog: Boolean
     ): MutableLiveData<ApiResponseModels.PlaceOrderResponse> {
         val mLiveData = MutableLiveData<ApiResponseModels.PlaceOrderResponse>()
@@ -120,7 +147,8 @@ class CheckoutRepository {
                 total,
                 coupon_val,
                 postcode,
-                address
+                address,
+                debit_amount
             )
                 .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).doOnError {
                     (context as BaseActivity).dismissDialog()
