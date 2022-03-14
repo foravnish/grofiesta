@@ -34,6 +34,7 @@ import org.json.JSONException
 import org.json.JSONTokener
 import java.io.File
 import java.math.BigDecimal
+import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -55,6 +56,17 @@ class Utility {
 //        } catch (e: Exception) {
 //        }
 //    }
+
+        fun decimalTwoDigit(value: String): String {
+            value.replace(",", "")
+            val df = DecimalFormat("##.##")
+            return df.parse(value).toString()
+        }
+
+        fun twoDecimalDigit(value: String): String {
+            var num ="%.2f".format(value.toDouble())
+            return num
+        }
 
         fun setSpinnerAdatper(
             stringArrayList: ArrayList<String>,

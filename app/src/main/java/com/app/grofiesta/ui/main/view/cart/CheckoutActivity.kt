@@ -31,12 +31,14 @@ import android.view.Window
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.utils.Utils
 import com.ananda.retailer.Room.CanDatabase
 import com.app.grofiesta.adapter.CouponListAdapter
 import com.app.grofiesta.data.model.ApiResponseModels
 import com.app.grofiesta.ui.main.view.home.HomeActivity
 import com.app.grofiesta.ui.main.view.login.LoginActivity
 import com.app.grofiesta.ui.main.view.wallet.WalletModel
+import com.app.grofiesta.utils.Utility.Companion.decimalTwoDigit
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.razorpay.Checkout
 import com.razorpay.PaymentResultListener
@@ -134,8 +136,8 @@ class CheckoutActivity : BaseActivity(), PaymentResultListener {
                     var amt1 = mTotalAmt + mShippingCharge + mGST
                     var amt2 = mCoupon + mWallet
                     mGrandTotalAmt = amt1 - amt2
-                    txtGrandTotal.text = "₹" + mGrandTotalAmt
-                    txtTotalAmount.text = "₹" + mGrandTotalAmt
+                    txtGrandTotal.text = "₹" +Utility.twoDecimalDigit( mGrandTotalAmt.toString())
+                    txtTotalAmount.text = "₹" + Utility.twoDecimalDigit(mGrandTotalAmt.toString())
                     debit_amount==0.0
                     mSendWallet=0.0
                     mGrandTotalAmt=mGrandTotalAmt-mWallet
@@ -145,8 +147,8 @@ class CheckoutActivity : BaseActivity(), PaymentResultListener {
                     var amt1 = mTotalAmt + mShippingCharge + mGST
                     var amt2 = mCoupon + mGrandTotalAmt
                     mGrandTotalAmt = amt1 - amt2
-                    txtGrandTotal.text = "₹" + mGrandTotalAmt
-                    txtTotalAmount.text = "₹" + mGrandTotalAmt
+                    txtGrandTotal.text = "₹" + Utility.twoDecimalDigit(mGrandTotalAmt.toString())
+                    txtTotalAmount.text = "₹" + Utility.twoDecimalDigit(mGrandTotalAmt.toString())
                     debit_amount==mGrandTotalAmt
                     mSendWallet=mWallet - mGrandTotalAmt
                     mGrandTotalAmt=0.0
@@ -157,8 +159,8 @@ class CheckoutActivity : BaseActivity(), PaymentResultListener {
                 var amt1 = mTotalAmt + mShippingCharge + mGST
                 var amt2 = mCoupon + 0.0
                 mGrandTotalAmt = amt1 - amt2
-                txtGrandTotal.text = "₹" + mGrandTotalAmt
-                txtTotalAmount.text = "₹" + mGrandTotalAmt
+                txtGrandTotal.text = "₹" +Utility.twoDecimalDigit( mGrandTotalAmt.toString())
+                txtTotalAmount.text = "₹" +Utility.twoDecimalDigit( mGrandTotalAmt.toString())
                 txtWallet.text = "- ₹ 0.0"
                 isPayFromWallet = false
             }
@@ -306,7 +308,7 @@ class CheckoutActivity : BaseActivity(), PaymentResultListener {
                         qty = qty + mData.qty.toInt()
                     }
                     txtItemTotal.text = "₹" + mTotalAmt
-                    txtGst.text = "+ ₹" + mGST
+                    txtGst.text = "+ ₹" + Utility.twoDecimalDigit(mGST.toString())
                     txtPktQty.text = "" + qty + " PKT"
 
                 }
@@ -325,8 +327,8 @@ class CheckoutActivity : BaseActivity(), PaymentResultListener {
                     var amt1 = mTotalAmt + mShippingCharge + mGST
                     var amt2 = mCoupon + mWallet
                     mGrandTotalAmt = amt1 - amt2
-                    txtGrandTotal.text = "₹" + mGrandTotalAmt
-                    txtTotalAmount.text = "₹" + mGrandTotalAmt
+                    txtGrandTotal.text = "₹" +Utility.twoDecimalDigit(mGrandTotalAmt.toString())
+                    txtTotalAmount.text = "₹" + Utility.twoDecimalDigit(mGrandTotalAmt.toString())
 //                    if (it.distance != null && it.distance != "") {
 //                        if (it.distance.toInt() < 10)
 //                            lytDistance.visibility = View.VISIBLE
@@ -339,8 +341,8 @@ class CheckoutActivity : BaseActivity(), PaymentResultListener {
                     var amt1 = mTotalAmt + mShippingCharge + mGST
                     var amt2 = mCoupon + mWallet
                     mGrandTotalAmt = amt1 - amt2
-                    txtGrandTotal.text = "₹" + mGrandTotalAmt
-                    txtTotalAmount.text = "₹" + mGrandTotalAmt
+                    txtGrandTotal.text = "₹" + Utility.twoDecimalDigit(mGrandTotalAmt.toString())
+                    txtTotalAmount.text = "₹" +Utility.twoDecimalDigit( mGrandTotalAmt.toString())
                 }
             })
 
@@ -376,8 +378,8 @@ class CheckoutActivity : BaseActivity(), PaymentResultListener {
         var amt1 = mTotalAmt + mShippingCharge + mGST
         var amt2 = mCoupon + mWallet
         mGrandTotalAmt = amt1 - amt2
-        txtGrandTotal.text = "₹" + mGrandTotalAmt
-        txtTotalAmount.text = "₹" + mGrandTotalAmt
+        txtGrandTotal.text = "₹" + Utility.twoDecimalDigit(mGrandTotalAmt.toString())
+        txtTotalAmount.text = "₹" + Utility.twoDecimalDigit(mGrandTotalAmt.toString())
     }
 
     private fun callCoupan() {
@@ -410,8 +412,8 @@ class CheckoutActivity : BaseActivity(), PaymentResultListener {
                     var amt1 = mTotalAmt + mShippingCharge + mGST
                     var amt2 = mCoupon + mWallet
                     mGrandTotalAmt = amt1 - amt2
-                    txtGrandTotal.text = "₹" + mGrandTotalAmt
-                    txtTotalAmount.text = "₹" + mGrandTotalAmt
+                    txtGrandTotal.text = "₹" + Utility.twoDecimalDigit(mGrandTotalAmt.toString())
+                    txtTotalAmount.text = "₹" + Utility.twoDecimalDigit(mGrandTotalAmt.toString())
                 } else
                     showSnackBar(binding.root, "Invalid coupon code.")
             } else

@@ -1,16 +1,9 @@
 package com.app.grofiesta.data.api
 
 object ApiUrls {
-    const val BASE_URL = "https://nayapatta.com/grofiesta/"
+    const val BASE_URL = "https://grofiesta.com/"
 
-    const val ABOUT_US = "https://nayapatta.com/grofiesta/welcome/aboutwelcome/about"
-    const val TNC = "https://nayapatta.com/grofiesta/welcome/terms_and_condition"
-    const val PRIVACY_POLICY = "https://nayapatta.com/grofiesta/welcome/privacy_policy"
-
-    //const val BASE_URL = "https://fakestoreapi.com/"
-    //const val PRODUCT_API = "products?limit=10"
-
-
+    
     const val REGISTRATION = "user/apiRegistration"
     const val CHECK_FOR_EXIST = "api/checkuserExistApi"
     const val SEND_OTP = "api/sendOtopApi"
