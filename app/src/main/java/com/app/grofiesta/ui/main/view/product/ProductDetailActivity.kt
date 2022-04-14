@@ -303,6 +303,10 @@ class ProductDetailActivity : BaseActivity() {
                 txtSalePrice.text = "₹" + it.success.product_detail.display_price
                 txtPrice.text = "₹" + it.success.product_detail.main_price
 
+                if (it.success.product_detail.main_price==it.success.product_detail.display_price)
+                    txtPrice.visibility=View.GONE
+                else txtPrice.visibility=View.VISIBLE
+
                 if (it.success.product_detail.qty=="" || it.success.product_detail.qty =="0")
                     txtOutOfStock.visibility = View.VISIBLE
                  else {

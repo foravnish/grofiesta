@@ -10,13 +10,18 @@ import com.app.grofiesta.data.model.ApiResponseModels
 import com.app.grofiesta.utils.Utility
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.home_product_item.view.*
+import kotlinx.android.synthetic.main.home_product_item.view.imgWishlist
+import kotlinx.android.synthetic.main.home_product_item.view.lytAddtoCart
 import kotlinx.android.synthetic.main.home_product_item.view.lytMain
 import kotlinx.android.synthetic.main.home_product_item.view.productImg
 import kotlinx.android.synthetic.main.home_product_item.view.txtDiscount
 import kotlinx.android.synthetic.main.home_product_item.view.txtDisplayPrice
+import kotlinx.android.synthetic.main.home_product_item.view.txtLabel
 import kotlinx.android.synthetic.main.home_product_item.view.txtMainPrice
 import kotlinx.android.synthetic.main.home_product_item.view.txtName
+import kotlinx.android.synthetic.main.home_product_item.view.txtOutOfStock
 import kotlinx.android.synthetic.main.home_product_item.view.txtWeightSize
+import kotlinx.android.synthetic.main.item_product_list.view.*
 
 class ReleatedProductAdapter(
     val mList: ArrayList<ApiResponseModels.RelatedProductResponse.Success>,
@@ -59,6 +64,9 @@ class ReleatedProductAdapter(
                         txtWeightSize.text=""+weight_size
                         txtDisplayPrice.text="₹"+display_price
                         txtMainPrice.text="₹"+main_price
+
+                        if (main_price==display_price) txtMainPrice.visibility=View.GONE
+                        else txtMainPrice.visibility=View.VISIBLE
 
                         if (discount_percent!=null && discount_percent!="0" && discount_percent!=""){
                             txtDiscount.visibility=View.VISIBLE

@@ -32,6 +32,8 @@ import com.app.grofiesta.ui.main.view.product.ProductViewModel
 import com.app.grofiesta.ui.main.view.product.SearchProductActivity
 import com.app.grofiesta.ui.main.view.product.ShopByGroAndFiestaActivity
 import com.app.grofiesta.utils.Utility
+import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.dialog_deal_popup.*
 import kotlinx.coroutines.*
 import java.lang.Runnable
 
@@ -126,9 +128,10 @@ class HomeFragment : BaseFragment() {
 
         callDynamicProducts()
 
-        callGroProducts()
+//        callGroProducts()
 
         callMarqueeApi()
+
 
         binding.lnrsearch.setOnClickListener {
             Intent(requireActivity(), SearchProductActivity::class.java).apply {
@@ -157,6 +160,31 @@ class HomeFragment : BaseFragment() {
         }
         return binding.root;
 
+
+    }
+
+    private fun showDealPopup(image: String, url: String) {
+
+        val mDialog = Utility.MyCustomDialog(mContext!!, R.layout.dialog_deal_popup)
+        mDialog.imgClose.setOnClickListener {
+            mDialog.dismiss()
+        }
+        mDialog.imgDeal.setOnClickListener {
+            mDialog.dismiss()
+
+        }
+        Glide.with(this).load(image).into(mDialog.imgDeal)
+
+        mDialog.imgDeal.setOnClickListener {
+            Intent(requireActivity(), WebViewActivity::class.java).apply {
+                putExtra("webUrl",""+url)
+                putExtra("webTitle","Offers")
+            }.let {
+                Utility.startActivityWithLeftToRightAnimation(requireActivity(),it)
+            }
+
+        }
+        mDialog.show()
 
     }
 
@@ -239,10 +267,13 @@ class HomeFragment : BaseFragment() {
 
         mViewModel.iniBannerAPi(false)!!.observe(requireActivity(), Observer {
             if (it != null) {
-                if (it.success != null && it.success.size > 0) {
-                    initPagerViewer(it.success)
+                if (it.slider != null && it.slider.size > 0) {
+                    initPagerViewer(it.slider)
                 } else {
                     binding.lytGro.root.visibility = View.GONE
+                }
+                if (it.popup.image!=""){
+                    showDealPopup(it.popup.image,it.popup.url)
                 }
             } else Utility.showToast(requireContext())
         })
@@ -302,6 +333,7 @@ class HomeFragment : BaseFragment() {
         })
 
 
+/*
         mViewModel.initFiestaProducts(false)!!.observe(requireActivity(), Observer { mData ->
             binding.lytfiesta.shimmerLayout.visibility = View.GONE
             if (mData != null) {
@@ -338,6 +370,7 @@ class HomeFragment : BaseFragment() {
                 }
             } else Utility.showToast(requireContext())
         })
+*/
 
 
 //        mViewModel.initBestSellerProducts(false)!!.observe(requireActivity(), Observer {

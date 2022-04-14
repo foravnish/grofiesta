@@ -116,13 +116,13 @@ class CheckoutActivity : BaseActivity(), PaymentResultListener {
                 if (radio.text == "Pay Online") {
                     txtPayNow.text = "Pay Now"
                     paymentStatus = "online"
-                    lytBalance.visibility = View.VISIBLE
+//                    lytBalance.visibility = View.VISIBLE
                 } else {
                     txtPayNow.text = "Buy Now"
                     paymentStatus = "cod"
-                    lytBalance.visibility = View.GONE
+//                    lytBalance.visibility = View.GONE
 
-                    var amt1 = mTotalAmt + mShippingCharge + mGST
+                    var amt1 = mTotalAmt + mShippingCharge
                     var amt2 = mCoupon + 0.0
                     mGrandTotalAmt = amt1 - amt2
                     txtTotalAmount.text = "₹" + mGrandTotalAmt
@@ -133,7 +133,7 @@ class CheckoutActivity : BaseActivity(), PaymentResultListener {
             if (b) {
                 if (mGrandTotalAmt > mWallet) {
                     txtWallet.text = "- ₹ " + mWallet
-                    var amt1 = mTotalAmt + mShippingCharge + mGST
+                    var amt1 = mTotalAmt + mShippingCharge
                     var amt2 = mCoupon + mWallet
                     mGrandTotalAmt = amt1 - amt2
                     txtGrandTotal.text = "₹" +Utility.twoDecimalDigit( mGrandTotalAmt.toString())
@@ -144,7 +144,7 @@ class CheckoutActivity : BaseActivity(), PaymentResultListener {
                     txtPayNow.text = "Pay Now"
                 } else {
                     txtWallet.text = "- ₹ " + mGrandTotalAmt
-                    var amt1 = mTotalAmt + mShippingCharge + mGST
+                    var amt1 = mTotalAmt + mShippingCharge
                     var amt2 = mCoupon + mGrandTotalAmt
                     mGrandTotalAmt = amt1 - amt2
                     txtGrandTotal.text = "₹" + Utility.twoDecimalDigit(mGrandTotalAmt.toString())
@@ -156,7 +156,7 @@ class CheckoutActivity : BaseActivity(), PaymentResultListener {
                 }
                 isPayFromWallet = true
             } else {
-                var amt1 = mTotalAmt + mShippingCharge + mGST
+                var amt1 = mTotalAmt + mShippingCharge
                 var amt2 = mCoupon + 0.0
                 mGrandTotalAmt = amt1 - amt2
                 txtGrandTotal.text = "₹" +Utility.twoDecimalDigit( mGrandTotalAmt.toString())
@@ -301,13 +301,15 @@ class CheckoutActivity : BaseActivity(), PaymentResultListener {
                     initAdapter(it)
 
                     for (mData in it) {
-                        mTotalAmt = mTotalAmt + mData.totalAmount.toDouble()
+                        mTotalAmt = (mTotalAmt + mData.totalAmount.toDouble())
                         if (mData.gst != "")
                             mGST = mGST + mData.gst.toDouble()
 
                         qty = qty + mData.qty.toInt()
                     }
-                    txtItemTotal.text = "₹" + mTotalAmt
+
+                    var mWitoutGST=mTotalAmt-mGST
+                    txtItemTotal.text = "₹" + Utility.twoDecimalDigit(mWitoutGST.toString())
                     txtGst.text = "+ ₹" + Utility.twoDecimalDigit(mGST.toString())
                     txtPktQty.text = "" + qty + " PKT"
 
@@ -324,7 +326,7 @@ class CheckoutActivity : BaseActivity(), PaymentResultListener {
                     txtShipingCharge.text = "+ ₹" + it.shipping
                     mShippingCharge = it.shipping.toDouble()
 
-                    var amt1 = mTotalAmt + mShippingCharge + mGST
+                    var amt1 = mTotalAmt + mShippingCharge
                     var amt2 = mCoupon + mWallet
                     mGrandTotalAmt = amt1 - amt2
                     txtGrandTotal.text = "₹" +Utility.twoDecimalDigit(mGrandTotalAmt.toString())
@@ -338,7 +340,7 @@ class CheckoutActivity : BaseActivity(), PaymentResultListener {
                 } else {
                     mShippingCharge = 0.0
                     txtShipingCharge.text = "+ ₹" + mShippingCharge
-                    var amt1 = mTotalAmt + mShippingCharge + mGST
+                    var amt1 = mTotalAmt + mShippingCharge
                     var amt2 = mCoupon + mWallet
                     mGrandTotalAmt = amt1 - amt2
                     txtGrandTotal.text = "₹" + Utility.twoDecimalDigit(mGrandTotalAmt.toString())
@@ -375,7 +377,7 @@ class CheckoutActivity : BaseActivity(), PaymentResultListener {
         mCoupon = 0.0
         txtDisCoupan.text = "₹ " + mCoupon
         txtDisCoupan.setTextColor(this.getColor(R.color.colorBlackLite))
-        var amt1 = mTotalAmt + mShippingCharge + mGST
+        var amt1 = mTotalAmt + mShippingCharge
         var amt2 = mCoupon + mWallet
         mGrandTotalAmt = amt1 - amt2
         txtGrandTotal.text = "₹" + Utility.twoDecimalDigit(mGrandTotalAmt.toString())
@@ -409,7 +411,7 @@ class CheckoutActivity : BaseActivity(), PaymentResultListener {
                     mCoupon = it.data.coupon_val.toDouble()
                     txtDisCoupan.setTextColor(this.getColor(R.color.green))
 
-                    var amt1 = mTotalAmt + mShippingCharge + mGST
+                    var amt1 = mTotalAmt + mShippingCharge
                     var amt2 = mCoupon + mWallet
                     mGrandTotalAmt = amt1 - amt2
                     txtGrandTotal.text = "₹" + Utility.twoDecimalDigit(mGrandTotalAmt.toString())

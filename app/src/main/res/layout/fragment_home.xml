@@ -108,7 +108,8 @@
 
                             <include
                                 android:id="@+id/lytGro"
-                                layout="@layout/lyt_fruits" />
+                                layout="@layout/lyt_fruits"
+                                android:visibility="gone"/>
 
                             <include
                                 android:id="@+id/lytDynamicProduct"
@@ -116,7 +117,8 @@
 
                             <include
                                 android:id="@+id/lytfiesta"
-                                layout="@layout/lyt_meet" />
+                                layout="@layout/lyt_meet"
+                                android:visibility="gone"/>
 
                             <include
                                 android:id="@+id/lytBestSeller"

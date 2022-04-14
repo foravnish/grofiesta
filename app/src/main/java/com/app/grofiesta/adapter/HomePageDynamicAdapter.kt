@@ -96,7 +96,7 @@ class HomePageDynamicAdapter(
                         if (mList.productsdata.size > 0)
                             initAdapter(context, itemView, mList.productsdata)
 
-                        if (mList.module_banner.size > 0)
+                        if (mList.section_banner.size > 0)
                             initPagerViewer(context, itemView, mList.section_banner,base_url)
                     }
 

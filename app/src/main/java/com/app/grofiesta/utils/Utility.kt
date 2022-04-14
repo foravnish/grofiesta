@@ -129,7 +129,7 @@ class Utility {
             dialog.setCanceledOnTouchOutside(true)
             dialog.setCancelable(true)
             dialog.window!!.setGravity(Gravity.CENTER)
-            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog.window!!.setLayout(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT

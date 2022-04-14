@@ -357,18 +357,23 @@ object ApiResponseModels {
     ) {
         data class Data(
             var email: String,
-            var opt: Int
+            var opt: String
         )
     }
 
     data class BannerResponse(
-        val success: ArrayList<Success>
+        val slider: ArrayList<Success>,
+        val popup: Popuo
     ) : Serializable {
         data class Success(
             val slider_id: String = "",
             val urlimage: String = "",
             val heading:String,
             val title:String
+        )
+        data class Popuo(
+            var image: String,
+            var url: String,
         )
     }
 

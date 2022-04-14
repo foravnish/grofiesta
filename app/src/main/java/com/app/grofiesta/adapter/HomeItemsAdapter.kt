@@ -66,6 +66,9 @@ class HomeItemsAdapter(
                         txtDisplayPrice.text="₹"+display_price
                         txtMainPrice.text="₹"+main_price
 
+                        if (main_price==display_price) txtMainPrice.visibility=View.GONE
+                        else txtMainPrice.visibility=View.VISIBLE
+
                         if (discount_percent!=null && discount_percent!="0" && discount_percent!=""){
                             txtDiscount.visibility=View.VISIBLE
                             txtDiscount.text=""+discount_percent+"% Off"

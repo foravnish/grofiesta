@@ -14,6 +14,7 @@ import com.app.grofiesta.data.model.request.UserProfileRequest
 import com.app.grofiesta.databinding.ActivityProfileBinding
 import com.app.grofiesta.ui.base.BaseActivity
 import com.app.grofiesta.ui.main.view.login.LoginViewModel
+import com.app.grofiesta.ui.main.view.product.ImagePreviewActivity
 import com.app.grofiesta.utils.Utility
 import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -52,6 +53,18 @@ class ProfileActivity : BaseActivity() {
 
         binding.imgCapture.setOnClickListener {
             callCamera()
+        }
+
+        binding.profileImage.setOnClickListener {
+            if (img.endsWith(".jpg") || img.endsWith("jpeg ")
+                || img.endsWith("png")){
+                Intent(this@ProfileActivity, ImagePreviewActivity::class.java).apply {
+                    putExtra("image", img)
+                }.let {
+                    Utility.startActivityWithLeftToRightAnimationContext(this@ProfileActivity!!, it)
+                }
+
+            }
         }
         callUserData()
     }
